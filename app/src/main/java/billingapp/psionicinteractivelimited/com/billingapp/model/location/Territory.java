@@ -1,5 +1,14 @@
 package billingapp.psionicinteractivelimited.com.billingapp.model.location;
 
+import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by raihan on 8/17/16.
  */
@@ -64,5 +73,28 @@ public class Territory
     public String toString()
     {
         return "ClassPojo [sector = "+sector+", id = "+id+", address = "+address+", name = "+name+"]";
+    }
+    public static Territory jsontoTerritory(String json) {
+        try {
+            JSONObject territoryJson = new JSONObject(json);
+            Territory TerritoryToReturn = new Territory(territoryJson.getString("address"),territoryJson.getString("id"),territoryJson.getString("name"));
+            return TerritoryToReturn;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static List<Territory> returnTerritoryFromArray(String JsonArray){
+        ArrayList<Territory> territorylist = new ArrayList<Territory>();
+        try {
+            JSONArray territoryArray = new JSONArray(JsonArray);
+            for(int i = 0;i<territoryArray.length();i++){
+                Territory sector = jsontoTerritory(territoryArray.get(i).toString());
+                territorylist.add(sector);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return territorylist;
     }
 }

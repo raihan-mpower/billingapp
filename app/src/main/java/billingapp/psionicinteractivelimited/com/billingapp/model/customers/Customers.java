@@ -1,5 +1,13 @@
 package billingapp.psionicinteractivelimited.com.billingapp.model.customers;
 
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by raihan on 8/17/16.
  */
@@ -117,5 +125,30 @@ public class Customers
     public String toString()
     {
         return "ClassPojo [houses_id = "+houses_id+", phone = "+phone+", price = "+price+", customer_code = "+customer_code+", address = "+address+", customers_id = "+customers_id+", name = "+name+", last_paid = "+last_paid+"]";
+    }
+
+    public static Customers jsontoCustomers(String json) {
+        try {
+            JSONObject customerJson = new JSONObject(json);
+            Customers customerToReturn = new Customers(customerJson.getString("houses_id"),customerJson.getString("phone"),customerJson.getString("price"),customerJson.getString("customer_code"),customerJson.getString("address"),customerJson.getString("customers_id"),customerJson.getString("name"),customerJson.getString("last_paid"));
+            return customerToReturn;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static List<Customers> returnCustomersFromArray(String JsonArray){
+        ArrayList<Customers> customerlist = new ArrayList<Customers>();
+        try {
+            JSONArray customerArray = new JSONArray(JsonArray);
+            for(int i = 0;i<customerArray.length();i++){
+                Customers customers = jsontoCustomers(customerArray.get(i).toString());
+                customerlist.add(customers);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return customerlist;
+
     }
 }

@@ -1,5 +1,12 @@
 package billingapp.psionicinteractivelimited.com.billingapp.model.location;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by raihan on 8/17/16.
  */
@@ -63,5 +70,29 @@ public class Sector
     public String toString()
     {
         return "ClassPojo [sector = "+sector+", id = "+id+", road = "+road+", territory_id = "+territory_id+"]";
+    }
+    public static Sector jsontoSector(String json) {
+        try {
+            JSONObject sectorJson = new JSONObject(json);
+            Sector SectorToReturn = new Sector(sectorJson.getString("sector"),sectorJson.getString("id"),sectorJson.getString("territory_id"));
+            return SectorToReturn;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static List<Sector> returnSectorFromArray(String JsonArray){
+        ArrayList<Sector> sectorlist = new ArrayList<Sector>();
+        try {
+            JSONArray sectorArray = new JSONArray(JsonArray);
+            for(int i = 0;i<sectorArray.length();i++){
+                Sector sector = jsontoSector(sectorArray.get(i).toString());
+                sectorlist.add(sector);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return sectorlist;
+
     }
 }

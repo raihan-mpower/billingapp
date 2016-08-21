@@ -1,5 +1,12 @@
 package billingapp.psionicinteractivelimited.com.billingapp.model.location;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by raihan on 8/17/16.
  */
@@ -51,5 +58,29 @@ public class House
     public String toString()
     {
         return "ClassPojo [id = "+id+", roads_id = "+roads_id+", house = "+house+"]";
+    }
+    public static House jsontoHouse(String json) {
+        try {
+            JSONObject customerJson = new JSONObject(json);
+            House HouseToReturn = new House(customerJson.getString("id"),customerJson.getString("roads_id"),customerJson.getString("house"));
+            return HouseToReturn;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static List<House> returnCustomersFromArray(String JsonArray){
+        ArrayList<House> houselist = new ArrayList<House>();
+        try {
+            JSONArray houseArray = new JSONArray(JsonArray);
+            for(int i = 0;i<houseArray.length();i++){
+                House house = jsontoHouse(houseArray.get(i).toString());
+                houselist.add(house);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return houselist;
+
     }
 }
