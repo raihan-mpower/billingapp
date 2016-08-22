@@ -4,6 +4,10 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Customers;
 
 /**
@@ -20,6 +24,7 @@ public class customerRepository {
     public static String name = "name";
 
     public static String last_paid = "last_paid";
+    public static String [] columns = {houses_id,phone,price,customer_code,address,customers_id,name,last_paid};
     public static String sqlStatement = "CREATE TABLE customers(houses_id VARCHAR PRIMARY KEY, phone VARCHAR, price VARCHAR, customer_code VARCHAR, address VARCHAR, customers_id VARCHAR, name VARCHAR, last_paid VARCHAR )";
 
     public static void createsql(SQLiteDatabase database){
@@ -39,8 +44,25 @@ public class customerRepository {
         return values;
     }
     public static Customers getCustomer(Cursor cursor){
-        Customers customers = new Customers(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7));
+        Customers customers = new Customers(cursor.getString(7),cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                cursor.getString(4), cursor.getString(5), cursor.getString(6));
+        return customers;
+    }
+
+    public static ArrayList<Customers> findByCaseID(String caseId,SQLiteDatabase database) {
+        Cursor cursor = database.query(tableName, columns, houses_id + " = ?", new String[]{caseId},
+                null, null, null, null);
+        return readAllCustomers(cursor);
+    }
+    private static ArrayList<Customers> readAllCustomers(Cursor cursor) {
+        cursor.moveToFirst();
+        ArrayList<Customers> customers = new ArrayList<Customers>();
+        while (!cursor.isAfterLast()) {
+            Customers customer = getCustomer(cursor);
+            customers.add(customer);
+            cursor.moveToNext();
+        }
+        cursor.close();
         return customers;
     }
 
