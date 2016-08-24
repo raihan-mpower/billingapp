@@ -1,14 +1,24 @@
 package billingapp.psionicinteractivelimited.com.billingapp.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
+import java.util.ArrayList;
+
+import billingapp.psionicinteractivelimited.com.billingapp.MainActivity;
 import billingapp.psionicinteractivelimited.com.billingapp.R;
+import billingapp.psionicinteractivelimited.com.billingapp.database.billingdatabaseHelper;
+import billingapp.psionicinteractivelimited.com.billingapp.database.territoryRepository;
+import billingapp.psionicinteractivelimited.com.billingapp.model.location.Road;
+import billingapp.psionicinteractivelimited.com.billingapp.model.location.Sector;
+import billingapp.psionicinteractivelimited.com.billingapp.model.location.Territory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +37,10 @@ public class LocationFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private AutoCompleteTextView sector;
+    private AutoCompleteTextView atcv;
+    private AutoCompleteTextView house;
+    private AutoCompleteTextView road;
 
     public LocationFragment() {
         // Required empty public constructor
@@ -63,9 +77,99 @@ public class LocationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_location, container, false);
+        View view = inflater.inflate(R.layout.fragment_location, container, false);
+
+        final billingdatabaseHelper databasehelper = new billingdatabaseHelper(getActivity(),1);
+        MainActivity.territories =territoryRepository.getALLterritory(databasehelper.getReadableDatabase());
+        atcv = (AutoCompleteTextView)view.findViewById(R.id.city);
+        sector = (AutoCompleteTextView)view.findViewById(R.id.sector_block);
+        road = (AutoCompleteTextView)view.findViewById(R.id.road_no);
+        house = (AutoCompleteTextView)view.findViewById(R.id.house_number);
+        sector.setThreshold(-1);
+        road.setThreshold(-1);
+        house.setThreshold(-1);
+        final ArrayList<String> suggestions = new ArrayList<String>();
+        for(int i = 0;i< MainActivity.territories.size();i++){
+            Log.v("naam ki",MainActivity.territories.get(i).getName());
+            suggestions.add(MainActivity.territories.get(i).getName());
+        }
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, suggestions);
+        atcv.setAdapter(arrayAdapter);
+        arrayAdapter.notifyDataSetChanged();
+        atcv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            actvOnclick(suggestions,databasehelper);
+
+
+            }
+        });
+
+        return view;
     }
 
+    private void actvOnclick(ArrayList<String> suggestions, final billingdatabaseHelper databasehelper) {
+        int index = suggestions.indexOf(atcv.getEditableText().toString());
+        Territory territory = MainActivity.territories.get(index);
+        MainActivity.sectors = databasehelper.getSectorbyTerritoryID(territory.getId());
+        final ArrayList<String> sectorsuggestions = new ArrayList<String>();
+        for(int i = 0;i< MainActivity.sectors.size();i++){
+            Log.v("naam ki",MainActivity.sectors.get(i).getSector());
+            sectorsuggestions.add(MainActivity.sectors.get(i).getSector());
+        }
+        Log.v("sect size ki","__"+sectorsuggestions.size());
+        ArrayAdapter<String> sectorarrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, sectorsuggestions);
+        sector.setAdapter(sectorarrayAdapter);
+        sectorarrayAdapter.notifyDataSetChanged();
+        sector.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                sectorOnClick(sectorsuggestions,databasehelper);
+            }
+        });
+    }
+
+    private void sectorOnClick(ArrayList<String> sectorsuggestions, final billingdatabaseHelper databasehelper) {
+        int index = sectorsuggestions.indexOf(sector.getEditableText().toString());
+        Sector sectorselect = MainActivity.sectors.get(index);
+        MainActivity.roads = databasehelper.getRoadbySectorID(sectorselect.getId());
+        final ArrayList<String> roadsuggestions = new ArrayList<String>();
+        for(int i = 0;i< MainActivity.roads.size();i++){
+            Log.v("road naam ki",MainActivity.roads.get(i).getRoad());
+            roadsuggestions.add(MainActivity.roads.get(i).getRoad());
+        }
+        Log.v("road size ki","__"+roadsuggestions.size());
+        ArrayAdapter<String> roadarrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, roadsuggestions);
+        road.setAdapter(roadarrayAdapter);
+        roadarrayAdapter.notifyDataSetChanged();
+        road.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               RoadOnClick(roadsuggestions,databasehelper);
+            }
+        });
+    }
+
+    private void RoadOnClick(ArrayList<String> roadsuggestions, billingdatabaseHelper databasehelper) {
+        int index = roadsuggestions.indexOf(sector.getEditableText().toString());
+        Road Roadselect = MainActivity.roads.get(index);
+        MainActivity.houses = databasehelper.getHousesbyRoadID(Roadselect.getId());
+        ArrayList<String> housesuggestions = new ArrayList<String>();
+        for(int i = 0;i< MainActivity.houses.size();i++){
+            Log.v("house naam ki",MainActivity.houses.get(i).getHouse());
+            housesuggestions.add(MainActivity.houses.get(i).getHouse());
+        }
+        Log.v("house size ki","__"+housesuggestions.size());
+        ArrayAdapter<String> housearrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, housesuggestions);
+        house.setAdapter(housearrayAdapter);
+        housearrayAdapter.notifyDataSetChanged();
+        house.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+    }
 
 
 }

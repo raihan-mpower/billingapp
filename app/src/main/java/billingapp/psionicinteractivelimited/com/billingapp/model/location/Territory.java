@@ -84,7 +84,7 @@ public class Territory
             return null;
         }
     }
-    public static List<Territory> returnTerritoryFromArray(String JsonArray){
+    public static ArrayList<Territory> returnTerritoryFromArray(String JsonArray){
         ArrayList<Territory> territorylist = new ArrayList<Territory>();
         try {
             JSONArray territoryArray = new JSONArray(JsonArray);

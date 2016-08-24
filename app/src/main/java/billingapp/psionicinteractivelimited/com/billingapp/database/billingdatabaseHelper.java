@@ -4,10 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Map;
 
+import billingapp.psionicinteractivelimited.com.billingapp.MainActivity;
 import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Customers;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.House;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.Road;
@@ -21,6 +23,10 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
     public billingdatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
 
+    }
+
+    public billingdatabaseHelper(Context context, int i) {
+        super(context, "billingDatabase", null, 1);
     }
 
     @Override
@@ -142,6 +148,7 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
     /////////////////Territory methods/////////////////////////////
     public void insert_or_update_Territory(ArrayList<Territory> territorylist){
         SQLiteDatabase database = getWritableDatabase();
+        Log.v("list size",""+territorylist.size());
         for(int i = 0;i<territorylist.size();i++) {
             if(getTerritorybyID(territorylist.get(i).getId()).size()>0){
                 updateTerritory(territorylist.get(i));

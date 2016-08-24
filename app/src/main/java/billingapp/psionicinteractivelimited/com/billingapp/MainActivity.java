@@ -35,6 +35,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,7 +43,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import billingapp.psionicinteractivelimited.com.billingapp.database.billingdatabaseHelper;
+import billingapp.psionicinteractivelimited.com.billingapp.database.sectorRepository;
 import billingapp.psionicinteractivelimited.com.billingapp.fragments.LocationFragment;
+import billingapp.psionicinteractivelimited.com.billingapp.model.location.House;
+import billingapp.psionicinteractivelimited.com.billingapp.model.location.Road;
+import billingapp.psionicinteractivelimited.com.billingapp.model.location.Sector;
+import billingapp.psionicinteractivelimited.com.billingapp.model.location.Territory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,6 +67,13 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    public static ArrayList<Territory> territories = new ArrayList<Territory>();
+    public static ArrayList<Sector> sectors = new ArrayList<Sector>();
+    public static ArrayList<Road> roads = new ArrayList<Road>();
+    public static ArrayList<House> houses = new ArrayList<House>();
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpget = new HttpGet("http://cable.psionichub.com/sync/locations?token="+token);
 
+
         try {
             // Add your data
 //            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -141,6 +156,8 @@ public class MainActivity extends AppCompatActivity {
             if(statusCode == 200){
                 Log.v("testcall",responseBody);
                 responsestring = responseBody;
+                processResponse(responsestring);
+
             }else{
                 responsestring = "error";
             }
@@ -152,6 +169,87 @@ public class MainActivity extends AppCompatActivity {
         }
         return responsestring;
     }
+
+    private void processResponse(String responsestring) {
+        try {
+            JSONArray response = new JSONArray(responsestring);
+
+            Log.v("length",""+response.toString());
+            String territoryarray = "";
+            for(int i = 0;i<response.length();i++){
+                JSONObject objects = response.getJSONObject(i);
+                Territory territoryToAdd = Territory.jsontoTerritory(objects.getJSONObject("territory").toString());
+                processSectorArray(objects.getJSONObject("territory").toString());                
+                territories.add(territoryToAdd);
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        billingdatabaseHelper databasehelper = new billingdatabaseHelper(this,1);
+        Log.v("length",""+territories.size());
+        databasehelper.insert_or_update_Territory(territories);
+
+    }
+
+    private void processSectorArray(String territorystring) {
+        JSONObject territory = null;
+
+        try {
+            territory = new JSONObject(territorystring);
+            JSONArray SectorArray = new JSONArray(territory.getString("sector"));
+            for(int i = 0;i<SectorArray.length();i++){
+                Sector sector = Sector.jsontoSector(SectorArray.getJSONObject(i).toString());
+                sectors.add(sector);
+                processRoadArray(SectorArray.getJSONObject(i).toString());
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        billingdatabaseHelper databasehelper = new billingdatabaseHelper(this,1);
+        Log.v("sector _ length",""+sectors.size());
+        databasehelper.insert_or_update_Sector(sectors);
+
+
+    }
+
+    private void processRoadArray(String secotrobject) {
+        try {
+            JSONObject sector = new JSONObject(secotrobject);
+            JSONArray RoadArray = new JSONArray(sector.getString("road"));
+            for(int i = 0;i<RoadArray.length();i++){
+                Road road = Road.jsontoRoad(RoadArray.getJSONObject(i).toString());
+                roads.add(road);
+                processHouseArray(RoadArray.getJSONObject(i).toString());
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        billingdatabaseHelper databasehelper = new billingdatabaseHelper(this,1);
+        Log.v("Road _ length",""+roads.size());
+        databasehelper.insert_or_update_Road(roads);
+    }
+
+    private void processHouseArray(String s) {
+        try {
+            JSONObject road = new JSONObject(s);
+            JSONArray HouseArray = new JSONArray(road.getString("house"));
+            for(int i = 0;i<HouseArray.length();i++){
+                House house = House.jsontoHouse(HouseArray.getJSONObject(i).toString());
+                houses.add(house);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        billingdatabaseHelper databasehelper = new billingdatabaseHelper(this,1);
+        Log.v("Road _ length",""+houses.size());
+        databasehelper.insert_or_update_House(houses);
+    }
+
     public void executeAsynctask(){
         (new AsyncTask() {
 

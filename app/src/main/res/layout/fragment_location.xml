@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <EditText
+        <android.support.v7.widget.AppCompatAutoCompleteTextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/city"
@@ -19,10 +19,11 @@
             android:layout_marginRight="30dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/textboxback"
-            android:text="City"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:hint="City"
+            android:textColorHint="#ffffff" />
 
-        <EditText
+        <android.support.v7.widget.AppCompatAutoCompleteTextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/sector_block"
@@ -30,10 +31,11 @@
             android:layout_marginRight="30dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/textboxback"
-            android:text="Sector or Block"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
+            android:hint="Sector or Block" />
 
-        <EditText
+        <android.support.v7.widget.AppCompatAutoCompleteTextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/road_no"
@@ -41,10 +43,11 @@
             android:layout_marginRight="30dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/textboxback"
-            android:text="Road Number"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:hint="Road Number"
+            android:textColorHint="#ffffff" />
 
-        <EditText
+        <android.support.v7.widget.AppCompatAutoCompleteTextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/house_number"

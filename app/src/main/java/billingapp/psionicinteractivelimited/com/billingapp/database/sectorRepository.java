@@ -16,7 +16,7 @@ public class sectorRepository {
     public static String tableName = "sectors";
     public static String id = "id";
     public static String territory_id = "territory_id";
-    public static String sector = "road";
+    public static String sector = "sector";
 
     public static String [] columns = {id,territory_id,sector};
     public static String sqlStatement = "CREATE TABLE sectors(id VARCHAR PRIMARY KEY, territory_id VARCHAR, sector VARCHAR)";
