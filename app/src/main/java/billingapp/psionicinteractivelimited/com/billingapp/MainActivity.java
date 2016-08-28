@@ -45,6 +45,7 @@ import java.util.List;
 
 import billingapp.psionicinteractivelimited.com.billingapp.database.billingdatabaseHelper;
 import billingapp.psionicinteractivelimited.com.billingapp.database.sectorRepository;
+import billingapp.psionicinteractivelimited.com.billingapp.fragments.BillPaymentFragment;
 import billingapp.psionicinteractivelimited.com.billingapp.fragments.LocationFragment;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.House;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.Road;
@@ -295,8 +296,12 @@ public class MainActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             if(position == 0){
                 return LocationFragment.newInstance("","");
+            } if(position == 0){
+                return BillPaymentFragment.newInstance("","");
+
             }else {
-                return PlaceholderFragment.newInstance(position + 1);
+                return BillPaymentFragment.newInstance("","");
+
             }
         }
 
