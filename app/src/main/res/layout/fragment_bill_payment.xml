@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:ems="10"
-            android:id="@+id/editText"
+            android:id="@+id/user_info"
             android:background="@drawable/textboxback"
             android:layout_margin="15dp" />
 
@@ -55,12 +55,19 @@
             android:id="@+id/textView6"
             android:layout_margin="15dp"
             android:textColor="#ffffff" />
-        <com.cunoraz.tagview.TagView
-            android:id="@+id/tag_group"
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/textboxback"
-            android:layout_margin="15dp" />
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollView" >
+
+            <com.cunoraz.tagview.TagView
+                android:id="@+id/tag_group"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:layout_margin="15dp" />
+        </ScrollView>
 
     </LinearLayout>
 </FrameLayout>

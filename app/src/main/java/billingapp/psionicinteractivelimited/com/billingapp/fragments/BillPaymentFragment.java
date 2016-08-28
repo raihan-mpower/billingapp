@@ -1,19 +1,27 @@
 package billingapp.psionicinteractivelimited.com.billingapp.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+
+import com.cunoraz.tagview.Tag;
+import com.cunoraz.tagview.TagView;
+
+import java.util.ArrayList;
 
 import billingapp.psionicinteractivelimited.com.billingapp.R;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link BillPaymentFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link BillPaymentFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -65,8 +73,34 @@ public class BillPaymentFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bill_payment, container, false);
+        EditText user_info = (EditText) view.findViewById(R.id.user_info);
+        final TagView tagGroup = (TagView)view.findViewById(R.id.tag_group);
+        Tag tag = new Tag("jan");
+        tag.radius = 10f;
+        tag.layoutColor = Color.GRAY;
+        tag.tagTextColor = Color.BLACK;
+        tag.isDeletable = true;
+        ArrayList<Tag> tags = new ArrayList<>();
+
+        tags.add(tag);
+
+        tagGroup.addTags(tags);
+      //set click listener
+        tagGroup.setOnTagClickListener(new TagView.OnTagClickListener() {
+            @Override
+            public void onTagClick(Tag tag, int position) {
+            }
+        });
+
+        //set delete listener
+        tagGroup.setOnTagDeleteListener(new TagView.OnTagDeleteListener() {
+            @Override
+            public void onTagDeleted(final TagView view, final Tag tag, final int position) {
+            }
+        });
         return view;
     }
+
 
 
 }
