@@ -242,13 +242,13 @@ public class MainActivity extends AppCompatActivity {
                 House house = House.jsontoHouse(HouseArray.getJSONObject(i).toString());
                 houses.add(house);
             }
-
-        } catch (JSONException e) {
+            billingdatabaseHelper databasehelper = new billingdatabaseHelper(this,1);
+            Log.v("house _ length",""+houses.size());
+            databasehelper.insert_or_update_House(houses);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        billingdatabaseHelper databasehelper = new billingdatabaseHelper(this,1);
-        Log.v("Road _ length",""+houses.size());
-        databasehelper.insert_or_update_House(houses);
+
     }
 
     public void executeAsynctask(){

@@ -62,7 +62,7 @@ public class House
     public static House jsontoHouse(String json) {
         try {
             JSONObject customerJson = new JSONObject(json);
-            House HouseToReturn = new House(customerJson.getString("id"),customerJson.getString("roads_id"),customerJson.getString("house"));
+            House HouseToReturn = new House(customerJson.getString("house"),customerJson.getString("id"),customerJson.getString("roads_id"));
             return HouseToReturn;
         } catch (JSONException e) {
             e.printStackTrace();

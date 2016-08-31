@@ -151,7 +151,7 @@ public class LocationFragment extends Fragment {
     }
 
     private void RoadOnClick(ArrayList<String> roadsuggestions, billingdatabaseHelper databasehelper) {
-        int index = roadsuggestions.indexOf(sector.getEditableText().toString());
+        int index = roadsuggestions.indexOf(road.getEditableText().toString());
         Road Roadselect = MainActivity.roads.get(index);
         MainActivity.houses = databasehelper.getHousesbyRoadID(Roadselect.getId());
         ArrayList<String> housesuggestions = new ArrayList<String>();
