@@ -41,6 +41,8 @@ public class BillPaymentFragment extends Fragment {
     private TextView address;
     private TextView user_name;
     private TextView user_id;
+    private TagView tagGroup;
+    private TextView amount_due_info;
 
 
     public BillPaymentFragment() {
@@ -82,8 +84,20 @@ public class BillPaymentFragment extends Fragment {
         address = (TextView) view.findViewById(R.id.address_info);
         user_name = (TextView) view.findViewById(R.id.username_info);
         user_id = (TextView) view.findViewById(R.id.userid_info);
-        final TagView tagGroup = (TagView)view.findViewById(R.id.tag_group);
-        Tag tag = new Tag("jan");
+        amount_due_info = (TextView) view.findViewById(R.id.amount_due_info);
+        tagGroup = (TagView)view.findViewById(R.id.tag_group);
+
+        return view;
+    }
+    public void initiateCustomers(Customers customer){
+//        TextView UserInformation
+
+        address.setText(customer.getAddress());
+        user_name.setText(customer.getName());
+        user_id.setText(customer.getCustomer_code());
+        amount_due_info.setText(customer.getPrice());
+
+        Tag tag = new Tag(customer.getLast_paid());
         tag.radius = 10f;
         tag.layoutColor = Color.GRAY;
         tag.tagTextColor = Color.BLACK;
@@ -93,7 +107,7 @@ public class BillPaymentFragment extends Fragment {
         tags.add(tag);
 
         tagGroup.addTags(tags);
-      //set click listener
+        //set click listener
         tagGroup.setOnTagClickListener(new TagView.OnTagClickListener() {
             @Override
             public void onTagClick(Tag tag, int position) {
@@ -106,14 +120,7 @@ public class BillPaymentFragment extends Fragment {
             public void onTagDeleted(final TagView view, final Tag tag, final int position) {
             }
         });
-        return view;
-    }
-    public void initiateCustomers(Customers customer){
-//        TextView UserInformation
 
-        address.setText(customer.getAddress());
-        user_name.setText(customer.getName());
-        user_id.setText(customer.getCustomer_code());
     }
 
 
