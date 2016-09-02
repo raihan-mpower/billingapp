@@ -43,9 +43,10 @@ public class customerRepository {
         values.put(last_paid,customer.getLast_paid());
         return values;
     }
+
     public static Customers getCustomer(Cursor cursor){
-        Customers customers = new Customers(cursor.getString(7),cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                cursor.getString(4), cursor.getString(5), cursor.getString(6));
+        Customers customers = new Customers(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                cursor.getString(4), cursor.getString(5), cursor.getString(6),cursor.getString(7));
         return customers;
     }
 

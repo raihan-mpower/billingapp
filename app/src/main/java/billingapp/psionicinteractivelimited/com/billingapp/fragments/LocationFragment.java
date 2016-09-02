@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class LocationFragment extends Fragment {
     private AutoCompleteTextView road;
     private TextView customerid;
     private TextView telephonenumber;
+    private Button billpayment;
 
     public LocationFragment() {
         // Required empty public constructor
@@ -91,6 +93,7 @@ public class LocationFragment extends Fragment {
         sector = (AutoCompleteTextView)view.findViewById(R.id.sector_block);
         road = (AutoCompleteTextView)view.findViewById(R.id.road_no);
         house = (AutoCompleteTextView)view.findViewById(R.id.house_number);
+        billpayment = (Button) view.findViewById(R.id.bill_payment);
         sector.setThreshold(-1);
         road.setThreshold(-1);
         house.setThreshold(-1);
@@ -177,6 +180,15 @@ public class LocationFragment extends Fragment {
                 if(customers.size()>0){
                     customerid.setText(customers.get(0).getCustomers_id());
                     telephonenumber.setText(customers.get(0).getPhone());
+                    MainActivity.customerSelected = customers.get(0);
+                    billpayment.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ((MainActivity)getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerSelected);
+
+                            ((MainActivity)getActivity()).mViewPager.setCurrentItem(1);
+                        }
+                    });
                 }
             }
         });

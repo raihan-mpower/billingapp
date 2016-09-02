@@ -47,6 +47,7 @@ import billingapp.psionicinteractivelimited.com.billingapp.database.billingdatab
 import billingapp.psionicinteractivelimited.com.billingapp.database.sectorRepository;
 import billingapp.psionicinteractivelimited.com.billingapp.fragments.BillPaymentFragment;
 import billingapp.psionicinteractivelimited.com.billingapp.fragments.LocationFragment;
+import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Customers;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.House;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.Road;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.Sector;
@@ -68,13 +69,13 @@ public class MainActivity extends AppCompatActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ViewPager mViewPager;
+    public ViewPager mViewPager;
     public static ArrayList<Territory> territories = new ArrayList<Territory>();
     public static ArrayList<Sector> sectors = new ArrayList<Sector>();
     public static ArrayList<Road> roads = new ArrayList<Road>();
     public static ArrayList<House> houses = new ArrayList<House>();
-
-
+    public static Customers customerSelected ;
+    public BillPaymentFragment billPaymentFragment;
 
 
     @Override
@@ -149,8 +150,10 @@ public class MainActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             if(position == 0){
                 return LocationFragment.newInstance("","");
-            } if(position == 0){
-                return BillPaymentFragment.newInstance("","");
+            }else if(position == 1){
+                billPaymentFragment = BillPaymentFragment.newInstance("","");
+
+                return billPaymentFragment;
 
             }else {
                 return BillPaymentFragment.newInstance("","");

@@ -11,13 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.cunoraz.tagview.Tag;
 import com.cunoraz.tagview.TagView;
 
 import java.util.ArrayList;
 
+import billingapp.psionicinteractivelimited.com.billingapp.MainActivity;
 import billingapp.psionicinteractivelimited.com.billingapp.R;
+import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Customers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +38,11 @@ public class BillPaymentFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private TextView address;
+    private TextView user_name;
+    private TextView user_id;
+    private TagView tagGroup;
+    private TextView amount_due_info;
 
 
     public BillPaymentFragment() {
@@ -73,9 +81,23 @@ public class BillPaymentFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bill_payment, container, false);
-        EditText user_info = (EditText) view.findViewById(R.id.user_info);
-        final TagView tagGroup = (TagView)view.findViewById(R.id.tag_group);
-        Tag tag = new Tag("jan");
+        address = (TextView) view.findViewById(R.id.address_info);
+        user_name = (TextView) view.findViewById(R.id.username_info);
+        user_id = (TextView) view.findViewById(R.id.userid_info);
+        amount_due_info = (TextView) view.findViewById(R.id.amount_due_info);
+        tagGroup = (TagView)view.findViewById(R.id.tag_group);
+
+        return view;
+    }
+    public void initiateCustomers(Customers customer){
+//        TextView UserInformation
+
+        address.setText(customer.getAddress());
+        user_name.setText(customer.getName());
+        user_id.setText(customer.getCustomer_code());
+        amount_due_info.setText(customer.getPrice());
+
+        Tag tag = new Tag(customer.getLast_paid());
         tag.radius = 10f;
         tag.layoutColor = Color.GRAY;
         tag.tagTextColor = Color.BLACK;
@@ -85,7 +107,7 @@ public class BillPaymentFragment extends Fragment {
         tags.add(tag);
 
         tagGroup.addTags(tags);
-      //set click listener
+        //set click listener
         tagGroup.setOnTagClickListener(new TagView.OnTagClickListener() {
             @Override
             public void onTagClick(Tag tag, int position) {
@@ -98,7 +120,7 @@ public class BillPaymentFragment extends Fragment {
             public void onTagDeleted(final TagView view, final Tag tag, final int position) {
             }
         });
-        return view;
+
     }
 
 
