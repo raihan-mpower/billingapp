@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.cunoraz.tagview.Tag;
 import com.cunoraz.tagview.TagView;
@@ -73,7 +74,7 @@ public class BillPaymentFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bill_payment, container, false);
-        EditText user_info = (EditText) view.findViewById(R.id.user_info);
+        TextView address = (TextView) view.findViewById(R.id.address_info);
         final TagView tagGroup = (TagView)view.findViewById(R.id.tag_group);
         Tag tag = new Tag("jan");
         tag.radius = 10f;
@@ -99,6 +100,9 @@ public class BillPaymentFragment extends Fragment {
             }
         });
         return view;
+    }
+    public void initiatCustomers(View view){
+//        TextView UserInformation
     }
 
 
