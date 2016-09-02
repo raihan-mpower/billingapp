@@ -75,8 +75,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Road> roads = new ArrayList<Road>();
     public static ArrayList<House> houses = new ArrayList<House>();
     public static Customers customerSelected ;
-
-
+    public BillPaymentFragment billPaymentFragment;
 
 
     @Override
@@ -152,7 +151,9 @@ public class MainActivity extends AppCompatActivity {
             if(position == 0){
                 return LocationFragment.newInstance("","");
             }else if(position == 1){
-                return BillPaymentFragment.newInstance("","");
+                billPaymentFragment = BillPaymentFragment.newInstance("","");
+
+                return billPaymentFragment;
 
             }else {
                 return BillPaymentFragment.newInstance("","");

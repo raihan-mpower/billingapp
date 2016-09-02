@@ -18,7 +18,9 @@ import com.cunoraz.tagview.TagView;
 
 import java.util.ArrayList;
 
+import billingapp.psionicinteractivelimited.com.billingapp.MainActivity;
 import billingapp.psionicinteractivelimited.com.billingapp.R;
+import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Customers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +38,9 @@ public class BillPaymentFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private TextView address;
+    private TextView user_name;
+    private TextView user_id;
 
 
     public BillPaymentFragment() {
@@ -74,7 +79,9 @@ public class BillPaymentFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bill_payment, container, false);
-        TextView address = (TextView) view.findViewById(R.id.address_info);
+        address = (TextView) view.findViewById(R.id.address_info);
+        user_name = (TextView) view.findViewById(R.id.username_info);
+        user_id = (TextView) view.findViewById(R.id.userid_info);
         final TagView tagGroup = (TagView)view.findViewById(R.id.tag_group);
         Tag tag = new Tag("jan");
         tag.radius = 10f;
@@ -101,8 +108,12 @@ public class BillPaymentFragment extends Fragment {
         });
         return view;
     }
-    public void initiatCustomers(View view){
+    public void initiateCustomers(Customers customer){
 //        TextView UserInformation
+
+        address.setText(customer.getAddress());
+        user_name.setText(customer.getName());
+        user_id.setText(customer.getCustomer_code());
     }
 
 

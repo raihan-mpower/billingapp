@@ -184,6 +184,8 @@ public class LocationFragment extends Fragment {
                     billpayment.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            ((MainActivity)getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerSelected);
+
                             ((MainActivity)getActivity()).mViewPager.setCurrentItem(1);
                         }
                     });
