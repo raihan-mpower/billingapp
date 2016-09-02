@@ -25,7 +25,7 @@ public class customerRepository {
 
     public static String last_paid = "last_paid";
     public static String [] columns = {houses_id,phone,price,customer_code,address,customers_id,name,last_paid};
-    public static String sqlStatement = "CREATE TABLE customers(houses_id VARCHAR PRIMARY KEY, phone VARCHAR, price VARCHAR, customer_code VARCHAR, address VARCHAR, customers_id VARCHAR, name VARCHAR, last_paid VARCHAR )";
+    public static String sqlStatement = "CREATE TABLE customers(houses_id VARCHAR , phone VARCHAR, price VARCHAR, customer_code VARCHAR, address VARCHAR, customers_id INTEGER PRIMARY KEY, name VARCHAR, last_paid VARCHAR )";
 
     public static void createsql(SQLiteDatabase database){
         database.execSQL(sqlStatement);
@@ -51,6 +51,11 @@ public class customerRepository {
 
     public static ArrayList<Customers> findByCaseID(String caseId,SQLiteDatabase database) {
         Cursor cursor = database.query(tableName, columns, houses_id + " = ?", new String[]{caseId},
+                null, null, null, null);
+        return readAllCustomers(cursor);
+    }
+    public static ArrayList<Customers> findByCustomerCaseID(String caseId,SQLiteDatabase database) {
+        Cursor cursor = database.query(tableName, columns, customers_id + " = ?", new String[]{caseId},
                 null, null, null, null);
         return readAllCustomers(cursor);
     }

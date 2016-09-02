@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -16,6 +17,7 @@ import billingapp.psionicinteractivelimited.com.billingapp.MainActivity;
 import billingapp.psionicinteractivelimited.com.billingapp.R;
 import billingapp.psionicinteractivelimited.com.billingapp.database.billingdatabaseHelper;
 import billingapp.psionicinteractivelimited.com.billingapp.database.territoryRepository;
+import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Customers;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.Road;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.Sector;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.Territory;
@@ -41,6 +43,8 @@ public class LocationFragment extends Fragment {
     private AutoCompleteTextView atcv;
     private AutoCompleteTextView house;
     private AutoCompleteTextView road;
+    private TextView customerid;
+    private TextView telephonenumber;
 
     public LocationFragment() {
         // Required empty public constructor
@@ -81,6 +85,8 @@ public class LocationFragment extends Fragment {
 
         final billingdatabaseHelper databasehelper = new billingdatabaseHelper(getActivity(),1);
         MainActivity.territories =territoryRepository.getALLterritory(databasehelper.getReadableDatabase());
+        customerid = (TextView)view.findViewById(R.id.customer_id);
+        telephonenumber = (TextView)view.findViewById(R.id.telephone_no);
         atcv = (AutoCompleteTextView)view.findViewById(R.id.city);
         sector = (AutoCompleteTextView)view.findViewById(R.id.sector_block);
         road = (AutoCompleteTextView)view.findViewById(R.id.road_no);
@@ -150,11 +156,11 @@ public class LocationFragment extends Fragment {
         });
     }
 
-    private void RoadOnClick(ArrayList<String> roadsuggestions, billingdatabaseHelper databasehelper) {
+    private void RoadOnClick(ArrayList<String> roadsuggestions, final billingdatabaseHelper databasehelper) {
         int index = roadsuggestions.indexOf(road.getEditableText().toString());
         Road Roadselect = MainActivity.roads.get(index);
         MainActivity.houses = databasehelper.getHousesbyRoadID(Roadselect.getId());
-        ArrayList<String> housesuggestions = new ArrayList<String>();
+        final ArrayList<String> housesuggestions = new ArrayList<String>();
         for(int i = 0;i< MainActivity.houses.size();i++){
             Log.v("house naam ki",MainActivity.houses.get(i).getHouse());
             housesuggestions.add(MainActivity.houses.get(i).getHouse());
@@ -166,7 +172,12 @@ public class LocationFragment extends Fragment {
         house.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                int index = housesuggestions.indexOf(house.getEditableText().toString());
+                ArrayList<Customers> customers = databasehelper.getCustomersbyHouseID(MainActivity.houses.get(index).getId());
+                if(customers.size()>0){
+                    customerid.setText(customers.get(0).getCustomers_id());
+                    telephonenumber.setText(customers.get(0).getPhone());
+                }
             }
         });
     }

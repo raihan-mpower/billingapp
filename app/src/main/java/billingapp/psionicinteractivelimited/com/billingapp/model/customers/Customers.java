@@ -69,7 +69,7 @@ public class Customers
         this.customer_code = customer_code;
     }
 
-    public Customers(String last_paid, String name, String customers_id, String address, String customer_code, String price, String phone, String houses_id) {
+    public Customers(  String houses_id,String phone,String price,String customer_code,String address,String customers_id,String name, String last_paid  ) {
         this.last_paid = last_paid;
         this.name = name;
         this.customers_id = customers_id;
@@ -137,7 +137,7 @@ public class Customers
             return null;
         }
     }
-    public static List<Customers> returnCustomersFromArray(String JsonArray){
+    public static ArrayList<Customers> returnCustomersFromArray(String JsonArray){
         ArrayList<Customers> customerlist = new ArrayList<Customers>();
         try {
             JSONArray customerArray = new JSONArray(JsonArray);

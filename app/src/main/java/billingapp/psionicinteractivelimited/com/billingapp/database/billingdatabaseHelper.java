@@ -2,6 +2,7 @@ package billingapp.psionicinteractivelimited.com.billingapp.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -46,16 +47,37 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
     public void insert_or_update_Customers(ArrayList<Customers> customerlist){
         SQLiteDatabase database = getWritableDatabase();
         for(int i = 0;i<customerlist.size();i++) {
-            if(getCustomersbyHouseID(customerlist.get(i).getHouses_id()).size()>0){
-                updateCustomer(customerlist.get(i));
-            }else{
-                database.insert(customerRepository.tableName, null, customerRepository.getCustomerValues(customerlist.get(i)));
+            try {
+                if (getCustomersbyCustomerID(customerlist.get(i).getCustomers_id()).size() > 0) {
+                    updateCustomer(customerlist.get(i));
+                } else {
+                    database.insert(customerRepository.tableName, null, customerRepository.getCustomerValues(customerlist.get(i)));
+                }
+            }catch (Exception e){
+
             }
         }
+    }
+    public ArrayList<Customers> getCustomersbyCustomerID(String customerID){
+        return customerRepository.findByCustomerCaseID(customerID,getReadableDatabase());
+//        return null;
     }
     public ArrayList<Customers> getCustomersbyHouseID(String houseID){
         return customerRepository.findByCaseID(houseID,getReadableDatabase());
 //        return null;
+    }
+    public int getlastCustomerID(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT MAX(CAST("+customerRepository.customers_id+" AS INTEGER))  FROM "+customerRepository.tableName,null);
+        cursor.moveToFirst();
+        int lastid = 0;
+        try{
+            lastid = Integer.parseInt(cursor.getString(0));
+            cursor.close();
+        }catch (Exception e){
+            lastid = 0;
+        }
+        return lastid;
     }
     public void updateCustomer(Customers customer) {
         SQLiteDatabase database = getWritableDatabase();

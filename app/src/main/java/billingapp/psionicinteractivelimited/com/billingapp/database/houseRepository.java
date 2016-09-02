@@ -14,12 +14,13 @@ import billingapp.psionicinteractivelimited.com.billingapp.model.location.House;
  */
 public class houseRepository {
     public static String tableName = "house";
+    public static String _id = "_id";
     public static String id = "id";
     public static String roads_id = "roads_id";
     public static String house = "house";
 
-    public static String [] columns = {id,roads_id,house};
-    public static String sqlStatement = "CREATE TABLE house(id VARCHAR PRIMARY KEY, roads_id VARCHAR, house VARCHAR)";
+    public static String [] columns = {_id ,id,roads_id,house};
+    public static String sqlStatement = "CREATE TABLE house(_id INTEGER PRIMARY KEY AUTOINCREMENT,id VARCHAR, roads_id VARCHAR, house VARCHAR)";
 
     public static void createsql(SQLiteDatabase database){
         database.execSQL(sqlStatement);
@@ -33,7 +34,7 @@ public class houseRepository {
         return values;
     }
     public static House getHouse(Cursor cursor){
-        House house = new House(cursor.getString(2),cursor.getString(0), cursor.getString(1));
+        House house = new House(cursor.getString(3),cursor.getString(1), cursor.getString(2));
         return house;
     }
 
