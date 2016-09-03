@@ -131,6 +131,9 @@ public class PrintReceiptFragment extends Fragment {
                             "Powered by: "+print_powered_by
                     ));
         //ush: ends
+//        mTextView_user.setShadowLayer(1, 0, 0, Color.BLACK);
+//        mTextView_company.setShadowLayer(1, 0, 0, Color.BLACK);
+
         return view;
     }
     public void initiateCustomers(Customers customer){
