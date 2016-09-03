@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,9 @@ import android.widget.TextView;
 import com.cunoraz.tagview.Tag;
 import com.cunoraz.tagview.TagView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import billingapp.psionicinteractivelimited.com.billingapp.MainActivity;
 import billingapp.psionicinteractivelimited.com.billingapp.R;
@@ -98,15 +101,21 @@ public class BillPaymentFragment extends Fragment {
         user_name.setText(customer.getName());
         user_id.setText(customer.getCustomer_code());
         amount_due_info.setText(customer.getPrice());
+        ArrayList<String> monthsdue = getmonthsDue(customer.getLast_paid());
 
-        Tag tag = new Tag(customer.getLast_paid());
-        tag.radius = 10f;
-        tag.layoutColor = Color.GRAY;
-        tag.tagTextColor = Color.BLACK;
-        tag.isDeletable = true;
+
         ArrayList<Tag> tags = new ArrayList<>();
 
-        tags.add(tag);
+        for(int i = 0;i < monthsdue.size();i++){
+            Tag tag = new Tag(monthsdue.get(i));
+            tag.radius = 10f;
+            tag.layoutColor = Color.GRAY;
+            tag.tagTextColor = Color.BLACK;
+            tag.isDeletable = true;
+            tags.add(tag);
+        }
+
+
 
         tagGroup.addTags(tags);
         //set click listener
@@ -120,8 +129,56 @@ public class BillPaymentFragment extends Fragment {
         tagGroup.setOnTagDeleteListener(new TagView.OnTagDeleteListener() {
             @Override
             public void onTagDeleted(final TagView view, final Tag tag, final int position) {
+                tagGroup.remove(position);
+//                tag.text;
             }
         });
+
+    }
+    public ArrayList<String> getmonthsDue(String lastpaidmonth){
+        ArrayList<String> months = new ArrayList<String>();
+        months.add("jan");
+        months.add("feb");
+        months.add("mar");
+        months.add("apr");
+        months.add("may");
+        months.add("jun");
+        months.add("jul");
+        months.add("aug");
+        months.add("sep");
+        months.add("oct");
+        months.add("nov");
+        months.add("dec");
+
+        Calendar cal= Calendar.getInstance();
+        SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
+        String month_name = month_date.format(cal.getTime());
+
+        String strippedlastpaidmonth = lastpaidmonth.substring(0,3);
+        Log.v("last paid month",""+strippedlastpaidmonth);
+        String strippedcurrentmonth = month_name.substring(0,3);
+
+        int indexoflastpaid = months.indexOf(strippedlastpaidmonth.toLowerCase());
+        int indexofcurrentmonth = months.indexOf(strippedcurrentmonth.toLowerCase());
+
+        Log.v("last paid month",""+indexoflastpaid);
+        Log.v("current month",""+indexofcurrentmonth);
+
+        ArrayList<String> monthstoreturn = new ArrayList<String>();
+        if((indexofcurrentmonth-indexoflastpaid)>0){
+            for(int i = indexoflastpaid;i<indexofcurrentmonth;i++){
+                monthstoreturn.add(months.get(i));
+            }
+        }else if((indexofcurrentmonth-indexoflastpaid)<0){
+            for(int i = indexofcurrentmonth;i<12;i++){
+                monthstoreturn.add(months.get(i));
+            }
+            for(int i = 0;i<indexoflastpaid;i++){
+                monthstoreturn.add(months.get(i));
+            }
+        }
+        return monthstoreturn;
+
 
     }
 
