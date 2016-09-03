@@ -145,12 +145,15 @@
 
        <TableLayout
            android:layout_width="match_parent"
-           android:layout_height="match_parent"
+           android:layout_height="wrap_content"
+
 
            >
 
            <TableRow
                android:gravity="center_horizontal"
+               android:paddingTop="20dp"
+
                >
 
                <Button
@@ -166,6 +169,7 @@
                    android:layout_height="50pt"
                    android:id="@+id/button_print"
                    android:background="@drawable/button_print"
+
                    />
 
                <Button

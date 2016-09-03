@@ -12,7 +12,9 @@ import android.widget.TextView;
 import com.cunoraz.tagview.Tag;
 import com.cunoraz.tagview.TagView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import billingapp.psionicinteractivelimited.com.billingapp.R;
 import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Customers;
@@ -42,6 +44,15 @@ public class PrintReceiptFragment extends Fragment {
     //ush: started
     private TextView mTextView_company;
     private TextView mTextView_user;
+
+    private String print_address="";
+    private String print_user_name="";
+    private String print_user_id="";
+    private String print_due_amount="";
+    private String print_due_month="";
+    private String print_payment_date="";
+    private String print_notice="";
+    private String print_powered_by="";
 
 
     //ush: ends
@@ -90,20 +101,34 @@ public class PrintReceiptFragment extends Fragment {
         amount_due_info = (TextView) view.findViewById(R.id.amount_due_info);
         tagGroup = (TagView)view.findViewById(R.id.tag_group);
 
+
         //ush: started
+
+         String print_address="House #10, Road #9, Sector #3";
+         String print_user_name="Psionic Interactive Limited";
+         String print_user_id="51231";
+         String print_due_amount="480.00";
+         String print_due_month="June";
+         String print_payment_date=new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+         String print_notice="Please submit a signed copy of the bill to the collector.";
+         print_powered_by="Psionic Interactive Limited";
+
+
         mTextView_company= (TextView) view.findViewById(R.id.print_texts_company);
         mTextView_company.setText(Html.fromHtml("<b>DIGI 21 Cable Service<b><br>" + "House $3, Road #4, Sector #1<br>" +
                 "Uttara Model Town<br>Tel: 8915857<br>*********************************<br><br>"));
 
         mTextView_user= (TextView) view.findViewById(R.id.print_texts_user);
         mTextView_user.setText(Html.fromHtml(
-                    "<div>"+
-                             "<p>User Information</p>"+
-                             "<p id='user_address'>Address: House #10,Road #9, Sector #3 </p>"+
-                             "<p id='user_name'>User Name: Psionic Interactive Limited </p>"+
-                             "<p id='user_id'>User ID: 51231 </p>"+
-                        "</div>"
 
+                             "User Information <br> "+print_address +"<br>"+
+                             "User Name: "+print_user_name+"<br>"+
+                             "User ID: "+print_user_id+"<br>"+"<br>"+
+                             "Amount Due:<br>BDT "+print_due_amount+"<br>"+"<br>"+
+                            "Month Due:<br><b>"+print_due_month+"</b><br>"+"<br>"+
+                            "Date: "+ print_payment_date+"<br><br>"+
+                            print_notice+"<br><br>"+
+                            "Powered by: "+print_powered_by
                     ));
         //ush: ends
         return view;

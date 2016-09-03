@@ -6,48 +6,54 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
 
-        <TextView
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff"
-            android:text="Company Info"
-            android:layout_alignParentTop="true"
-            android:gravity="center_horizontal"
+            android:layout_height="match_parent">
 
-            android:layout_above="@+id/print_texts_user"
-            android:id="@+id/print_texts_company"
-            android:layout_weight="1"
-            />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff"
-            android:text="User and Bill info"
-            android:layout_above="@+id/imageButton"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:text="Company Info"
+                    android:padding="10dp"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center_horizontal"
 
-            android:id="@+id/print_texts_user"
-            android:layout_weight="2"
-            />
+                    android:layout_above="@+id/print_texts_user"
+                    android:id="@+id/print_texts_company"
+                    />
 
-        <ImageButton
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_gravity="bottom|center"
-            android:background="@drawable/button_print"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/imageButton"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:padding="10dp"
+                    android:text="User and Bill info"
+                    android:layout_above="@+id/imageButton"
+
+                    android:id="@+id/print_texts_user"
+                    />
+
+                <ImageButton
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button_print"
+                    android:id="@+id/imageButton"
+                    android:layout_marginTop="10dp"
+
+                    />
 
 
+            </LinearLayout>
 
-            />
+        </ScrollView>
 
-    </LinearLayout>
 </FrameLayout>
