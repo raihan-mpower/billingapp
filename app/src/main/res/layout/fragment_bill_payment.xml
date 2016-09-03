@@ -143,8 +143,6 @@
        <TableLayout
            android:layout_width="match_parent"
            android:layout_height="match_parent"
-           android:gravity="bottom"
-           android:paddingBottom="10dp"
 
            >
 
@@ -153,23 +151,23 @@
                >
 
                <Button
-                   android:layout_width="60pt"
-                   android:layout_height="60pt"
+                   android:layout_width="50pt"
+                   android:layout_height="50pt"
                    android:id="@+id/button_edit"
                    android:background="@drawable/button_edit"
 
                    />
 
                <Button
-                   android:layout_width="60pt"
-                   android:layout_height="60pt"
+                   android:layout_width="50pt"
+                   android:layout_height="50pt"
                    android:id="@+id/button_print"
                    android:background="@drawable/button_print"
                    />
 
                <Button
-                   android:layout_width="60pt"
-                   android:layout_height="60pt"
+                   android:layout_width="50pt"
+                   android:layout_height="50pt"
                    android:id="@+id/button_due"
                    android:background="@drawable/button_due"
                />

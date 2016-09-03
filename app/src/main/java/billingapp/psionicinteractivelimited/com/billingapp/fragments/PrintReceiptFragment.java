@@ -1,17 +1,12 @@
 package billingapp.psionicinteractivelimited.com.billingapp.fragments;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
 import android.text.Html;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cunoraz.tagview.Tag;
@@ -19,7 +14,6 @@ import com.cunoraz.tagview.TagView;
 
 import java.util.ArrayList;
 
-import billingapp.psionicinteractivelimited.com.billingapp.MainActivity;
 import billingapp.psionicinteractivelimited.com.billingapp.R;
 import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Customers;
 
@@ -27,10 +21,10 @@ import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Custo
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * to handle interaction events.
- * Use the {@link BillPaymentFragment#newInstance} factory method to
+ * Use the {@link PrintReceiptFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BillPaymentFragment extends Fragment {
+public class PrintReceiptFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -45,8 +39,13 @@ public class BillPaymentFragment extends Fragment {
     private TagView tagGroup;
     private TextView amount_due_info;
 
+    //ush: started
+    private TextView mTextView;
 
-    public BillPaymentFragment() {
+    //ush: ends
+
+
+    public PrintReceiptFragment() {
         // Required empty public constructor
     }
 
@@ -59,8 +58,8 @@ public class BillPaymentFragment extends Fragment {
      * @return A new instance of fragment BillPaymentFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BillPaymentFragment newInstance(String param1, String param2) {
-        BillPaymentFragment fragment = new BillPaymentFragment();
+    public static PrintReceiptFragment newInstance(String param1, String param2) {
+        PrintReceiptFragment fragment = new PrintReceiptFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -82,13 +81,31 @@ public class BillPaymentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_bill_payment, container, false);
+        View view = inflater.inflate(R.layout.fragment_print, container, false);
         address = (TextView) view.findViewById(R.id.address_info);
         user_name = (TextView) view.findViewById(R.id.username_info);
         user_id = (TextView) view.findViewById(R.id.userid_info);
         amount_due_info = (TextView) view.findViewById(R.id.amount_due_info);
         tagGroup = (TagView)view.findViewById(R.id.tag_group);
 
+        //ush: started
+            mTextView= (TextView) view.findViewById(R.id.print_texts);
+            mTextView.setText(Html.fromHtml(
+                    "<center><h1><b>DIGI 21 Cable Service<b></h1><br>" +
+                        "<h4>" +
+                            "House $3, Road #4, Sector #1<br>" +
+                            "Uttara Model Town<br>"+"Tel: 8915857<br>"+
+                            "*********************************<br><br>"+
+                        "</h4></center>"+
+                        "<div>"+
+                             "<p>User Information</p>"+
+                             "<p id='user_address'>Address: House #10,Road #9, Sector #3 </p>"+
+                             "<p id='user_name'>User Name: Psionic Interactive Limited </p>"+
+                             "<p id='user_id'>User ID: 51231 </p>"+
+                        "</div>"
+
+                    ));
+        //ush: ends
         return view;
     }
     public void initiateCustomers(Customers customer){

@@ -16,14 +16,11 @@
             android:layout_height="wrap_content"
             android:background="#fff"
             android:padding="10dp"
-            android:text="DIGI 21 Cable Service\n************************"
+            android:text="somthing"
             android:layout_above="@+id/imageButton"
-            android:gravity="center"
-            android:layout_alignParentTop="true" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
 
+            android:id="@+id/print_texts"
             />
 
         <ImageButton
