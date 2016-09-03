@@ -93,7 +93,8 @@
             android:layout_marginRight="30dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/textboxback"
-            android:text="Customer ID"
+            android:hint="Customer ID"
+            android:textColorHint="#fff"
             android:textColor="#ffffff" />
 
         <EditText
@@ -104,7 +105,8 @@
             android:layout_marginRight="30dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/textboxback"
-            android:text="Telephone Number"
+            android:hint="Telephone Number"
+            android:textColorHint="#fff"
             android:textColor="#ffffff" />
 
         <Button
