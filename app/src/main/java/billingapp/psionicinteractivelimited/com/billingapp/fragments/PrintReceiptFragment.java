@@ -40,7 +40,9 @@ public class PrintReceiptFragment extends Fragment {
     private TextView amount_due_info;
 
     //ush: started
-    private TextView mTextView;
+    private TextView mTextView_company;
+    private TextView mTextView_user;
+
 
     //ush: ends
 
@@ -89,15 +91,13 @@ public class PrintReceiptFragment extends Fragment {
         tagGroup = (TagView)view.findViewById(R.id.tag_group);
 
         //ush: started
-            mTextView= (TextView) view.findViewById(R.id.print_texts);
-            mTextView.setText(Html.fromHtml(
-                    "<center><h1><b>DIGI 21 Cable Service<b></h1><br>" +
-                        "<h4>" +
-                            "House $3, Road #4, Sector #1<br>" +
-                            "Uttara Model Town<br>"+"Tel: 8915857<br>"+
-                            "*********************************<br><br>"+
-                        "</h4></center>"+
-                        "<div>"+
+        mTextView_company= (TextView) view.findViewById(R.id.print_texts_company);
+        mTextView_company.setText(Html.fromHtml("<b>DIGI 21 Cable Service<b><br>" + "House $3, Road #4, Sector #1<br>" +
+                "Uttara Model Town<br>Tel: 8915857<br>*********************************<br><br>"));
+
+        mTextView_user= (TextView) view.findViewById(R.id.print_texts_user);
+        mTextView_user.setText(Html.fromHtml(
+                    "<div>"+
                              "<p>User Information</p>"+
                              "<p id='user_address'>Address: House #10,Road #9, Sector #3 </p>"+
                              "<p id='user_name'>User Name: Psionic Interactive Limited </p>"+

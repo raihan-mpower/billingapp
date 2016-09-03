@@ -6,31 +6,48 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <RelativeLayout
+    <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#fff"
-            android:padding="10dp"
-            android:text="somthing"
-            android:layout_above="@+id/imageButton"
+            android:text="Company Info"
             android:layout_alignParentTop="true"
+            android:gravity="center_horizontal"
 
-            android:id="@+id/print_texts"
+            android:layout_above="@+id/print_texts_user"
+            android:id="@+id/print_texts_company"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:text="User and Bill info"
+            android:layout_above="@+id/imageButton"
+
+            android:id="@+id/print_texts_user"
+            android:layout_weight="2"
             />
 
         <ImageButton
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_gravity="center"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_gravity="bottom|center"
             android:background="@drawable/button_print"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:id="@+id/imageButton" />
+            android:id="@+id/imageButton"
 
-    </RelativeLayout>
+
+
+            />
+
+    </LinearLayout>
 </FrameLayout>
