@@ -90,7 +90,7 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
     public void insert_or_update_House(ArrayList<House> houselist){
         SQLiteDatabase database = getWritableDatabase();
         for(int i = 0;i<houselist.size();i++) {
-            if(getCustomersbyHouseID(houselist.get(i).getId()).size()>0){
+            if(getHousebyID(houselist.get(i).getId()).size()>0){
                 updateHouse(houselist.get(i));
             }else{
                 database.insert(houseRepository.tableName, null, houseRepository.getHouseValues(houselist.get(i)));

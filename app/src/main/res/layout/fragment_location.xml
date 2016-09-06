@@ -13,7 +13,7 @@
 
         <android.support.v7.widget.AppCompatAutoCompleteTextView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:id="@+id/city"
             android:layout_marginTop="15dp"
             android:layout_marginRight="30dp"
@@ -21,11 +21,12 @@
             android:background="@drawable/textboxback"
             android:textColor="#ffffff"
             android:hint="City"
-            android:textColorHint="#ffffff" />
+            android:textColorHint="#ffffff"
+            android:layout_weight="1" />
 
         <android.support.v7.widget.AppCompatAutoCompleteTextView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:id="@+id/sector_block"
             android:layout_marginTop="15dp"
             android:layout_marginRight="30dp"
@@ -33,11 +34,12 @@
             android:background="@drawable/textboxback"
             android:textColor="#ffffff"
             android:textColorHint="#ffffff"
-            android:hint="Sector or Block" />
+            android:hint="Sector or Block"
+            android:layout_weight="1" />
 
         <android.support.v7.widget.AppCompatAutoCompleteTextView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:id="@+id/road_no"
             android:layout_marginTop="15dp"
             android:layout_marginRight="30dp"
@@ -45,11 +47,12 @@
             android:background="@drawable/textboxback"
             android:textColor="#ffffff"
             android:hint="Road Number"
-            android:textColorHint="#ffffff" />
+            android:textColorHint="#ffffff"
+            android:layout_weight="1" />
 
         <android.support.v7.widget.AppCompatAutoCompleteTextView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:id="@+id/house_number"
             android:layout_marginTop="15dp"
             android:layout_marginRight="30dp"
@@ -57,20 +60,23 @@
             android:background="@drawable/textboxback"
             android:textColor="#ffffff"
             android:textColorHint="#ffffff"
-            android:hint="House Number" />
+            android:hint="House Number"
+            android:layout_weight="1" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1">
 
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:id="@+id/imageView2"
                 android:src="@drawable/customer_icon"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center_vertical" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -86,35 +92,39 @@
 
         <EditText
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:id="@+id/customer_id"
             android:layout_marginTop="15dp"
             android:layout_marginRight="30dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/textboxback"
             android:text="Customer ID"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:layout_weight="1" />
 
         <EditText
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:id="@+id/telephone_no"
             android:layout_marginTop="15dp"
             android:layout_marginRight="30dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/textboxback"
             android:text="Telephone Number"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:layout_weight="1" />
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:text="Bill Payment"
             android:id="@+id/bill_payment"
             android:layout_gravity="center_horizontal"
             android:textColor="#ffffff"
             android:background="@drawable/buttonunpressedback"
-            android:layout_marginTop="15dp" />
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="15dp" />
     </LinearLayout>
 
 </FrameLayout>

@@ -115,9 +115,14 @@ public class syncUtils {
             Log.v("length",""+response.toString());
             String territoryarray = "";
             for(int i = 0;i<response.length();i++){
+//                JSONObject objects = response.getJSONObject(i);
+//                Territory territoryToAdd = Territory.jsontoTerritory(objects.getJSONObject("territory").toString());
+//                processSectorArray(objects.getJSONObject("territory").toString());
+//                MainActivity.territories.add(territoryToAdd);
                 JSONObject objects = response.getJSONObject(i);
-                Territory territoryToAdd = Territory.jsontoTerritory(objects.getJSONObject("territory").toString());
-                processSectorArray(objects.getJSONObject("territory").toString());
+                Log.v("length",""+objects.toString());
+                Territory territoryToAdd = Territory.jsontoTerritory(objects.toString());
+                processSectorArray(objects.toString());
                 MainActivity.territories.add(territoryToAdd);
             }
 
