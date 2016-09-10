@@ -47,6 +47,7 @@ import billingapp.psionicinteractivelimited.com.billingapp.database.billingdatab
 import billingapp.psionicinteractivelimited.com.billingapp.database.sectorRepository;
 import billingapp.psionicinteractivelimited.com.billingapp.fragments.BillPaymentFragment;
 import billingapp.psionicinteractivelimited.com.billingapp.fragments.LocationFragment;
+import billingapp.psionicinteractivelimited.com.billingapp.fragments.PrintReceiptFragment;
 import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Customers;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.House;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.Road;
@@ -76,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<House> houses = new ArrayList<House>();
     public static Customers customerSelected ;
     public BillPaymentFragment billPaymentFragment;
+
+    //ush: started
+    public PrintReceiptFragment printReceipttFragment;
+    //ush: ends
 
 
     @Override
@@ -156,7 +161,14 @@ public class MainActivity extends AppCompatActivity {
                 return billPaymentFragment;
 
             }else {
-                return BillPaymentFragment.newInstance("","");
+//                return BillPaymentFragment.newInstance("","");
+
+                //ush: started
+                printReceipttFragment = PrintReceiptFragment.newInstance("","");
+
+                return printReceipttFragment;
+
+                //ush: ends
 
             }
         }

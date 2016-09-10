@@ -1,18 +1,12 @@
 package billingapp.psionicinteractivelimited.com.billingapp.fragments;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
 import android.text.Html;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cunoraz.tagview.Tag;
@@ -20,9 +14,8 @@ import com.cunoraz.tagview.TagView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 
-import billingapp.psionicinteractivelimited.com.billingapp.MainActivity;
 import billingapp.psionicinteractivelimited.com.billingapp.R;
 import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Customers;
 
@@ -30,10 +23,10 @@ import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Custo
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * to handle interaction events.
- * Use the {@link BillPaymentFragment#newInstance} factory method to
+ * Use the {@link PrintReceiptFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BillPaymentFragment extends Fragment {
+public class PrintReceiptFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -47,10 +40,25 @@ public class BillPaymentFragment extends Fragment {
     private TextView user_id;
     private TagView tagGroup;
     private TextView amount_due_info;
-    public int count = 0;
+
+    //ush: started
+    private TextView mTextView_company;
+    private TextView mTextView_user;
+
+    private String print_address="";
+    private String print_user_name="";
+    private String print_user_id="";
+    private String print_due_amount="";
+    private String print_due_month="";
+    private String print_payment_date="";
+    private String print_notice="";
+    private String print_powered_by="";
 
 
-    public BillPaymentFragment() {
+    //ush: ends
+
+
+    public PrintReceiptFragment() {
         // Required empty public constructor
     }
 
@@ -63,8 +71,8 @@ public class BillPaymentFragment extends Fragment {
      * @return A new instance of fragment BillPaymentFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BillPaymentFragment newInstance(String param1, String param2) {
-        BillPaymentFragment fragment = new BillPaymentFragment();
+    public static PrintReceiptFragment newInstance(String param1, String param2) {
+        PrintReceiptFragment fragment = new PrintReceiptFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -86,37 +94,64 @@ public class BillPaymentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_bill_payment, container, false);
+        View view = inflater.inflate(R.layout.fragment_print, container, false);
         address = (TextView) view.findViewById(R.id.address_info);
         user_name = (TextView) view.findViewById(R.id.username_info);
         user_id = (TextView) view.findViewById(R.id.userid_info);
         amount_due_info = (TextView) view.findViewById(R.id.amount_due_info);
         tagGroup = (TagView)view.findViewById(R.id.tag_group);
 
+
+        //ush: started
+
+         String print_address="House #10, Road #9, Sector #3";
+         String print_user_name="Psionic Interactive Limited";
+         String print_user_id="51231";
+         String print_due_amount="480.00";
+         String print_due_month="June";
+         String print_payment_date=new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+         String print_notice="Please submit a signed copy of the bill to the collector.";
+         print_powered_by="Psionic Interactive Limited";
+
+
+        mTextView_company= (TextView) view.findViewById(R.id.print_texts_company);
+        mTextView_company.setText(Html.fromHtml("<b>DIGI 21 Cable Service<b><br>" + "House $3, Road #4, Sector #1<br>" +
+                "Uttara Model Town<br>Tel: 8915857<br>*********************************<br><br>"));
+
+        mTextView_user= (TextView) view.findViewById(R.id.print_texts_user);
+        mTextView_user.setText(Html.fromHtml(
+
+                             "User Information <br> "+print_address +"<br>"+
+                             "User Name: "+print_user_name+"<br>"+
+                             "User ID: "+print_user_id+"<br>"+"<br>"+
+                             "Amount Due:<br>BDT "+print_due_amount+"<br>"+"<br>"+
+                            "Month Due:<br><b>"+print_due_month+"</b><br>"+"<br>"+
+                            "Date: "+ print_payment_date+"<br><br>"+
+                            print_notice+"<br><br>"+
+                            "Powered by: "+print_powered_by
+                    ));
+        //ush: ends
+//        mTextView_user.setShadowLayer(1, 0, 0, Color.BLACK);
+//        mTextView_company.setShadowLayer(1, 0, 0, Color.BLACK);
+
         return view;
     }
     public void initiateCustomers(Customers customer){
 //        TextView UserInformation
-        count = 0;
+
         address.setText(customer.getAddress());
         user_name.setText(customer.getName());
         user_id.setText(customer.getCustomer_code());
+        amount_due_info.setText(customer.getPrice());
 
-        ArrayList<String> monthsdue = getmonthsDue(customer.getLast_paid());
-
-
+        Tag tag = new Tag(customer.getLast_paid());
+        tag.radius = 10f;
+        tag.layoutColor = Color.GRAY;
+        tag.tagTextColor = Color.BLACK;
+        tag.isDeletable = true;
         ArrayList<Tag> tags = new ArrayList<>();
 
-        for(int i = 0;i < monthsdue.size();i++){
-            Tag tag = new Tag(monthsdue.get(i));
-            tag.radius = 10f;
-            tag.layoutColor = Color.GRAY;
-            tag.tagTextColor = Color.BLACK;
-            tag.isDeletable = true;
-            tags.add(tag);
-        }
-
-
+        tags.add(tag);
 
         tagGroup.addTags(tags);
         //set click listener
@@ -130,68 +165,8 @@ public class BillPaymentFragment extends Fragment {
         tagGroup.setOnTagDeleteListener(new TagView.OnTagDeleteListener() {
             @Override
             public void onTagDeleted(final TagView view, final Tag tag, final int position) {
-                tagGroup.remove(position);
-//                tag.text;
             }
         });
-        if(customer.getPrice()!=null) {
-            try {
-//                Log.v("price now",""+Integer.parseInt(customer.getPrice())*count);
-                amount_due_info.setText(""+(Integer.parseInt(customer.getPrice())*count));
-            }catch (Exception e){
-                amount_due_info.setText(customer.getPrice());
-//
-            }
-        }
-
-    }
-    public ArrayList<String> getmonthsDue(String lastpaidmonth){
-        ArrayList<String> months = new ArrayList<String>();
-        months.add("jan");
-        months.add("feb");
-        months.add("mar");
-        months.add("apr");
-        months.add("may");
-        months.add("jun");
-        months.add("jul");
-        months.add("aug");
-        months.add("sep");
-        months.add("oct");
-        months.add("nov");
-        months.add("dec");
-
-        Calendar cal= Calendar.getInstance();
-        SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
-        String month_name = month_date.format(cal.getTime());
-
-        String strippedlastpaidmonth = lastpaidmonth.substring(0,3);
-        Log.v("last paid month",""+strippedlastpaidmonth);
-        String strippedcurrentmonth = month_name.substring(0,3);
-
-        int indexoflastpaid = months.indexOf(strippedlastpaidmonth.toLowerCase());
-        int indexofcurrentmonth = months.indexOf(strippedcurrentmonth.toLowerCase());
-
-        Log.v("last paid month",""+indexoflastpaid);
-        Log.v("current month",""+indexofcurrentmonth);
-
-        ArrayList<String> monthstoreturn = new ArrayList<String>();
-        if((indexofcurrentmonth-indexoflastpaid)>0){
-            for(int i = indexoflastpaid;i<indexofcurrentmonth;i++){
-                monthstoreturn.add(months.get(i));
-                count ++;
-            }
-        }else if((indexofcurrentmonth-indexoflastpaid)<0){
-            for(int i = indexofcurrentmonth;i<12;i++){
-                monthstoreturn.add(months.get(i));
-                count++;
-            }
-            for(int i = 0;i<indexoflastpaid;i++){
-                monthstoreturn.add(months.get(i));
-                count++;
-            }
-        }
-        return monthstoreturn;
-
 
     }
 

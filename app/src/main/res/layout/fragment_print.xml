@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="65dp"
+    tools:context="billingapp.psionicinteractivelimited.com.billingapp.fragments.BillPaymentFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/imageButton">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_margin="20dp"
+
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:text="Company Info"
+                    android:padding="10dp"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center_horizontal"
+
+                    android:layout_above="@+id/print_texts_user"
+                    android:id="@+id/print_texts_company"
+
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:padding="10dp"
+                    android:text="User and Bill info"
+                    android:layout_above="@+id/imageButton"
+
+                    android:id="@+id/print_texts_user"
+                    />
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    <ImageButton
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_gravity="center"
+        android:background="@drawable/button_print"
+        android:id="@+id/imageButton"
+
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
