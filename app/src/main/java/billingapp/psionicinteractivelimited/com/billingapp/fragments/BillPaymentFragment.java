@@ -47,6 +47,7 @@ public class BillPaymentFragment extends Fragment {
     private TextView user_id;
     private TagView tagGroup;
     private TextView amount_due_info;
+    public int count = 0;
 
 
     public BillPaymentFragment() {
@@ -96,11 +97,11 @@ public class BillPaymentFragment extends Fragment {
     }
     public void initiateCustomers(Customers customer){
 //        TextView UserInformation
-
+        count = 0;
         address.setText(customer.getAddress());
         user_name.setText(customer.getName());
         user_id.setText(customer.getCustomer_code());
-        amount_due_info.setText(customer.getPrice());
+
         ArrayList<String> monthsdue = getmonthsDue(customer.getLast_paid());
 
 
@@ -133,6 +134,15 @@ public class BillPaymentFragment extends Fragment {
 //                tag.text;
             }
         });
+        if(customer.getPrice()!=null) {
+            try {
+//                Log.v("price now",""+Integer.parseInt(customer.getPrice())*count);
+                amount_due_info.setText(""+(Integer.parseInt(customer.getPrice())*count));
+            }catch (Exception e){
+                amount_due_info.setText(customer.getPrice());
+//
+            }
+        }
 
     }
     public ArrayList<String> getmonthsDue(String lastpaidmonth){
@@ -168,13 +178,16 @@ public class BillPaymentFragment extends Fragment {
         if((indexofcurrentmonth-indexoflastpaid)>0){
             for(int i = indexoflastpaid;i<indexofcurrentmonth;i++){
                 monthstoreturn.add(months.get(i));
+                count ++;
             }
         }else if((indexofcurrentmonth-indexoflastpaid)<0){
             for(int i = indexofcurrentmonth;i<12;i++){
                 monthstoreturn.add(months.get(i));
+                count++;
             }
             for(int i = 0;i<indexoflastpaid;i++){
                 monthstoreturn.add(months.get(i));
+                count++;
             }
         }
         return monthstoreturn;
