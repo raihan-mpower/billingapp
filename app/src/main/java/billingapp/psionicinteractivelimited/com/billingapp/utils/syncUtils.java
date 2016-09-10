@@ -237,7 +237,7 @@ public class syncUtils {
             if(statusCode == 200){
                 Log.v("testcall",responseBody);
                 responsestring = responseBody;
-                processResponse(responsestring);
+//                processResponse(responsestring);
 
             }else{
                 responsestring = "error";

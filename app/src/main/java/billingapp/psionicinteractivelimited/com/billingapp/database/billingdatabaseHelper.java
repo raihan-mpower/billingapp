@@ -90,10 +90,14 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
     public void insert_or_update_House(ArrayList<House> houselist){
         SQLiteDatabase database = getWritableDatabase();
         for(int i = 0;i<houselist.size();i++) {
-            if(getHousebyID(houselist.get(i).getId()).size()>0){
-                updateHouse(houselist.get(i));
-            }else{
-                database.insert(houseRepository.tableName, null, houseRepository.getHouseValues(houselist.get(i)));
+            try {
+                if (getHousebyID(houselist.get(i).getId()).size() > 0) {
+                    updateHouse(houselist.get(i));
+                } else {
+                    database.insert(houseRepository.tableName, null, houseRepository.getHouseValues(houselist.get(i)));
+                }
+            }catch (Exception e){
+
             }
         }
     }
@@ -117,11 +121,13 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
     public void insert_or_update_Road(ArrayList<Road> roadlist){
         SQLiteDatabase database = getWritableDatabase();
         for(int i = 0;i<roadlist.size();i++) {
-            if(getRoadbyID(roadlist.get(i).getId()).size()>0){
-                updateRoad(roadlist.get(i));
-            }else{
-                database.insert(roadsRepository.tableName, null, roadsRepository.getRoadsValues(roadlist.get(i)));
-            }
+            try {
+                if (getRoadbyID(roadlist.get(i).getId()).size() > 0) {
+                    updateRoad(roadlist.get(i));
+                } else {
+                    database.insert(roadsRepository.tableName, null, roadsRepository.getRoadsValues(roadlist.get(i)));
+                }
+            }catch (Exception e){}
         }
     }
     public ArrayList<Road> getRoadbyID(String roadID){
@@ -144,11 +150,13 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
     public void insert_or_update_Sector(ArrayList<Sector> sectorlist){
         SQLiteDatabase database = getWritableDatabase();
         for(int i = 0;i<sectorlist.size();i++) {
-            if(getSectorbyID(sectorlist.get(i).getId()).size()>0){
-                updateSector(sectorlist.get(i));
-            }else{
-                database.insert(sectorRepository.tableName, null, sectorRepository.getSectorValues(sectorlist.get(i)));
-            }
+            try {
+                if (getSectorbyID(sectorlist.get(i).getId()).size() > 0) {
+                    updateSector(sectorlist.get(i));
+                } else {
+                    database.insert(sectorRepository.tableName, null, sectorRepository.getSectorValues(sectorlist.get(i)));
+                }
+            }catch (Exception e){}
         }
     }
     public ArrayList<Sector> getSectorbyID(String sectorID){
@@ -172,10 +180,14 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = getWritableDatabase();
         Log.v("list size",""+territorylist.size());
         for(int i = 0;i<territorylist.size();i++) {
-            if(getTerritorybyID(territorylist.get(i).getId()).size()>0){
-                updateTerritory(territorylist.get(i));
-            }else{
-                database.insert(territoryRepository.tableName, null, territoryRepository.getTerritoryValues(territorylist.get(i)));
+            try {
+                if (getTerritorybyID(territorylist.get(i).getId()).size() > 0) {
+                    updateTerritory(territorylist.get(i));
+                } else {
+                    database.insert(territoryRepository.tableName, null, territoryRepository.getTerritoryValues(territorylist.get(i)));
+                }
+            }catch (Exception e){
+
             }
         }
     }
