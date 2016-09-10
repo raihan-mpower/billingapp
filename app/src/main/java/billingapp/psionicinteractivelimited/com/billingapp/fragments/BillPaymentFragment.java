@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -48,6 +49,9 @@ public class BillPaymentFragment extends Fragment {
     private TagView tagGroup;
     private TextView amount_due_info;
     public int count = 0;
+    String amount = "0.00";
+    String months = "";
+    private Button print;
 
 
     public BillPaymentFragment() {
@@ -92,11 +96,13 @@ public class BillPaymentFragment extends Fragment {
         user_id = (TextView) view.findViewById(R.id.userid_info);
         amount_due_info = (TextView) view.findViewById(R.id.amount_due_info);
         tagGroup = (TagView)view.findViewById(R.id.tag_group);
+        print = (Button)view.findViewById(R.id.button_print);
 
         return view;
     }
     public void initiateCustomers(Customers customer){
-//        TextView UserInformation
+//        TextView UserInformation\
+
         count = 0;
         address.setText(customer.getAddress());
         user_name.setText(customer.getName());
@@ -131,6 +137,11 @@ public class BillPaymentFragment extends Fragment {
             @Override
             public void onTagDeleted(final TagView view, final Tag tag, final int position) {
                 tagGroup.remove(position);
+                if(months.equalsIgnoreCase("")){
+                    months = tag.text;
+                }else {
+                    months = months + "," + tag.text;
+                }
 //                tag.text;
             }
         });
@@ -138,11 +149,20 @@ public class BillPaymentFragment extends Fragment {
             try {
 //                Log.v("price now",""+Integer.parseInt(customer.getPrice())*count);
                 amount_due_info.setText(""+(Integer.parseInt(customer.getPrice())*count));
+                amount = ""+(Integer.parseInt(customer.getPrice())*count);
             }catch (Exception e){
                 amount_due_info.setText(customer.getPrice());
 //
             }
         }
+        print.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerSelected,amount,months);
+
+                ((MainActivity)getActivity()).mViewPager.setCurrentItem(2);
+            }
+        });
 
     }
     public ArrayList<String> getmonthsDue(String lastpaidmonth){

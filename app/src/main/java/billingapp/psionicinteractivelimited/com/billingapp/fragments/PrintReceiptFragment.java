@@ -95,78 +95,52 @@ public class PrintReceiptFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_print, container, false);
-        address = (TextView) view.findViewById(R.id.address_info);
-        user_name = (TextView) view.findViewById(R.id.username_info);
-        user_id = (TextView) view.findViewById(R.id.userid_info);
-        amount_due_info = (TextView) view.findViewById(R.id.amount_due_info);
-        tagGroup = (TagView)view.findViewById(R.id.tag_group);
+
+        mTextView_company= (TextView) view.findViewById(R.id.print_texts_company);
+        mTextView_user= (TextView) view.findViewById(R.id.print_texts_user);
 
 
         //ush: started
 
-         String print_address="House #10, Road #9, Sector #3";
-         String print_user_name="Psionic Interactive Limited";
-         String print_user_id="51231";
-         String print_due_amount="480.00";
-         String print_due_month="June";
-         String print_payment_date=new SimpleDateFormat("dd-MM-yyyy").format(new Date());
-         String print_notice="Please submit a signed copy of the bill to the collector.";
-         print_powered_by="Psionic Interactive Limited";
 
-
-        mTextView_company= (TextView) view.findViewById(R.id.print_texts_company);
-        mTextView_company.setText(Html.fromHtml("<b>DIGI 21 Cable Service<b><br>" + "House $3, Road #4, Sector #1<br>" +
-                "Uttara Model Town<br>Tel: 8915857<br>*********************************<br><br>"));
-
-        mTextView_user= (TextView) view.findViewById(R.id.print_texts_user);
-        mTextView_user.setText(Html.fromHtml(
-
-                             "User Information <br> "+print_address +"<br>"+
-                             "User Name: "+print_user_name+"<br>"+
-                             "User ID: "+print_user_id+"<br>"+"<br>"+
-                             "Amount Due:<br>BDT "+print_due_amount+"<br>"+"<br>"+
-                            "Month Due:<br><b>"+print_due_month+"</b><br>"+"<br>"+
-                            "Date: "+ print_payment_date+"<br><br>"+
-                            print_notice+"<br><br>"+
-                            "Powered by: "+print_powered_by
-                    ));
         //ush: ends
 //        mTextView_user.setShadowLayer(1, 0, 0, Color.BLACK);
 //        mTextView_company.setShadowLayer(1, 0, 0, Color.BLACK);
 
         return view;
     }
-    public void initiateCustomers(Customers customer){
+    public void initiateCustomers(Customers customer,String amount,String months){
 //        TextView UserInformation
 
-        address.setText(customer.getAddress());
-        user_name.setText(customer.getName());
-        user_id.setText(customer.getCustomer_code());
-        amount_due_info.setText(customer.getPrice());
+        String print_address=customer.getAddress();
+        String print_user_name="Psionic Interactive Limited";
+        String print_user_id=customer.getCustomer_code();
+        String print_due_amount=amount;
+        String print_due_month=months;
+        String print_payment_date=new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        String print_notice="Please submit a signed copy of the bill to the collector.";
+        print_powered_by="Psionic Interactive Limited";
 
-        Tag tag = new Tag(customer.getLast_paid());
-        tag.radius = 10f;
-        tag.layoutColor = Color.GRAY;
-        tag.tagTextColor = Color.BLACK;
-        tag.isDeletable = true;
-        ArrayList<Tag> tags = new ArrayList<>();
 
-        tags.add(tag);
 
-        tagGroup.addTags(tags);
-        //set click listener
-        tagGroup.setOnTagClickListener(new TagView.OnTagClickListener() {
-            @Override
-            public void onTagClick(Tag tag, int position) {
-            }
-        });
+        mTextView_company.setText(Html.fromHtml("<b>DIGI 21 Cable Service<b><br>" + "House $3, Road #4, Sector #1<br>" +
+                "Uttara Model Town<br>Tel: 8915857<br>*********************************<br><br>"));
 
-        //set delete listener
-        tagGroup.setOnTagDeleteListener(new TagView.OnTagDeleteListener() {
-            @Override
-            public void onTagDeleted(final TagView view, final Tag tag, final int position) {
-            }
-        });
+
+        mTextView_user.setText(Html.fromHtml(
+
+                "User Information <br> "+print_address +"<br>"+
+                        "User Name: "+print_user_name+"<br>"+
+                        "User ID: "+print_user_id+"<br>"+"<br>"+
+                        "Amount Due:<br>BDT "+print_due_amount+"<br>"+"<br>"+
+                        "Month Due:<br><b>"+print_due_month+"</b><br>"+"<br>"+
+                        "Date: "+ print_payment_date+"<br><br>"+
+                        print_notice+"<br><br>"+
+                        "Powered by: "+print_powered_by
+        ));
+
+
+
 
     }
 
