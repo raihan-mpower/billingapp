@@ -75,7 +75,12 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Sector> sectors = new ArrayList<Sector>();
     public static ArrayList<Road> roads = new ArrayList<Road>();
     public static ArrayList<House> houses = new ArrayList<House>();
-    public static Customers customerSelected ;
+//    public static Customers customerSelected ;
+    //ush.start
+    public static ArrayList<Customers> customerSelected =new ArrayList<Customers>() ;
+    public static Customers customerForProcessing ;
+
+    //ush.end
     public BillPaymentFragment billPaymentFragment;
 
     //ush: started

@@ -143,6 +143,8 @@ public class BillPaymentFragment extends Fragment {
                     months = months + "," + tag.text;
                 }
 //                tag.text;
+
+
             }
         });
         if(customer.getPrice()!=null) {
@@ -158,7 +160,7 @@ public class BillPaymentFragment extends Fragment {
         print.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerSelected,amount,months);
+                ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerSelected.get(0),amount,months);
 
                 ((MainActivity)getActivity()).mViewPager.setCurrentItem(2);
             }

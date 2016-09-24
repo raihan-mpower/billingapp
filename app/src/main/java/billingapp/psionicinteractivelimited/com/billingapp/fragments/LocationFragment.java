@@ -44,11 +44,14 @@ public class LocationFragment extends Fragment {
     private AutoCompleteTextView atcv;
     private AutoCompleteTextView house;
     private AutoCompleteTextView road;
-    //ush.start
 
+    //ush.start
+    private AutoCompleteTextView customerid;
+    private AutoCompleteTextView telephonenumber;
     //ush.end
-    private TextView customerid;
-    private TextView telephonenumber;
+
+//    private TextView customerid;
+//    private TextView telephonnumber;
     private Button billpayment;
 
     public LocationFragment() {
@@ -91,8 +94,14 @@ public class LocationFragment extends Fragment {
         final billingdatabaseHelper databasehelper = new billingdatabaseHelper(getActivity(),1);
         MainActivity.territories =territoryRepository.getALLterritory(databasehelper.getReadableDatabase());
 
-        customerid = (TextView)view.findViewById(R.id.customer_id);
-        telephonenumber = (TextView)view.findViewById(R.id.telephone_no);
+//        customerid = (TextView)view.findViewById(R.id.customer_id);
+
+        //ush.start
+        customerid= (AutoCompleteTextView) view.findViewById(R.id.customer_id);
+        telephonenumber = (AutoCompleteTextView) view.findViewById(R.id.telephone_no);
+        //ush.end
+
+//        telephonenumber = (TextView)view.findViewById(R.id.telephone_no);
         atcv = (AutoCompleteTextView)view.findViewById(R.id.city);
         sector = (AutoCompleteTextView)view.findViewById(R.id.sector_block);
         road = (AutoCompleteTextView)view.findViewById(R.id.road_no);
@@ -101,6 +110,9 @@ public class LocationFragment extends Fragment {
         sector.setThreshold(-1);
         road.setThreshold(-1);
         house.setThreshold(-1);
+        customerid.setThreshold(-1);
+        telephonenumber.setThreshold(-1);
+
         final ArrayList<String> suggestions = new ArrayList<String>();
         for(int i = 0;i< MainActivity.territories.size();i++){
             Log.v("naam ki",MainActivity.territories.get(i).getName());
@@ -115,6 +127,14 @@ public class LocationFragment extends Fragment {
             actvOnclick(suggestions,databasehelper);
 
 
+            }
+        });
+        billpayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerForProcessing);
+
+                ((MainActivity)getActivity()).mViewPager.setCurrentItem(1);
             }
         });
 
@@ -179,23 +199,62 @@ public class LocationFragment extends Fragment {
         house.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int index = housesuggestions.indexOf(house.getEditableText().toString());
-                ArrayList<Customers> customers = databasehelper.getCustomersbyHouseID(MainActivity.houses.get(index).getId());
-                if(customers.size()>0){
-                    customerid.setText(customers.get(0).getCustomers_id());
-                    telephonenumber.setText(customers.get(0).getPhone());
-                    MainActivity.customerSelected = customers.get(0);
-                    billpayment.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ((MainActivity)getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerSelected);
-
-                            ((MainActivity)getActivity()).mViewPager.setCurrentItem(1);
-                        }
-                    });
-                }
+             houseOnclick(housesuggestions,databasehelper);
             }
         });
+    }
+
+    private void houseOnclick(final ArrayList<String> housesuggestions, final billingdatabaseHelper databasehelper) {
+        final int index = housesuggestions.indexOf(house.getEditableText().toString());
+
+        final ArrayList<Customers> customers = databasehelper.getCustomersbyHouseID(MainActivity.houses.get(index).getId());
+        if(customers.size()>0){
+//                    customerid.setText(customers.get(0).getCustomers_id());
+//                    telephonenumber.setText(customers.get(0).getPhone());
+            MainActivity.customerSelected = customers;
+            final ArrayList<String> customerSuggestions = new ArrayList<String>();
+            final ArrayList<String> customerphoneSuggestions = new ArrayList<String>();
+            for(int i = 0;i< MainActivity.customerSelected.size();i++){
+                Log.v("customer",MainActivity.customerSelected.get(i).getCustomers_id());
+                customerSuggestions.add(MainActivity.customerSelected.get(i).getCustomers_id());
+                customerphoneSuggestions.add(MainActivity.customerSelected.get(i).getPhone());
+            }
+            ArrayAdapter<String> customerArrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, customerSuggestions);
+            customerid.setAdapter(customerArrayAdapter);
+            customerArrayAdapter.notifyDataSetChanged();
+            customerid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    int customerindex = customerSuggestions.indexOf(customerid.getEditableText().toString());
+//                    houseOnclick(customerSuggestions,databasehelper);
+                    MainActivity.customerForProcessing = customers.get(customerindex);
+                    telephonenumber.setText(MainActivity.customerForProcessing.getPhone());
+                }
+            });
+
+            ArrayAdapter<String> customerPhoneArrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, customerphoneSuggestions);
+            telephonenumber.setAdapter(customerPhoneArrayAdapter);
+            customerPhoneArrayAdapter.notifyDataSetChanged();
+            telephonenumber.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    int customerindex = customerphoneSuggestions.indexOf(telephonenumber.getEditableText().toString());
+//                    houseOnclick(customerSuggestions,databasehelper);
+                    MainActivity.customerForProcessing = customers.get(customerindex);
+                    customerid.setText( MainActivity.customerForProcessing.getCustomers_id());
+                }
+            });
+
+
+            billpayment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((MainActivity)getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerForProcessing);
+
+                    ((MainActivity)getActivity()).mViewPager.setCurrentItem(1);
+                }
+            });
+        }
     }
 
 
