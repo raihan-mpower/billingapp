@@ -53,6 +53,10 @@ public class BillPaymentFragment extends Fragment {
     String months = "";
     private Button print;
 
+    //u.start
+    int customer_price;
+    //u.end
+
 
     public BillPaymentFragment() {
         // Required empty public constructor
@@ -100,7 +104,7 @@ public class BillPaymentFragment extends Fragment {
 
         return view;
     }
-    public void initiateCustomers(Customers customer){
+    public void initiateCustomers(final Customers customer){
 //        TextView UserInformation\
 
         count = 0;
@@ -108,10 +112,14 @@ public class BillPaymentFragment extends Fragment {
         user_name.setText(customer.getName());
         user_id.setText(customer.getCustomer_code());
 
+        //u.start
+        customer_price=Integer.parseInt(customer.getPrice());
+        //u.end
+
         ArrayList<String> monthsdue = getmonthsDue(customer.getLast_paid());
 
 
-        ArrayList<Tag> tags = new ArrayList<>();
+        final ArrayList<Tag> tags = new ArrayList<>();
 
         for(int i = 0;i < monthsdue.size();i++){
             Tag tag = new Tag(monthsdue.get(i));
@@ -143,6 +151,25 @@ public class BillPaymentFragment extends Fragment {
                     months = months + "," + tag.text;
                 }
 //                tag.text;
+                //u.start
+//                amount_due_info.setText(Integer.parseInt(amount)-customer_price);
+//                amount_due_info.setText("100");
+
+
+                try {
+//                Log.v("price now",""+Integer.parseInt(customer.getPrice())*count);
+                    int newPrice=(Integer.parseInt(customer.getPrice())*count-(Integer.parseInt(customer.getPrice())));
+                    amount_due_info.setText(""+newPrice);
+                    amount = ""+newPrice;
+                }catch (Exception e){
+                    amount_due_info.setText(customer.getPrice());
+//
+                }
+//                tagGroup = (TagView)view.findViewById(R.id.tag_group);
+//                tagGroup.addTags(tags);
+
+                //u.end
+
 
 
             }
@@ -153,20 +180,29 @@ public class BillPaymentFragment extends Fragment {
                 amount_due_info.setText(""+(Integer.parseInt(customer.getPrice())*count));
                 amount = ""+(Integer.parseInt(customer.getPrice())*count);
             }catch (Exception e){
-                amount_due_info.setText(customer.getPrice());
+//                amount_due_info.setText(customer.getPrice());
 //
             }
         }
+
+
         print.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerSelected.get(0),amount,months);
+                int amountInInt= Integer.parseInt(amount);
+                if(amountInInt<=0){
+                        //do nothing
+                }else{
+                    ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerSelected.get(0),amount,months);
+                    ((MainActivity)getActivity()).mViewPager.setCurrentItem(2);
 
-                ((MainActivity)getActivity()).mViewPager.setCurrentItem(2);
+
+                }
             }
         });
 
     }
+
     public ArrayList<String> getmonthsDue(String lastpaidmonth){
         ArrayList<String> months = new ArrayList<String>();
         months.add("jan");
