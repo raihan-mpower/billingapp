@@ -44,6 +44,9 @@ public class LocationFragment extends Fragment {
     private AutoCompleteTextView atcv;
     private AutoCompleteTextView house;
     private AutoCompleteTextView road;
+    //ush.start
+
+    //ush.end
     private TextView customerid;
     private TextView telephonenumber;
     private Button billpayment;
@@ -87,6 +90,7 @@ public class LocationFragment extends Fragment {
 
         final billingdatabaseHelper databasehelper = new billingdatabaseHelper(getActivity(),1);
         MainActivity.territories =territoryRepository.getALLterritory(databasehelper.getReadableDatabase());
+
         customerid = (TextView)view.findViewById(R.id.customer_id);
         telephonenumber = (TextView)view.findViewById(R.id.telephone_no);
         atcv = (AutoCompleteTextView)view.findViewById(R.id.city);
