@@ -80,8 +80,7 @@ public class Customers
         this.phone = phone;
         this.houses_id = houses_id;
 
-
-        this.updated_at=updated_at;
+        this.updated_at = updated_at;
     }
 
     public String getAddress ()
@@ -143,7 +142,7 @@ public class Customers
     @Override
     public String toString()
     {
-        return "ClassPojo [houses_id = "+houses_id+", phone = "+phone+", price = "+price+", customer_code = "+customer_code+", address = "+address+", customers_id = "+customers_id+", name = "+name+", last_paid = "+last_paid+"]";
+        return "ClassPojo [houses_id = "+houses_id+", phone = "+phone+", price = "+price+", customer_code = "+customer_code+", address = "+address+", customers_id = "+customers_id+", name = "+name+", last_paid = "+last_paid+", updated_at = "+updated_at+"]";
     }
 
     public static Customers jsontoCustomers(String json) {

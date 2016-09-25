@@ -31,7 +31,7 @@ public class customerRepository {
 
 
     public static String [] columns = {houses_id,phone,price,customer_code,address,customers_id,name,last_paid,updated_at};
-    public static String sqlStatement = "CREATE TABLE customers(houses_id VARCHAR , phone VARCHAR, price VARCHAR, customer_code VARCHAR, address VARCHAR, customers_id INTEGER PRIMARY KEY, name VARCHAR, last_paid VARCHAR, updated_at TIMESTAMP )";
+    public static String sqlStatement = "CREATE TABLE customers(houses_id VARCHAR , phone VARCHAR, price VARCHAR, customer_code VARCHAR, address VARCHAR, customers_id INTEGER PRIMARY KEY, name VARCHAR, last_paid VARCHAR, updated_at VARCHAR )";
 
     public static void createsql(SQLiteDatabase database){
         database.execSQL(sqlStatement);
