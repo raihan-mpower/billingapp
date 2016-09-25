@@ -29,6 +29,10 @@ public class Customers
 
     private String last_paid;
 
+    //ius start
+    private String updated_at;
+    //ius end
+
     public String getHouses_id ()
     {
         return houses_id;
@@ -49,10 +53,7 @@ public class Customers
         this.phone = phone;
     }
 
-    public String getPrice ()
-    {
-        return price;
-    }
+    public String getPrice () { return price;}
 
     public void setPrice (String price)
     {
@@ -69,7 +70,7 @@ public class Customers
         this.customer_code = customer_code;
     }
 
-    public Customers(  String houses_id,String phone,String price,String customer_code,String address,String customers_id,String name, String last_paid  ) {
+    public Customers(  String houses_id,String phone,String price,String customer_code,String address,String customers_id,String name, String last_paid, String updated_at ) {
         this.last_paid = last_paid;
         this.name = name;
         this.customers_id = customers_id;
@@ -78,6 +79,9 @@ public class Customers
         this.price = price;
         this.phone = phone;
         this.houses_id = houses_id;
+
+
+        this.updated_at=updated_at;
     }
 
     public String getAddress ()
@@ -121,6 +125,21 @@ public class Customers
         this.last_paid = last_paid;
     }
 
+    //updated_at
+
+    //ius start
+    public String getUpdated_at ()
+    {
+        return updated_at;
+    }
+
+    public void setUpdated_at (String updated_at)
+    {
+        this.updated_at = updated_at;
+    }
+
+    //ius end
+
     @Override
     public String toString()
     {
@@ -130,7 +149,7 @@ public class Customers
     public static Customers jsontoCustomers(String json) {
         try {
             JSONObject customerJson = new JSONObject(json);
-            Customers customerToReturn = new Customers(customerJson.getString("houses_id"),customerJson.getString("phone"),customerJson.getString("price"),customerJson.getString("customer_code"),customerJson.getString("address"),customerJson.getString("customers_id"),customerJson.getString("name"),customerJson.getString("last_paid"));
+            Customers customerToReturn = new Customers(customerJson.getString("houses_id"),customerJson.getString("phone"),customerJson.getString("price"),customerJson.getString("customer_code"),customerJson.getString("address"),customerJson.getString("customers_id"),customerJson.getString("name"),customerJson.getString("last_paid"),customerJson.getString("updated_at"));
             return customerToReturn;
         } catch (JSONException e) {
             e.printStackTrace();

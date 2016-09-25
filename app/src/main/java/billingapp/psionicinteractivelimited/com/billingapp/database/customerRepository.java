@@ -22,10 +22,16 @@ public class customerRepository {
     public static String address = "address";
     public static String customers_id = "customers_id";
     public static String name = "name";
-
     public static String last_paid = "last_paid";
-    public static String [] columns = {houses_id,phone,price,customer_code,address,customers_id,name,last_paid};
-    public static String sqlStatement = "CREATE TABLE customers(houses_id VARCHAR , phone VARCHAR, price VARCHAR, customer_code VARCHAR, address VARCHAR, customers_id INTEGER PRIMARY KEY, name VARCHAR, last_paid VARCHAR )";
+
+    //ius. start
+    public static String updated_at="updated_at";
+    //ius. end
+
+
+
+    public static String [] columns = {houses_id,phone,price,customer_code,address,customers_id,name,last_paid,updated_at};
+    public static String sqlStatement = "CREATE TABLE customers(houses_id VARCHAR , phone VARCHAR, price VARCHAR, customer_code VARCHAR, address VARCHAR, customers_id INTEGER PRIMARY KEY, name VARCHAR, last_paid VARCHAR, updated_at TIMESTAMP )";
 
     public static void createsql(SQLiteDatabase database){
         database.execSQL(sqlStatement);
@@ -41,12 +47,13 @@ public class customerRepository {
         values.put(customers_id, customer.getCustomers_id());
         values.put(name,customer.getName());
         values.put(last_paid,customer.getLast_paid());
+        values.put(updated_at,customer.getUpdated_at());
         return values;
     }
 
     public static Customers getCustomer(Cursor cursor){
         Customers customers = new Customers(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                cursor.getString(4), cursor.getString(5), cursor.getString(6),cursor.getString(7));
+                cursor.getString(4), cursor.getString(5), cursor.getString(6),cursor.getString(7),cursor.getString(8));
         return customers;
     }
 
