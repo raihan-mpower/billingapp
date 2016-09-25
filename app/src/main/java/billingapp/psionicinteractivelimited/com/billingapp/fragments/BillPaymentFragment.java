@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cunoraz.tagview.Tag;
 import com.cunoraz.tagview.TagView;
@@ -102,6 +103,8 @@ public class BillPaymentFragment extends Fragment {
         tagGroup = (TagView)view.findViewById(R.id.tag_group);
         print = (Button)view.findViewById(R.id.button_print);
 
+
+
         return view;
     }
     public void initiateCustomers(final Customers customer){
@@ -128,6 +131,10 @@ public class BillPaymentFragment extends Fragment {
             tag.tagTextColor = Color.BLACK;
             tag.isDeletable = true;
             tags.add(tag);
+
+            //ush.start
+            months= months + " " + tag.text;
+            //
         }
 
 
@@ -137,6 +144,7 @@ public class BillPaymentFragment extends Fragment {
         tagGroup.setOnTagClickListener(new TagView.OnTagClickListener() {
             @Override
             public void onTagClick(Tag tag, int position) {
+
             }
         });
 
@@ -146,32 +154,25 @@ public class BillPaymentFragment extends Fragment {
             public void onTagDeleted(final TagView view, final Tag tag, final int position) {
                 tagGroup.remove(position);
                 if(months.equalsIgnoreCase("")){
-                    months = tag.text;
+//                    months = tag.text;
+
+                    //ush.start
+                    months="All months deleted";
+                    //ush.end
                 }else {
-                    months = months + "," + tag.text;
+
+//                    months = months + "," + tag.text;
+
+                    //ush.start
+                    //removing deleted month from "months" string
+                    Toast.makeText(getActivity(), "Month "+tag.text+" Deleted successfully", Toast.LENGTH_LONG).show();
+                      months=months.replace(tag.text,"");
+                    //ush.end
                 }
-//                tag.text;
+
                 //u.start
-//                amount_due_info.setText(Integer.parseInt(amount)-customer_price);
-//                amount_due_info.setText("100");
-
-
-                try {
-//                Log.v("price now",""+Integer.parseInt(customer.getPrice())*count);
-                    int newPrice=(Integer.parseInt(customer.getPrice())*count-(Integer.parseInt(customer.getPrice())));
-                    amount_due_info.setText(""+newPrice);
-                    amount = ""+newPrice;
-                }catch (Exception e){
-                    amount_due_info.setText(customer.getPrice());
-//
-                }
-//                tagGroup = (TagView)view.findViewById(R.id.tag_group);
-//                tagGroup.addTags(tags);
-
+                changePriceandTag(customer);
                 //u.end
-
-
-
             }
         });
         if(customer.getPrice()!=null) {
@@ -186,6 +187,7 @@ public class BillPaymentFragment extends Fragment {
         }
 
 
+
         print.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,6 +195,8 @@ public class BillPaymentFragment extends Fragment {
                 if(amountInInt<=0){
                         //do nothing
                 }else{
+//                    months=monthTextChecker(months);
+                    months=months.replaceAll("( )+", " ");
                     ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerSelected.get(0),amount,months);
                     ((MainActivity)getActivity()).mViewPager.setCurrentItem(2);
 
@@ -202,6 +206,30 @@ public class BillPaymentFragment extends Fragment {
         });
 
     }
+
+    //ush.start
+
+    //comma editor
+//    public String monthTextChecker(String monthsForCheck){
+//        while(true)
+//        if(monthsForCheck.charAt(0)==',' || )
+//        {
+//            monthsForCheck.replace(",","");
+//        }
+//
+//        return monthsForCheck;
+//    }
+
+    public void changePriceandTag(Customers custom){
+
+
+        int newPrice=(Integer.parseInt(custom.getPrice())*count-(Integer.parseInt(custom.getPrice())));
+        count--;
+        amount = ""+newPrice;
+        amount_due_info.setText(amount);
+    }
+    //ush.end
+
 
     public ArrayList<String> getmonthsDue(String lastpaidmonth){
         ArrayList<String> months = new ArrayList<String>();
@@ -236,6 +264,7 @@ public class BillPaymentFragment extends Fragment {
         if((indexofcurrentmonth-indexoflastpaid)>0){
             for(int i = indexoflastpaid;i<indexofcurrentmonth;i++){
                 monthstoreturn.add(months.get(i));
+
                 count ++;
             }
         }else if((indexofcurrentmonth-indexoflastpaid)<0){
