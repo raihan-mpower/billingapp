@@ -113,7 +113,8 @@ public class PrintReceiptFragment extends Fragment {
 //        TextView UserInformation
 
         String print_address=customer.getAddress();
-        String print_user_name="Psionic Interactive Limited";
+//        String print_user_name="Psionic Interactive Limited";
+        String print_user_name=customer.getName();
         String print_user_id=customer.getCustomer_code();
         String print_due_amount=amount;
         String print_due_month=months;

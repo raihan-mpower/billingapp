@@ -197,7 +197,8 @@ public class BillPaymentFragment extends Fragment {
                 }else{
 //                    months=monthTextChecker(months);
                     months=months.replaceAll("( )+", " ");
-                    ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerSelected.get(0),amount,months);
+//                    ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerSelected.get(0),amount,months);
+                    ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerForProcessing,amount,months);
                     ((MainActivity)getActivity()).mViewPager.setCurrentItem(2);
 
 
