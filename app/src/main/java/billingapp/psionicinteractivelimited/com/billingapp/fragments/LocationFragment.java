@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -91,6 +93,8 @@ public class LocationFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_location, container, false);
 
+
+
         final billingdatabaseHelper databasehelper = new billingdatabaseHelper(getActivity(),1);
         MainActivity.territories =territoryRepository.getALLterritory(databasehelper.getReadableDatabase());
 
@@ -106,7 +110,9 @@ public class LocationFragment extends Fragment {
         sector = (AutoCompleteTextView)view.findViewById(R.id.sector_block);
         road = (AutoCompleteTextView)view.findViewById(R.id.road_no);
         house = (AutoCompleteTextView)view.findViewById(R.id.house_number);
+
         billpayment = (Button) view.findViewById(R.id.bill_payment);
+        atcv.setThreshold(-1);
         sector.setThreshold(-1);
         road.setThreshold(-1);
         house.setThreshold(-1);
@@ -249,12 +255,28 @@ public class LocationFragment extends Fragment {
             billpayment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((MainActivity)getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerForProcessing);
 
-                    ((MainActivity)getActivity()).mViewPager.setCurrentItem(1);
+                    if (checkBlankFields()){
+                        ((MainActivity) getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerForProcessing);
+                        ((MainActivity) getActivity()).mViewPager.setCurrentItem(1);
+
+                    }
+                    else
+                    {
+                        Toast.makeText(getContext(),"USER INFORMATION MISSING",Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         }
+    }
+
+    private boolean checkBlankFields() {
+
+        if (atcv.getEditableText().toString()=="" || sector.getEditableText().toString()=="" || road.getEditableText().toString()=="" || house.getEditableText().toString()=="" ||
+                customerid.getEditableText().toString()=="" || telephonenumber.getEditableText().toString()==""){
+            return false;
+        }
+        return true;
     }
 
 

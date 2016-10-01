@@ -7,7 +7,9 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cunoraz.tagview.Tag;
 import com.cunoraz.tagview.TagView;
@@ -16,7 +18,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import billingapp.psionicinteractivelimited.com.billingapp.MainActivity;
 import billingapp.psionicinteractivelimited.com.billingapp.R;
+import billingapp.psionicinteractivelimited.com.billingapp.model.GPSTracker;
 import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Customers;
 
 /**
@@ -53,6 +57,10 @@ public class PrintReceiptFragment extends Fragment {
     private String print_payment_date="";
     private String print_notice="";
     private String print_powered_by="";
+
+    private Button confirmationButton;
+
+    GPSTracker gps;
 
 
     //ush: ends
@@ -101,11 +109,41 @@ public class PrintReceiptFragment extends Fragment {
 
 
         //ush: started
+        confirmationButton= (Button) view.findViewById(R.id.confirmationButton);
 
 
         //ush: ends
 //        mTextView_user.setShadowLayer(1, 0, 0, Color.BLACK);
 //        mTextView_company.setShadowLayer(1, 0, 0, Color.BLACK);
+
+        confirmationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(getContext(),"processing...",Toast.LENGTH_LONG).show();
+
+                //gps info
+                gps=new GPSTracker(getContext());
+                if(gps.canGetLocation()){
+
+                    double latitude = gps.getLatitude();
+                    double longitude = gps.getLongitude();
+
+                    // \n is for new line
+                    Toast.makeText(getContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+                }else{
+                    // can't get location
+                    // GPS or Network is not enabled
+                    // Ask user to enable GPS/network in settings
+                    gps.showSettingsAlert();
+                }
+
+
+
+            }
+        });
+//        public void proceedToConfirmation(View v) {
+//        Toast.makeText(getContext(), "processing...", Toast.LENGTH_LONG).show();
+//        }
 
         return view;
     }
@@ -144,6 +182,8 @@ public class PrintReceiptFragment extends Fragment {
 
 
     }
+
+
 
 
 

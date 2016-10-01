@@ -54,12 +54,13 @@
 
         </ScrollView>
 
-    <ImageButton
+    <Button
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_gravity="center"
         android:background="@drawable/button_print"
-        android:id="@+id/imageButton"
+        android:id="@+id/confirmationButton"
+        android:onClick="proceedToConfirmation"
 
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
