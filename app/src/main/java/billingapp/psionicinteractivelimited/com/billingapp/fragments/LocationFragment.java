@@ -1,6 +1,8 @@
 package billingapp.psionicinteractivelimited.com.billingapp.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -111,6 +113,10 @@ public class LocationFragment extends Fragment {
         road = (AutoCompleteTextView)view.findViewById(R.id.road_no);
         house = (AutoCompleteTextView)view.findViewById(R.id.house_number);
 
+        //floating button
+
+        //floating end
+
         billpayment = (Button) view.findViewById(R.id.bill_payment);
         atcv.setThreshold(-1);
         sector.setThreshold(-1);
@@ -143,6 +149,14 @@ public class LocationFragment extends Fragment {
                 ((MainActivity)getActivity()).mViewPager.setCurrentItem(1);
             }
         });
+
+//        view.setOnLongClickListener(new View.OnLongClickListener() {
+//            public boolean onLongClick(View arg0) {
+//                Toast.makeText(getContext(), "Long Clicked " ,Toast.LENGTH_SHORT).show();
+//
+//                return true;    // set to true
+//            }
+//        });
 
         return view;
     }

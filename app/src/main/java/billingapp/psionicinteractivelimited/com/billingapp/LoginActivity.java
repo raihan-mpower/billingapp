@@ -33,6 +33,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -93,6 +94,18 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                //for: not loading each time
+
+//                preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+//                boolean isFirstTrue=preferences.getBoolean("firstload",false);
+//                if(isFirstTrue){
+//                    Toast.makeText(LoginActivity.this, "Welcome back", Toast.LENGTH_SHORT).show();
+//                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
+//
+//                }
+
+//                Toast.makeText(LoginActivity.this, , Toast.LENGTH_SHORT).show();
+
                 executeAsynctask();
 
             }

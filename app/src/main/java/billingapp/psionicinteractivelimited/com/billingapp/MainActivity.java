@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -75,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Sector> sectors = new ArrayList<Sector>();
     public static ArrayList<Road> roads = new ArrayList<Road>();
     public static ArrayList<House> houses = new ArrayList<House>();
+
+//    boolean testtest=false;
 //    public static Customers customerSelected ;
     //ush.start
     public static ArrayList<Customers> customerSelected =new ArrayList<Customers>() ;
@@ -93,7 +96,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         syncUtils Su = new syncUtils(this);
-        Su.executeAsynctask();
+
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+
+
+        boolean isFistLoad=preferences.getBoolean("firstLoad",true);
+        if(isFistLoad){
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("firstLoad",false);
+            editor.apply();
+
+            Toast.makeText(MainActivity.this, "testest"+isFistLoad, Toast.LENGTH_SHORT).show();
+            Su.executeAsynctask();
+        }
+//        else{
+////            Toast.makeText(MainActivity.this, "notest"+isFistLoad, Toast.LENGTH_SHORT).show();
+//        }
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
