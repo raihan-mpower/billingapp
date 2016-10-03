@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     //ush.start
     public static ArrayList<Customers> customerSelected =new ArrayList<Customers>() ;
     public static Customers customerForProcessing ;
+    syncUtils Su;
 
     //ush.end
     public BillPaymentFragment billPaymentFragment;
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        syncUtils Su = new syncUtils(this);
+        Su = new syncUtils(this);
 
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
@@ -130,6 +131,39 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_update) {
+            Su.executeAsynctask();
+            Toast.makeText(MainActivity.this, "Updating...", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        else if(id == R.id.action_sync){
+            Toast.makeText(MainActivity.this, "Syncing...", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        else if(id == R.id.action_logout){
+            Toast.makeText(MainActivity.this, "Logging out...", Toast.LENGTH_SHORT).show();
+
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     /**
      * A placeholder fragment containing a simple view.
