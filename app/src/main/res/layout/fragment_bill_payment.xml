@@ -92,14 +92,30 @@
             </LinearLayout>
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Amount Due :"
-            android:id="@+id/textView5"
-            android:textColor="#ffffff"
-            android:layout_marginLeft="15dp" />
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Amount Due :"
+                android:id="@+id/textView5"
+                android:textColor="#ffffff"
+                android:layout_marginLeft="15dp" />
+
+
+            <Button
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/addtag"
+                android:id="@+id/button_add_month"
+                android:gravity="center_vertical"/>
+
+        </LinearLayout>
+
+
 
         <LinearLayout
             android:orientation="horizontal"
@@ -116,6 +132,7 @@
                 android:id="@+id/amount_due_info"
                 android:textColor="#ffffff"
                 android:textStyle="bold" />
+
 
         </LinearLayout>
 

@@ -51,11 +51,15 @@ public class BillPaymentFragment extends Fragment {
     private TextView amount_due_info;
     public int count = 0;
     String amount = "0.00";
-    String months = "";
     private Button print;
+    private Button add_month;
 
+    ArrayList<String> months=new ArrayList<>();
+    int monthsCounter=0;
     //u.start
     int customer_price;
+
+//    final ArrayList<Tag> tags= new ArrayList<>();
     //u.end
 
 
@@ -103,6 +107,8 @@ public class BillPaymentFragment extends Fragment {
         tagGroup = (TagView)view.findViewById(R.id.tag_group);
         print = (Button)view.findViewById(R.id.button_print);
 
+        add_month= (Button) view.findViewById(R.id.button_add_month);
+
 
 
         return view;
@@ -122,7 +128,8 @@ public class BillPaymentFragment extends Fragment {
         ArrayList<String> monthsdue = getmonthsDue(customer.getLast_paid());
 
 
-        final ArrayList<Tag> tags = new ArrayList<>();
+       final ArrayList<Tag> tags = new ArrayList<>();
+
 
         for(int i = 0;i < monthsdue.size();i++){
             Tag tag = new Tag(monthsdue.get(i));
@@ -133,7 +140,9 @@ public class BillPaymentFragment extends Fragment {
             tags.add(tag);
 
             //ush.start
-            months= months + " " + tag.text;
+//            months= months + " " + tag.text;
+            months.add(tag.text+" ");
+            monthsCounter++;
             //
         }
 
@@ -153,25 +162,30 @@ public class BillPaymentFragment extends Fragment {
             @Override
             public void onTagDeleted(final TagView view, final Tag tag, final int position) {
                 tagGroup.remove(position);
-                if(months.equalsIgnoreCase("")){
-//                    months = tag.text;
 
-                    //ush.start
-                    months="All months deleted";
-                    //ush.end
-                }else {
+                //before array implementation in months.
+//                if(months.equalsIgnoreCase("")){
+//                    months="All months deleted";
+//                    //ush.end
+//                }else {
+//                    //removing deleted month from "months" string
+//                    Toast.makeText(getActivity(), "Month "+tag.text+" Deleted successfully", Toast.LENGTH_LONG).show();
+//                    tags.remove(position);
+//                    months=months.replace(tag.text,"");
+//                    //ush.end
+//                }
 
-//                    months = months + "," + tag.text;
-
-                    //ush.start
+                if(!months.isEmpty()){
                     //removing deleted month from "months" string
                     Toast.makeText(getActivity(), "Month "+tag.text+" Deleted successfully", Toast.LENGTH_LONG).show();
-                      months=months.replace(tag.text,"");
+                    tags.remove(position);
+                    months.remove(position);
+                    monthsCounter--;
                     //ush.end
                 }
 
                 //u.start
-                changePriceandTag(customer);
+                changePriceandTag(customer,-1);
                 //u.end
             }
         });
@@ -196,13 +210,36 @@ public class BillPaymentFragment extends Fragment {
                         //do nothing
                 }else{
 //                    months=monthTextChecker(months);
-                    months=months.replaceAll("( )+", " ");
+                    String monthsString=months.toString();
 //                    ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerSelected.get(0),amount,months);
-                    ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerForProcessing,amount,months);
+                    ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerForProcessing,amount,monthsString);
                     ((MainActivity)getActivity()).mViewPager.setCurrentItem(2);
 
 
                 }
+            }
+        });
+
+        add_month.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "Month Added", Toast.LENGTH_SHORT).show();
+
+
+                Tag tag = new Tag(getNextMonth(months.get(monthsCounter)));
+                tag.radius = 10f;
+                tag.layoutColor = Color.GRAY;
+                tag.tagTextColor = Color.BLACK;
+                tag.isDeletable = true;
+                tags.add(tag);
+
+                months.add(tag.text);
+                monthsCounter++;
+
+                tagGroup.addTags(tags);
+                changePriceandTag(customer,1);
+
             }
         });
 
@@ -221,12 +258,20 @@ public class BillPaymentFragment extends Fragment {
 //        return monthsForCheck;
 //    }
 
-    public void changePriceandTag(Customers custom){
+    public void changePriceandTag(Customers custom,int reduceORadd){
 
+        int newPrice;
 
-        int newPrice=(Integer.parseInt(custom.getPrice())*count-(Integer.parseInt(custom.getPrice())));
-        count--;
-        amount = ""+newPrice;
+        if(reduceORadd<0)
+        {
+            newPrice = (Integer.parseInt(custom.getPrice()) * count - (Integer.parseInt(custom.getPrice())));
+            count--;
+        }else{
+            newPrice = (Integer.parseInt(custom.getPrice()) * count + (Integer.parseInt(custom.getPrice())));
+            count++;
+        }
+
+        amount = "" + newPrice;
         amount_due_info.setText(amount);
     }
     //ush.end
@@ -280,6 +325,17 @@ public class BillPaymentFragment extends Fragment {
         }
         return monthstoreturn;
 
+
+    }
+
+    public String getNextMonth(String lastmonth){
+        String[] cal={"jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"};
+        for(int i=0;i<11;i++){
+            if(lastmonth.equals(cal[i])){
+                return cal[(i+1)%11];
+            }
+        }
+        return "err";
 
     }
 
