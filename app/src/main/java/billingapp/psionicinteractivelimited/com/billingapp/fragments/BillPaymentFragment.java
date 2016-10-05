@@ -182,10 +182,11 @@ public class BillPaymentFragment extends Fragment {
                     months.remove(position);
                     monthsCounter--;
                     //ush.end
+                    changePriceandTag(customer,-1);
                 }
 
                 //u.start
-                changePriceandTag(customer,-1);
+//                changePriceandTag(customer,-1);
                 //u.end
             }
         });
@@ -224,9 +225,9 @@ public class BillPaymentFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Month Added", Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(getActivity(), ""+months.get(monthsCounter-1), Toast.LENGTH_SHORT).show();
+
+//                Toast.makeText(getActivity(), ""+months.get(monthsCounter-1), Toast.LENGTH_SHORT).show();
                 if(monthsCounter>0) {
                     Tag tag = new Tag(getNextMonth(months.get(monthsCounter - 1)));
                     tag.radius = 10f;
@@ -240,6 +241,25 @@ public class BillPaymentFragment extends Fragment {
 
                     tagGroup.addTags(tags);
                     changePriceandTag(customer, 1);
+                }
+                else if(monthsCounter==0){
+                    Toast.makeText(getActivity(), ""+customer.getLast_paid(), Toast.LENGTH_SHORT).show();
+
+                    Tag tag = new Tag(getNextMonthServer(customer.getLast_paid().toLowerCase()));
+
+                    tag.radius = 10f;
+                    tag.layoutColor = Color.GRAY;
+                    tag.tagTextColor = Color.BLACK;
+                    tag.isDeletable = true;
+                    tags.add(tag);
+
+                    months.add(tag.text);
+                    monthsCounter++;
+
+                    tagGroup.addTags(tags);
+                    changePriceandTag(customer, 1);
+
+
                 }else
                 {
                     Toast.makeText(getActivity(), "No month added", Toast.LENGTH_SHORT).show();
@@ -338,6 +358,19 @@ public class BillPaymentFragment extends Fragment {
         for(int i=0;i<12;i++){
 //            Log.v("Last Month", lastmonth);
             if(lastmonth.equals(cal[i])){
+//                Log.v("what month", cal[i]);
+                return cal[(i+1)%12];
+            }
+        }
+        return "err";
+
+    }
+
+    public String getNextMonthServer(String month){
+        String[] cal={"jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"};
+        for(int i=0;i<12;i++){
+//            Log.v("Last Month", lastmonth);
+            if(month.contains(cal[i])){
 //                Log.v("what month", cal[i]);
                 return cal[(i+1)%12];
             }

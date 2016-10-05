@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -205,6 +206,19 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
         database.update(territoryRepository.tableName, valuesToUpdate, territoryRepository.id + " = ?", new String[]{territory.getId()});
     }
     ///////////////////////////////////////////////////////
+
+    public String makeTimeStampEmpty(Customers customer){
+        SQLiteDatabase database_to_null_timestamp = getWritableDatabase();
+        ContentValues valuesToUpdate = new ContentValues();
+        valuesToUpdate.put("updated_at", "");
+        database_to_null_timestamp.update(customerRepository.tableName, valuesToUpdate, customerRepository.customers_id + " = ?", new String[]{customer.getCustomers_id()});
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT "+customerRepository.updated_at+" FROM "+customerRepository.tableName,null);
+        return cursor.toString();
+
+    }
+
 
 
 }

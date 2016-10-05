@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import billingapp.psionicinteractivelimited.com.billingapp.LoginActivity;
 import billingapp.psionicinteractivelimited.com.billingapp.MainActivity;
 import billingapp.psionicinteractivelimited.com.billingapp.R;
 import billingapp.psionicinteractivelimited.com.billingapp.model.GPSTracker;
 import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Customers;
+import billingapp.psionicinteractivelimited.com.billingapp.database.billingdatabaseHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +64,8 @@ public class PrintReceiptFragment extends Fragment {
     private Button confirmationButton;
 
     GPSTracker gps;
+
+    Customers customer_global;
 
 
     //ush: ends
@@ -104,6 +109,8 @@ public class PrintReceiptFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_print, container, false);
 
+        final billingdatabaseHelper databasehelper = new billingdatabaseHelper(getActivity(),1);
+
         mTextView_company= (TextView) view.findViewById(R.id.print_texts_company);
         mTextView_user= (TextView) view.findViewById(R.id.print_texts_user);
 
@@ -136,6 +143,9 @@ public class PrintReceiptFragment extends Fragment {
                     // Ask user to enable GPS/network in settings
                     gps.showSettingsAlert();
                 }
+                Log.v("updddated at",""+databasehelper.makeTimeStampEmpty(customer_global));
+
+//                databasehelper.makeTimeStampEmpty(customer_global);
 
 
 
@@ -149,7 +159,7 @@ public class PrintReceiptFragment extends Fragment {
     }
     public void initiateCustomers(Customers customer,String amount,String months){
 //        TextView UserInformation
-
+        customer_global=customer;
         String print_address=customer.getAddress();
 //        String print_user_name="Psionic Interactive Limited";
         String print_user_name=customer.getName();
