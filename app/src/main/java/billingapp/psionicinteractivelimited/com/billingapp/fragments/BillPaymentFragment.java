@@ -141,7 +141,7 @@ public class BillPaymentFragment extends Fragment {
 
             //ush.start
 //            months= months + " " + tag.text;
-            months.add(tag.text+" ");
+            months.add(tag.text+"");
             monthsCounter++;
             //
         }
@@ -226,19 +226,24 @@ public class BillPaymentFragment extends Fragment {
             public void onClick(View view) {
                 Toast.makeText(getContext(), "Month Added", Toast.LENGTH_SHORT).show();
 
+                Toast.makeText(getActivity(), ""+months.get(monthsCounter-1), Toast.LENGTH_SHORT).show();
+                if(monthsCounter>0) {
+                    Tag tag = new Tag(getNextMonth(months.get(monthsCounter - 1)));
+                    tag.radius = 10f;
+                    tag.layoutColor = Color.GRAY;
+                    tag.tagTextColor = Color.BLACK;
+                    tag.isDeletable = true;
+                    tags.add(tag);
 
-                Tag tag = new Tag(getNextMonth(months.get(monthsCounter)));
-                tag.radius = 10f;
-                tag.layoutColor = Color.GRAY;
-                tag.tagTextColor = Color.BLACK;
-                tag.isDeletable = true;
-                tags.add(tag);
+                    months.add(tag.text);
+                    monthsCounter++;
 
-                months.add(tag.text);
-                monthsCounter++;
-
-                tagGroup.addTags(tags);
-                changePriceandTag(customer,1);
+                    tagGroup.addTags(tags);
+                    changePriceandTag(customer, 1);
+                }else
+                {
+                    Toast.makeText(getActivity(), "No month added", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -330,9 +335,11 @@ public class BillPaymentFragment extends Fragment {
 
     public String getNextMonth(String lastmonth){
         String[] cal={"jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"};
-        for(int i=0;i<11;i++){
+        for(int i=0;i<12;i++){
+//            Log.v("Last Month", lastmonth);
             if(lastmonth.equals(cal[i])){
-                return cal[(i+1)%11];
+//                Log.v("what month", cal[i]);
+                return cal[(i+1)%12];
             }
         }
         return "err";
