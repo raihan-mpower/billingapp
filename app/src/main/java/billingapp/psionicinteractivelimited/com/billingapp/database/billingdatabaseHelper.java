@@ -61,6 +61,10 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
             }
         }
     }
+    public ArrayList<Customers> getALLCustomers(){
+        return customerRepository.getALLCustomers(getReadableDatabase());
+//        return null;
+    }
     public ArrayList<Customers> getCustomersbyCustomerID(String customerID){
         return customerRepository.findByCustomerCaseID(customerID,getReadableDatabase());
 //        return null;
@@ -85,7 +89,7 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
     public void updateCustomer(Customers customer) {
         SQLiteDatabase database = getWritableDatabase();
         ContentValues valuesToUpdate = customerRepository.getCustomerValues(customer);
-        database.update(customerRepository.tableName, valuesToUpdate, customerRepository.houses_id + " = ?", new String[]{customer.getHouses_id()});
+        database.update(customerRepository.tableName, valuesToUpdate, customerRepository.customers_id + " = ?", new String[]{customer.getCustomers_id()});
     }
     ///////////////////////////////////////////////////////
 
@@ -212,7 +216,7 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
     public String makeTimeStampEmpty(Customers customer){
         SQLiteDatabase database_to_null_timestamp = getWritableDatabase();
         ContentValues valuesToUpdate = new ContentValues();
-        valuesToUpdate.put("updated_at", "");
+        valuesToUpdate.put("updated_at","");
         database_to_null_timestamp.update(customerRepository.tableName, valuesToUpdate, customerRepository.customers_id + " = ?", new String[]{customer.getCustomers_id()});
 
         SQLiteDatabase db = getReadableDatabase();

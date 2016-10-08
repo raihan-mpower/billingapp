@@ -95,4 +95,10 @@ public class customerRepository {
         cursor.close();
         return customers;
     }
+
+    public static ArrayList<Customers> getALLCustomers(SQLiteDatabase readableDatabase) {
+        Cursor cursor = readableDatabase.query(tableName, columns,null, null,
+                null, null, null, null);
+        return readAllCustomers(cursor);
+    }
 }

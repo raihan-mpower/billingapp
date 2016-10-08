@@ -124,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_update) {
+
+
             Su.executeAsynctask();
             Toast.makeText(MainActivity.this, "Updating...", Toast.LENGTH_SHORT).show();
             return true;

@@ -67,7 +67,13 @@ public class syncUtils {
                 String token = preferences.getString("token", "");
                 postData(token);
                 Log.v("token",token);
+                billingdatabaseHelper databasehelper = new billingdatabaseHelper(context,1);
+                if(databasehelper.getALLCustomers().size()<1){
+                    Log.v("is here","already exists");
                 syncCustomers();
+                }else{
+                    updatedCustomer();
+                }
                 return null;
             }
 
@@ -137,6 +143,8 @@ public class syncUtils {
 
 
     }
+
+
 
     public String postData(String token) {
         String responsestring = "";
@@ -278,8 +286,32 @@ public class syncUtils {
              response = getCustomersData(token,i);
             customerlist = Customers.returnCustomersFromArray(response);
         }
+    }
+
+    public void updatedCustomer(){
+        billingdatabaseHelper databasehelper = new billingdatabaseHelper(context,1);
+
+        int i = 0;
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String token = preferences.getString("token", "");
+
+        String response = getCustomersData(token,i);
+        ArrayList<Customers> customerlist = Customers.returnCustomersFromArray(response);
+
+        while(customerlist.size()>0)
+        {
+            databasehelper.insert_or_update_Customers(customerlist);
+            i = Integer.parseInt(customerlist.get(customerlist.size()-1).getCustomers_id());
+            Log.v("last customer id",""+i);
+            response = getCustomersData(token,i);
+            customerlist = Customers.returnCustomersFromArray(response);
+        }
+
 
     }
+
+
 
     public String getCustomersData(String token,int last_id) {
         String responsestring = "";
