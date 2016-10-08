@@ -79,4 +79,20 @@ public class customerRepository {
         return customers;
     }
 
+
+    public static ArrayList<Customers> findCustomerByBlankTimestamp(SQLiteDatabase database) {
+        Cursor cursor = database.query(tableName, columns, null, null, null, null, null, null);
+        cursor.moveToFirst();
+        ArrayList<Customers> customers = new ArrayList<Customers>();
+        while (!cursor.isAfterLast()) {
+            Customers customer = getCustomer(cursor);
+            if (customer.getUpdated_at().equals("")){
+                customers.add(customer);
+
+            }
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return customers;
+    }
 }

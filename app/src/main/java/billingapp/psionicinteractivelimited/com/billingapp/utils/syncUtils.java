@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -17,8 +18,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.ContentHandler;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import billingapp.psionicinteractivelimited.com.billingapp.MainActivity;
@@ -66,6 +79,63 @@ public class syncUtils {
                 dialog.dismiss();
             }
         }).execute();
+    }
+
+    public void syncLocalWithServer(String token){
+        Log.v("syncLocalWithServer","started");
+
+        String sync_url = "http://cable.psionichub.com/sync/billingdata?token="+token;
+        Log.v("url",sync_url);
+        String data1="";
+        String data2="";
+
+
+        try {
+            URL url = new URL(sync_url);
+            HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setDoOutput(true);
+
+            OutputStream outputStream = httpURLConnection.getOutputStream();
+            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
+
+            String data =
+                    URLEncoder.encode("date1","UTF-8")+"="+ URLEncoder.encode(data1,"UTF-8")+"&"+
+                    URLEncoder.encode("data2","UTF-8")+"="+ URLEncoder.encode(data2,"UTF-8");
+
+            bufferedWriter.write(data);
+            bufferedWriter.flush();
+            bufferedWriter.close();
+            outputStream.close();
+
+            httpURLConnection.setDoInput(true);
+            InputStream inputStream = httpURLConnection.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+            String response = "";
+            String line = "";
+            while ((line = bufferedReader.readLine())!=null)
+            {
+                response += line;
+            }
+            Log.v("response",response);
+
+            bufferedReader.close();
+            inputStream.close();
+            httpURLConnection.disconnect();
+
+//            return response;
+        }
+//        catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        catch(Exception e){
+            Log.v("Exceptiooooooooooooooon",""+e);
+
+        }
+
+
     }
 
     public String postData(String token) {
@@ -250,4 +320,27 @@ public class syncUtils {
         }
         return responsestring;
     }
+
+//    class UpdateBlankTimes extends AsyncTask<String, Integer, String> {
+//
+//        ProgressDialog dialog;
+//
+//        @Override
+//        protected void onPreExecute() {
+////            super.onPreExecute();
+//            dialog = ProgressDialog.show(context,"please wait","syncing billing info");
+//
+//        }
+//
+//        @Override
+//        protected String doInBackground(String... params) {
+//
+//            return "";
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String content) {
+//            dialog.dismiss();
+//        }
+//    }
 }

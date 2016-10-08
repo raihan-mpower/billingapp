@@ -1,10 +1,12 @@
 package billingapp.psionicinteractivelimited.com.billingapp.database;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -218,6 +220,16 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
         return cursor.toString();
 
     }
+
+    public ArrayList<Customers> getCustomersWithNoTimestamp(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        return customerRepository.findCustomerByBlankTimestamp(db);
+
+
+    }
+
+
 
 
 

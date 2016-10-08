@@ -143,9 +143,9 @@ public class PrintReceiptFragment extends Fragment {
                     // Ask user to enable GPS/network in settings
                     gps.showSettingsAlert();
                 }
-                Log.v("updddated at",""+databasehelper.makeTimeStampEmpty(customer_global));
+//                Log.v("updddated at",""+databasehelper.makeTimeStampEmpty(customer_global));
 
-//                databasehelper.makeTimeStampEmpty(customer_global);
+                databasehelper.makeTimeStampEmpty(customer_global);
 
 
 
