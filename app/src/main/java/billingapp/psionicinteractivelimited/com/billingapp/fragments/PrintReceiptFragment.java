@@ -60,6 +60,7 @@ public class PrintReceiptFragment extends Fragment {
     private String print_payment_date="";
     private String print_notice="";
     private String print_powered_by="";
+    private int monthsCounter;
 
     private Button confirmationButton;
 
@@ -126,9 +127,7 @@ public class PrintReceiptFragment extends Fragment {
         confirmationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(getContext(),"processing...",Toast.LENGTH_LONG).show();
 
-                //gps info
                 gps=new GPSTracker(getContext());
                 if(gps.canGetLocation()){
 
@@ -137,6 +136,11 @@ public class PrintReceiptFragment extends Fragment {
 
                     // \n is for new line
                     Toast.makeText(getContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+
+                    databasehelper.makeTimeStampEmpty(customer_global,""+latitude,""+longitude,""+print_due_month,print_due_amount,monthsCounter,print_payment_date);
+//                    Log.v("updddated_attttttttttt",cursor_tostring);
+
+
                 }else{
                     // can't get location
                     // GPS or Network is not enabled
@@ -145,8 +149,6 @@ public class PrintReceiptFragment extends Fragment {
                 }
 //                Log.v("updddated at",""+databasehelper.makeTimeStampEmpty(customer_global));
 
-                String cursor_tostring = databasehelper.makeTimeStampEmpty(customer_global);
-                Log.v("updddated_attttttttttt",cursor_tostring);
 
 
 
@@ -158,16 +160,17 @@ public class PrintReceiptFragment extends Fragment {
 
         return view;
     }
-    public void initiateCustomers(Customers customer,String amount,String months){
+    public void initiateCustomers(Customers customer,String amount,String months,int monthsCounter){
 //        TextView UserInformation
         customer_global=customer;
         String print_address=customer.getAddress();
 //        String print_user_name="Psionic Interactive Limited";
         String print_user_name=customer.getName();
         String print_user_id=customer.getCustomer_code();
-        String print_due_amount=amount;
-        String print_due_month=months;
-        String print_payment_date=new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+         print_due_amount=amount;
+         print_due_month=months;
+        this.monthsCounter=monthsCounter;
+        print_payment_date=new SimpleDateFormat("dd-MM-yyyy").format(new Date());
         String print_notice="Please submit a signed copy of the bill to the collector.";
         print_powered_by="Psionic Interactive Limited";
 

@@ -213,15 +213,21 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
     }
     ///////////////////////////////////////////////////////
 
-    public String makeTimeStampEmpty(Customers customer){
+    public void makeTimeStampEmpty(Customers customer, String lat, String lon,String amount,String month,int monthCounter,String collectionDate){
         SQLiteDatabase database_to_null_timestamp = getWritableDatabase();
         ContentValues valuesToUpdate = new ContentValues();
         valuesToUpdate.put("updated_at","");
+        valuesToUpdate.put("to_sync_lat",lat);
+        valuesToUpdate.put("to_sync_lon",lon);
+        valuesToUpdate.put("to_sync_paying_for",monthCounter);
+        valuesToUpdate.put("to_sync_total_amount",amount);
+        valuesToUpdate.put("to_sync_collection_date",collectionDate);
+
         database_to_null_timestamp.update(customerRepository.tableName, valuesToUpdate, customerRepository.customers_id + " = ?", new String[]{customer.getCustomers_id()});
 
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT "+customerRepository.updated_at+" FROM "+customerRepository.tableName,null);
-        return cursor.toString();
+//        SQLiteDatabase db = getReadableDatabase();
+//        Cursor cursor = db.rawQuery("SELECT "+customerRepository.updated_at+" FROM "+customerRepository.tableName,null);
+//        return cursor.toString();
 
     }
 

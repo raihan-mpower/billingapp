@@ -27,18 +27,20 @@ public class customerRepository {
     //ius. start
     public static String updated_at="updated_at";
 
-    //ther e
+    //variable after bill payment (to sync after payment)
     public static String to_sync_lat="0.0";
     public static String to_sync_lon="0.0";
-    public static String to_sync_paying="";
+    public static String to_sync_paying_for="0";
+    public static String to_sync_total_amount="0.0";
+    public static String to_sync_collection_date="0.0";
 
 
     //ius. end
 
 
 
-    public static String [] columns = {houses_id,phone,price,customer_code,address,customers_id,name,last_paid,updated_at};
-    public static String sqlStatement = "CREATE TABLE customers(houses_id VARCHAR , phone VARCHAR, price VARCHAR, customer_code VARCHAR, address VARCHAR, customers_id INTEGER PRIMARY KEY, name VARCHAR, last_paid VARCHAR, updated_at VARCHAR )";
+    public static String [] columns = {houses_id,phone,price,customer_code,address,customers_id,name,last_paid,updated_at,to_sync_lat,to_sync_lon,to_sync_paying_for,to_sync_total_amount,to_sync_collection_date};
+    public static String sqlStatement = "CREATE TABLE customers(houses_id VARCHAR , phone VARCHAR, price VARCHAR, customer_code VARCHAR, address VARCHAR, customers_id INTEGER PRIMARY KEY, name VARCHAR, last_paid VARCHAR, updated_at VARCHAR, to_sync_lat VARCHAR, to_sync_lon VARCHAR, to_sync_paying_for VARCHAR, to_sync_total_amount VARCHAR, to_sync_collection_date VARCHAR )";
 
     public static void createsql(SQLiteDatabase database){
         database.execSQL(sqlStatement);
@@ -95,7 +97,6 @@ public class customerRepository {
             Customers customer = getCustomer(cursor);
             if (customer.getUpdated_at().equals("")){
                 customers.add(customer);
-
             }
             cursor.moveToNext();
         }
@@ -104,8 +105,7 @@ public class customerRepository {
     }
 
     public static ArrayList<Customers> getALLCustomers(SQLiteDatabase readableDatabase) {
-        Cursor cursor = readableDatabase.query(tableName, columns,null, null,
-                null, null, null, null);
+        Cursor cursor = readableDatabase.query(tableName, columns,null, null, null, null, null, null);
         return readAllCustomers(cursor);
     }
 }

@@ -213,7 +213,7 @@ public class BillPaymentFragment extends Fragment {
 //                    months=monthTextChecker(months);
                     String monthsString=months.toString();
 //                    ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerSelected.get(0),amount,months);
-                    ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerForProcessing,amount,monthsString);
+                    ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerForProcessing,amount,monthsString,monthsCounter);
                     ((MainActivity)getActivity()).mViewPager.setCurrentItem(2);
 
 

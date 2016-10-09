@@ -29,9 +29,14 @@ public class Customers
 
     private String last_paid;
 
-    //ius start
     private String updated_at;
-    //ius end
+
+    public static String to_sync_lat="0.0";
+    public static String to_sync_lon="0.0";
+    public static String to_sync_paying_for="0";
+    public static String to_sync_total_amount="0";
+    public static String to_sync_collection_date="";
+
 
     public String getHouses_id ()
     {
@@ -69,6 +74,18 @@ public class Customers
     {
         this.customer_code = customer_code;
     }
+
+    public String get_to_sync_lat () { return price;}
+    public String get_to_sync_lon () { return price;}
+    public String get_to_sync_paying_for () { return price;}
+    public String get_to_sync_total_amount () { return price;}
+    public String get_to_sync_collection_date () { return price;}
+
+    public void set_to_sync_lat (String a) { this.to_sync_lat=a;}
+    public void set_to_sync_lon (String a) {this.to_sync_lon=a;}
+    public void set_to_sync_paying_for (String a) {this.to_sync_paying_for=a;}
+    public void set_to_sync_total_amount (String a) { this.to_sync_total_amount=a;}
+    public void set_to_sync_collection_date (String a) {this.to_sync_collection_date=a;}
 
     public Customers(  String houses_id,String phone,String price,String customer_code,String address,String customers_id,String name, String last_paid, String updated_at ) {
         this.last_paid = last_paid;
@@ -142,7 +159,7 @@ public class Customers
     @Override
     public String toString()
     {
-        return "ClassPojo [houses_id = "+houses_id+", phone = "+phone+", price = "+price+", customer_code = "+customer_code+", address = "+address+", customers_id = "+customers_id+", name = "+name+", last_paid = "+last_paid+", updated_at = "+updated_at+"]";
+        return "ClassPojo [houses_id = "+houses_id+", phone = "+phone+", price = "+price+", customer_code = "+customer_code+", address = "+address+", customers_id = "+customers_id+", name = "+name+", last_paid = "+last_paid+", updated_at = "+updated_at+", location: lat = "+to_sync_lat+", location: lon = "+to_sync_lon+", paying for = "+to_sync_paying_for+", bill amount = "+to_sync_total_amount+", collection date = "+to_sync_collection_date+"]";
     }
 
     public static Customers jsontoCustomers(String json) {
