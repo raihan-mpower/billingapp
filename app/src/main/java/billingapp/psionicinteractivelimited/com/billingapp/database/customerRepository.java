@@ -26,6 +26,13 @@ public class customerRepository {
 
     //ius. start
     public static String updated_at="updated_at";
+
+    //ther e
+    public static String to_sync_lat="0.0";
+    public static String to_sync_lon="0.0";
+    public static String to_sync_paying="";
+
+
     //ius. end
 
 

@@ -64,8 +64,6 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                 String test = arrayList.toString();
                 Log.v("db list",test);
 
-
-
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
                 String data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode("name", "UTF-8") + "&" +
                         URLEncoder.encode("user_id", "UTF-8") + "=" + URLEncoder.encode("id", "UTF-8") + "&" +

@@ -145,7 +145,8 @@ public class PrintReceiptFragment extends Fragment {
                 }
 //                Log.v("updddated at",""+databasehelper.makeTimeStampEmpty(customer_global));
 
-                databasehelper.makeTimeStampEmpty(customer_global);
+                String cursor_tostring = databasehelper.makeTimeStampEmpty(customer_global);
+                Log.v("updddated_attttttttttt",cursor_tostring);
 
 
 
