@@ -75,11 +75,11 @@ public class Customers
         this.customer_code = customer_code;
     }
 
-    public String get_to_sync_lat () { return price;}
-    public String get_to_sync_lon () { return price;}
-    public String get_to_sync_paying_for () { return price;}
-    public String get_to_sync_total_amount () { return price;}
-    public String get_to_sync_collection_date () { return price;}
+    public String get_to_sync_lat () { return to_sync_lat;}
+    public String get_to_sync_lon () { return to_sync_lon;}
+    public String get_to_sync_paying_for () { return to_sync_paying_for;}
+    public String get_to_sync_total_amount () { return to_sync_total_amount;}
+    public String get_to_sync_collection_date () { return to_sync_collection_date;}
 
     public void set_to_sync_lat (String a) { this.to_sync_lat=a;}
     public void set_to_sync_lon (String a) {this.to_sync_lon=a;}

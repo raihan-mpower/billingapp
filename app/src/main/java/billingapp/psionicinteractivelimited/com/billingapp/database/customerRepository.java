@@ -28,11 +28,11 @@ public class customerRepository {
     public static String updated_at="updated_at";
 
     //variable after bill payment (to sync after payment)
-    public static String to_sync_lat="0.0";
-    public static String to_sync_lon="0.0";
-    public static String to_sync_paying_for="0";
-    public static String to_sync_total_amount="0.0";
-    public static String to_sync_collection_date="0.0";
+    public static String to_sync_lat="to_sync_lat";
+    public static String to_sync_lon="to_sync_lon";
+    public static String to_sync_paying_for="to_sync_paying_for";
+    public static String to_sync_total_amount="to_sync_total_amount";
+    public static String to_sync_collection_date="to_sync_collection_date";
 
 
     //ius. end
@@ -57,6 +57,11 @@ public class customerRepository {
         values.put(name,customer.getName());
         values.put(last_paid,customer.getLast_paid());
         values.put(updated_at,customer.getUpdated_at());
+        values.put(to_sync_lat,customer.get_to_sync_lat());
+        values.put(to_sync_lon,customer.get_to_sync_lon());
+        values.put(to_sync_paying_for,customer.get_to_sync_paying_for());
+        values.put(to_sync_total_amount,customer.get_to_sync_total_amount());
+        values.put(to_sync_collection_date,customer.get_to_sync_collection_date());
         return values;
     }
 

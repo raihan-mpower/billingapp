@@ -213,7 +213,7 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
     }
     ///////////////////////////////////////////////////////
 
-    public void makeTimeStampEmpty(Customers customer, String lat, String lon,String amount,String month,int monthCounter,String collectionDate){
+    public void makeTimeStampEmpty(Customers customer, String lat, String lon,String amount,int monthCounter,String collectionDate){
         SQLiteDatabase database_to_null_timestamp = getWritableDatabase();
         ContentValues valuesToUpdate = new ContentValues();
         valuesToUpdate.put("updated_at","");
