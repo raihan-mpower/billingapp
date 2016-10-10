@@ -31,11 +31,11 @@ public class Customers
 
     private String updated_at;
 
-    public static String to_sync_lat="0.0";
-    public static String to_sync_lon="0.0";
-    public static String to_sync_paying_for="0";
-    public static String to_sync_total_amount="0";
-    public static String to_sync_collection_date="";
+    public static String to_sync_lat="default";
+    public static String to_sync_lon="deafult";
+    public static String to_sync_paying_for="deafult";
+    public static String to_sync_total_amount="deafult";
+    public static String to_sync_collection_date="deafult";
 
 
     public String getHouses_id ()

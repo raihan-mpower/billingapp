@@ -233,7 +233,6 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<Customers> getCustomersWithNoTimestamp(){
         SQLiteDatabase db = this.getReadableDatabase();
-
         return customerRepository.findCustomerByBlankTimestamp(db);
 
 

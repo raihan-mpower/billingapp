@@ -114,8 +114,6 @@ public class PrintReceiptFragment extends Fragment {
 
         mTextView_company= (TextView) view.findViewById(R.id.print_texts_company);
         mTextView_user= (TextView) view.findViewById(R.id.print_texts_user);
-
-
         //ush: started
         confirmationButton= (Button) view.findViewById(R.id.confirmationButton);
 

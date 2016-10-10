@@ -3,6 +3,7 @@ package billingapp.psionicinteractivelimited.com.billingapp.database;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +102,13 @@ public class customerRepository {
         while (!cursor.isAfterLast()) {
             Customers customer = getCustomer(cursor);
             if (customer.getUpdated_at().equals("")){
+
+                customer.set_to_sync_lat(cursor.getString(9));
+                customer.set_to_sync_lon(cursor.getString(10));
+                customer.set_to_sync_paying_for(cursor.getString(11));
+                customer.set_to_sync_total_amount(cursor.getString(12));
+                customer.set_to_sync_collection_date(cursor.getString(13));
+                Log.v("lisssssssssssttt fromm ",cursor.getString(9)+""+cursor.getString(10)+""+cursor.getString(11)+""+cursor.getString(12)+""+cursor.getString(13));
                 customers.add(customer);
             }
             cursor.moveToNext();

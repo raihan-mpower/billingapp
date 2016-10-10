@@ -131,15 +131,10 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         else if(id == R.id.action_sync){
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-            String token = preferences.getString("token", "");
 
-//            Su.syncLocalWithServer(token);
             BackgroundTask bt=new BackgroundTask(MainActivity.this);
             bt.execute();
             Su.executeAsynctask();
-
-//            Toast.makeText(MainActivity.this, "Syncing...", Toast.LENGTH_SHORT).show();
             return true;
         }
         else if(id == R.id.action_logout){

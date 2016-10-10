@@ -48,7 +48,6 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     protected String doInBackground(String... params) {
 
         String sync_url = "http://cable.psionichub.com/sync/billingdata?token="+token;
-        Log.v("IN BACKGROUND:TOKEN",sync_url);
 
             try {
                 URL url = new URL(sync_url);
@@ -62,33 +61,47 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                 billingdatabaseHelper dbHelper=new billingdatabaseHelper(ctx,1);
                 ArrayList<Customers> arrayList =  dbHelper.getCustomersWithNoTimestamp();
                 String test = arrayList.toString();
+                Log.v("Array List length",arrayList.size()+"");
 
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
 
-                for (int arrayListCounter=0;arrayListCounter<arrayList.size();arrayListCounter++){
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+
+                for (int arrayListCounter=0;arrayListCounter<=arrayList.size();arrayListCounter++){
+                    // etotuk porjonto ok ok ok
 
                     Customers customer= arrayList.get(arrayListCounter);
 
                 String data = URLEncoder.encode("customer_id", "UTF-8") + "=" + URLEncoder.encode(customer.getCustomers_id(), "UTF-8") + "&" +
-                                URLEncoder.encode("total", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_total_amount(), "UTF-8") + "&" +
+                                URLEncoder.encode("total_bill", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_total_amount(), "UTF-8") + "&" +
                                 URLEncoder.encode("collection_date", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_collection_date(), "UTF-8")+"&"+
                                 URLEncoder.encode("lat", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_lat(), "UTF-8")+"&"+
                                 URLEncoder.encode("lon", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_lon(), "UTF-8");
+                    Log.v("Dataaaaaaaaaaaaaaa",data );
+
 
                         Log.v(""+customer.getCustomers_id()," "+customer.get_to_sync_total_amount()+" "+customer.get_to_sync_collection_date()+" "+customer.get_to_sync_lat()+" "+customer.get_to_sync_lon());
-//                        URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode("name", "UTF-8") + "&" +
-//                        URLEncoder.encode("user_id", "UTF-8") + "=" + URLEncoder.encode("id", "UTF-8") + "&" +
-//                        URLEncoder.encode("user_location", "UTF-8") + "=" + URLEncoder.encode("location", "UTF-8");
+
+                    bufferedWriter.write(data);
+                    String response = "";
+                    String line = "";
+                    while ((line = bufferedReader.readLine())!=null)
+                    {
+                        response += line;
+                    }
+                    Log.v("Response from server",""+customer.getCustomers_id()+" "+response);
 
 
-                bufferedWriter.write(data);
-                bufferedWriter.flush();
                 }
+
+                bufferedWriter.flush();
                 bufferedWriter.close();
                 OS.close();
-                InputStream IS = httpURLConnection.getInputStream();
-                IS.close();
-                //httpURLConnection.connect();
+
+                bufferedReader.close();
+                inputStream.close();
+
                 httpURLConnection.disconnect();
                 return "Registration Success...";
             } catch (MalformedURLException e) {
