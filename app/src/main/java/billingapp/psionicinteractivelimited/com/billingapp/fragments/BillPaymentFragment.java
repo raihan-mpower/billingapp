@@ -161,28 +161,24 @@ public class BillPaymentFragment extends Fragment {
         tagGroup.setOnTagDeleteListener(new TagView.OnTagDeleteListener() {
             @Override
             public void onTagDeleted(final TagView view, final Tag tag, final int position) {
-                tagGroup.remove(position);
 
-                //before array implementation in months.
-//                if(months.equalsIgnoreCase("")){
-//                    months="All months deleted";
-//                    //ush.end
-//                }else {
-//                    //removing deleted month from "months" string
-//                    Toast.makeText(getActivity(), "Month "+tag.text+" Deleted successfully", Toast.LENGTH_LONG).show();
-//                    tags.remove(position);
-//                    months=months.replace(tag.text,"");
-//                    //ush.end
-//                }
-
-                if(!months.isEmpty()){
+                Log.v("tag position",""+position);
+                Log.v("months counter",""+monthsCounter);
+                Log.v("count",""+count);
+//                && position==monthsCounter+1
+                if(!months.isEmpty() && position==(count-1)){
                     //removing deleted month from "months" string
+                    tagGroup.remove(position);
                     Toast.makeText(getActivity(), "Month "+tag.text+" Deleted successfully", Toast.LENGTH_LONG).show();
                     tags.remove(position);
                     months.remove(position);
                     monthsCounter--;
                     //ush.end
                     changePriceandTag(customer,-1);
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "Can't delete this tag", Toast.LENGTH_SHORT).show();
                 }
 
                 //u.start

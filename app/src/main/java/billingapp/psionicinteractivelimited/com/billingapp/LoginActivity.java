@@ -91,22 +91,27 @@ public class LoginActivity extends AppCompatActivity {
         mEmailView = (EditText) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
         loginButton = (Button) findViewById(R.id.email_sign_in_button);
+
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+        if(preferences.getBoolean("isLoggedIn",false)){
+
+            String u=preferences.getString("user","");
+            String p=preferences.getString("pass","");
+            String t=preferences.getString("token","");
+            executeAsynctask(u,p,t);
+
+        }
+
         loginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //for: not loading each time
 
-//                preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
-//                boolean isFirstTrue=preferences.getBoolean("firstload",false);
-//                if(isFirstTrue){
-//                    Toast.makeText(LoginActivity.this, "Welcome back", Toast.LENGTH_SHORT).show();
-//                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
-//
-//                }
+                if (mEmailView.getText().toString().equals("") || mPasswordView.getText().toString().equals("")){
 
-//                Toast.makeText(LoginActivity.this, , Toast.LENGTH_SHORT).show();
+                }else{
+                    executeAsynctask();
+                }
 
-                executeAsynctask();
 
             }
         });
@@ -138,17 +143,68 @@ public class LoginActivity extends AppCompatActivity {
             protected void onPostExecute(Object o) {
                 super.onPostExecute(o);
 
-                if((!token.equalsIgnoreCase("error"))|| token.equalsIgnoreCase("")){
+                if((!token.equalsIgnoreCase("error"))||token.equalsIgnoreCase("")){
+//                    if((!token.equalsIgnoreCase("error"))|| token.equalsIgnoreCase("")){
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("token",token);
+                    editor.putString("user",username);
+                    editor.putString("pass",password);
+
+                    editor.putBoolean("isLoggedIn",true);
+
                     editor.apply();
+
+                    dialog.dismiss();
+                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                    finish();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"Wrong Creds", Toast.LENGTH_SHORT).show();
                 }
                 dialog.dismiss();
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+
             }
         }).execute();
     }
+
+    //////////////////////////////////////////////
+    public void executeAsynctask(final String u,final String p,final String t){
+        (new AsyncTask() {
+            String username=u;
+            String password=p;
+            String token=t;
+            ProgressDialog dialog;
+
+            @Override
+            protected void onPreExecute() {
+                mEmailView.setText(u);
+                mPasswordView.setText(p);
+                super.onPreExecute();
+                dialog = ProgressDialog.show(LoginActivity.this,"please wait","processing");
+            }
+
+            @Override
+            protected Object doInBackground(Object[] params) {
+                token = postData(username, password);
+
+                Log.v("token",token);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+
+                dialog.dismiss();
+                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                finish();
+            }
+        }).execute();
+    }
+
+    //////////////////////////////////////////////
     public String postData(String username, String password) {
         String token = "";
         // Create a new HttpClient and Post Header

@@ -1,5 +1,6 @@
 package billingapp.psionicinteractivelimited.com.billingapp.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -139,12 +140,18 @@ public class PrintReceiptFragment extends Fragment {
 //                    Log.v("updddated_attttttttttt",cursor_tostring);
 
 
+
+
                 }else{
                     // can't get location
                     // GPS or Network is not enabled
                     // Ask user to enable GPS/network in settings
                     gps.showSettingsAlert();
                 }
+
+                ((MainActivity)getActivity()).mViewPager.setCurrentItem(0);
+                ((MainActivity)getActivity()).locationFragment.getBackFromPrintScreen();
+
 //                Log.v("updddated at",""+databasehelper.makeTimeStampEmpty(customer_global));
 
 

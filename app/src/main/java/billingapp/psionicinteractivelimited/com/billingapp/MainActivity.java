@@ -1,5 +1,6 @@
 package billingapp.psionicinteractivelimited.com.billingapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     //ush: started
     public PrintReceiptFragment printReceipttFragment;
+    public LocationFragment locationFragment;
     //ush: ends
 
 
@@ -138,7 +140,19 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         else if(id == R.id.action_logout){
+
             Toast.makeText(MainActivity.this, "Logging out...", Toast.LENGTH_SHORT).show();
+
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("isLoggedIn",false);
+            editor.apply();
+
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            finish();
+
+
+
 
 
         }
@@ -195,7 +209,8 @@ public class MainActivity extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             if(position == 0){
-                return LocationFragment.newInstance("","");
+                locationFragment = LocationFragment.newInstance("","");
+                return locationFragment;
             }else if(position == 1){
                 billPaymentFragment = BillPaymentFragment.newInstance("","");
 
@@ -206,7 +221,6 @@ public class MainActivity extends AppCompatActivity {
 
                 //ush: started
                 printReceipttFragment = PrintReceiptFragment.newInstance("","");
-
                 return printReceipttFragment;
 
                 //ush: ends

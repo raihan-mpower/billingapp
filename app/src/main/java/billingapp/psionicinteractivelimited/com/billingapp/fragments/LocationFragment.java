@@ -93,6 +93,8 @@ public class LocationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+//        ((MainActivity)getActivity()).mViewPager.setCurrentItem(0);
         View view = inflater.inflate(R.layout.fragment_location, container, false);
 
 
@@ -145,18 +147,10 @@ public class LocationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((MainActivity)getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerForProcessing);
-
                 ((MainActivity)getActivity()).mViewPager.setCurrentItem(1);
             }
         });
 
-//        view.setOnLongClickListener(new View.OnLongClickListener() {
-//            public boolean onLongClick(View arg0) {
-//                Toast.makeText(getContext(), "Long Clicked " ,Toast.LENGTH_SHORT).show();
-//
-//                return true;    // set to true
-//            }
-//        });
 
         return view;
     }
@@ -222,6 +216,42 @@ public class LocationFragment extends Fragment {
              houseOnclick(housesuggestions,databasehelper);
             }
         });
+    }
+    public void getBackFromPrintScreen(){
+        final ArrayList<String> suggestions = new ArrayList<String>();
+        for(int i = 0;i< MainActivity.territories.size();i++){
+            Log.v("naam ki",MainActivity.territories.get(i).getName());
+            suggestions.add(MainActivity.territories.get(i).getName());
+        }
+        final billingdatabaseHelper databasehelper = new billingdatabaseHelper(getActivity(),1);
+        actvOnclick(suggestions,databasehelper);
+        int index = suggestions.indexOf(atcv.getEditableText().toString());
+        Territory territory = MainActivity.territories.get(index);
+        MainActivity.sectors = databasehelper.getSectorbyTerritoryID(territory.getId());
+        final ArrayList<String> sectorsuggestions = new ArrayList<String>();
+        for(int i = 0;i< MainActivity.sectors.size();i++){
+            Log.v("naam ki",MainActivity.sectors.get(i).getSector());
+            sectorsuggestions.add(MainActivity.sectors.get(i).getSector());
+        }
+        sectorOnClick(sectorsuggestions,databasehelper);
+        index = sectorsuggestions.indexOf(sector.getEditableText().toString());
+        Sector sectorselect = MainActivity.sectors.get(index);
+        MainActivity.roads = databasehelper.getRoadbySectorID(sectorselect.getId());
+        final ArrayList<String> roadsuggestions = new ArrayList<String>();
+        for(int i = 0;i< MainActivity.roads.size();i++){
+            Log.v("road naam ki",MainActivity.roads.get(i).getRoad());
+            roadsuggestions.add(MainActivity.roads.get(i).getRoad());
+        }
+        house.setText("");
+        house.setHint("House Number");
+        customerid.setText("");
+        customerid.setHint("Customer ID");
+        telephonenumber.setText("");
+        telephonenumber.setHint("Telephone Number");
+        RoadOnClick(roadsuggestions,databasehelper);
+
+
+
     }
 
     private void houseOnclick(final ArrayList<String> housesuggestions, final billingdatabaseHelper databasehelper) {
