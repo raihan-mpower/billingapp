@@ -352,7 +352,7 @@ public class BillPaymentFragment extends Fragment {
 
     public String getNextMonth(String lastmonth){
         String[] cal={"jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"};
-        for(int i=0;i<12;i++){
+        for(int i=0;i<cal.length;i++){
 //            Log.v("Last Month", lastmonth);
             if(lastmonth.equals(cal[i])){
 //                Log.v("what month", cal[i]);

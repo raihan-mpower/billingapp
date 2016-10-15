@@ -27,6 +27,7 @@
                 android:background="@drawable/textboxback"
                 android:textColor="#ffffff"
                 android:hint="City"
+                android:text=""
                 android:textColorHint="#ffffff"
                 android:layout_weight="1" />
 
@@ -39,6 +40,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/textboxback"
+                android:text=""
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff"
                 android:hint="Sector or Block"
@@ -53,6 +55,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/textboxback"
+                android:text=""
                 android:textColor="#ffffff"
                 android:hint="Road Number"
                 android:textColorHint="#ffffff"
@@ -67,6 +70,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/textboxback"
+                android:text=""
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff"
                 android:hint="House Number"
@@ -110,6 +114,7 @@
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/textboxback"
                 android:hint="Customer ID"
+                android:text=""
                 android:textColorHint="#fff"
                 android:textColor="#ffffff"
                 android:layout_weight="1" />
@@ -124,6 +129,7 @@
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/textboxback"
                 android:hint="Telephone Number"
+                android:text=""
                 android:textColorHint="#fff"
                 android:textColor="#ffffff"
                 android:layout_weight="1" />
@@ -132,6 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:text="Bill Payment"
+                android:textSize="20sp"
                 android:id="@+id/bill_payment"
                 android:layout_gravity="center_horizontal"
                 android:textColor="#ffffff"

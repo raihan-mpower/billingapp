@@ -90,12 +90,13 @@ public class LocationFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
 //        ((MainActivity)getActivity()).mViewPager.setCurrentItem(0);
         View view = inflater.inflate(R.layout.fragment_location, container, false);
+
+
 
 
 
@@ -143,13 +144,13 @@ public class LocationFragment extends Fragment {
 
             }
         });
-        billpayment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity)getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerForProcessing);
-                ((MainActivity)getActivity()).mViewPager.setCurrentItem(1);
-            }
-        });
+//        billpayment.setOnClickListener(new View.OnClickListe//r() {
+//            @O//rride
+//            public void onClick(Vi// v) {
+//                ((MainActivity)getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerForProce//ing);
+//                ((MainActivity)getActivity()).mViewPager.setCurrentI//m(1);
+//      //    }
+//        });
 
 
         return view;

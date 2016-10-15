@@ -29,7 +29,8 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            >
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -41,14 +42,15 @@
                     android:layout_height="wrap_content"
                     android:text="Address: "
                     android:id="@+id/address_label"
-                    android:textColor="#ffffff" />
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/address_info"
                     android:textColor="#ffffff"
-                    android:textStyle="bold" />
+                    android:textSize="20sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -61,14 +63,15 @@
                     android:layout_height="wrap_content"
                     android:text="User Name: "
                     android:id="@+id/user_name_label"
-                    android:textColor="#ffffff" />
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/username_info"
-                    android:textStyle="bold"
-                    android:textColor="#ffffff" />
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -81,14 +84,15 @@
                     android:layout_height="wrap_content"
                     android:text="User ID: "
                     android:id="@+id/user_id_label"
-                    android:textColor="#ffffff" />
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/userid_info"
                     android:textColor="#ffffff"
-                    android:textStyle="bold" />
+                    android:textSize="20sp"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -128,15 +132,33 @@
 
 
         </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Month Due :"
-            android:id="@+id/textView6"
-            android:layout_margin="15dp"
-            android:textColor="#ffffff" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Month Due :"
+                android:id="@+id/textView6"
+                android:layout_margin="15dp"
+                android:textColor="#fff"
+                />
+            <Button
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/addtag"
+                android:id="@+id/button_add_month"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"/>
+        </LinearLayout>
+
+
 
         <ScrollView
             android:layout_width="match_parent"
@@ -154,15 +176,7 @@
                 android:layout_margin="15dp" />
         </ScrollView>
 
-        <Button
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/addtag"
-            android:id="@+id/button_add_month"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"/>
+
 
         <TableLayout
            android:layout_width="match_parent"
