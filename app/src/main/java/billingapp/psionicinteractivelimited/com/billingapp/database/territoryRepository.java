@@ -43,8 +43,8 @@ public class territoryRepository {
         return readAllTerritory(cursor);
     }
     public static ArrayList<Territory> getALLterritory(SQLiteDatabase database) {
-        Cursor cursor = database.query(tableName, columns, null, null,
-                null, null, null, null);
+        Cursor cursor = database.query(tableName, columns, null, null, null, null, null, null);
+
         return readAllTerritory(cursor);
     }
     private static ArrayList<Territory> readAllTerritory(Cursor cursor) {

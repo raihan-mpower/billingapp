@@ -15,13 +15,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cunoraz.tagview.Tag;
 import com.cunoraz.tagview.TagView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import billingapp.psionicinteractivelimited.com.billingapp.MainActivity;
 import billingapp.psionicinteractivelimited.com.billingapp.R;
@@ -50,8 +53,16 @@ public class BillPaymentFragment extends Fragment {
     private TextView amount_due_info;
     public int count = 0;
     String amount = "0.00";
-    String months = "";
     private Button print;
+    private Button add_month;
+
+    ArrayList<String> months=new ArrayList<>();
+    int monthsCounter=0;
+    //u.start
+    int customer_price;
+
+//    final ArrayList<Tag> tags= new ArrayList<>();
+    //u.end
 
 
     public BillPaymentFragment() {
@@ -98,9 +109,13 @@ public class BillPaymentFragment extends Fragment {
         tagGroup = (TagView)view.findViewById(R.id.tag_group);
         print = (Button)view.findViewById(R.id.button_print);
 
+        add_month= (Button) view.findViewById(R.id.button_add_month);
+
+
+
         return view;
     }
-    public void initiateCustomers(Customers customer){
+    public void initiateCustomers(final Customers customer) throws ParseException {
 //        TextView UserInformation\
 
         count = 0;
@@ -108,10 +123,23 @@ public class BillPaymentFragment extends Fragment {
         user_name.setText(customer.getName());
         user_id.setText(customer.getCustomer_code());
 
-        ArrayList<String> monthsdue = getmonthsDue(customer.getLast_paid());
+        //u.start
+        customer_price=Integer.parseInt(customer.getPrice());
+        //u.end
+
+//        Toast.makeText(getContext(), customer.getLast_paid(), Toast.LENGTH_SHORT).show();
+        String s=customer.getLast_paid();
+        SimpleDateFormat simpleDateFormat =new SimpleDateFormat("yyyy-MM-dd");
+        Date date=simpleDateFormat.parse(s);
+        int m=date.getMonth();
+        Toast.makeText(getContext(), "Last paid "+getMonthFromInt(m), Toast.LENGTH_SHORT).show();
 
 
-        ArrayList<Tag> tags = new ArrayList<>();
+        ArrayList<String> monthsdue = getmonthsDue(getMonthFromInt(m));
+
+
+       final ArrayList<Tag> tags = new ArrayList<>();
+
 
         for(int i = 0;i < monthsdue.size();i++){
             Tag tag = new Tag(monthsdue.get(i));
@@ -120,6 +148,12 @@ public class BillPaymentFragment extends Fragment {
             tag.tagTextColor = Color.BLACK;
             tag.isDeletable = true;
             tags.add(tag);
+
+            //ush.start
+//            months= months + " " + tag.text;
+            months.add(tag.text+"");
+            monthsCounter++;
+            //
         }
 
 
@@ -129,6 +163,7 @@ public class BillPaymentFragment extends Fragment {
         tagGroup.setOnTagClickListener(new TagView.OnTagClickListener() {
             @Override
             public void onTagClick(Tag tag, int position) {
+
             }
         });
 
@@ -136,13 +171,29 @@ public class BillPaymentFragment extends Fragment {
         tagGroup.setOnTagDeleteListener(new TagView.OnTagDeleteListener() {
             @Override
             public void onTagDeleted(final TagView view, final Tag tag, final int position) {
-                tagGroup.remove(position);
-                if(months.equalsIgnoreCase("")){
-                    months = tag.text;
-                }else {
-                    months = months + "," + tag.text;
+
+                Log.v("tag position",""+position);
+                Log.v("months counter",""+monthsCounter);
+                Log.v("count",""+count);
+//                && position==monthsCounter+1
+                if(!months.isEmpty() && position==(count-1)){
+                    //removing deleted month from "months" string
+                    tagGroup.remove(position);
+                    Toast.makeText(getActivity(), "Month "+tag.text+" Deleted successfully", Toast.LENGTH_LONG).show();
+                    tags.remove(position);
+                    months.remove(position);
+                    monthsCounter--;
+                    //ush.end
+                    changePriceandTag(customer,-1);
                 }
-//                tag.text;
+                else
+                {
+                    Toast.makeText(getContext(), "Can't delete this tag", Toast.LENGTH_SHORT).show();
+                }
+
+                //u.start
+//                changePriceandTag(customer,-1);
+                //u.end
             }
         });
         if(customer.getPrice()!=null) {
@@ -151,20 +202,113 @@ public class BillPaymentFragment extends Fragment {
                 amount_due_info.setText(""+(Integer.parseInt(customer.getPrice())*count));
                 amount = ""+(Integer.parseInt(customer.getPrice())*count);
             }catch (Exception e){
-                amount_due_info.setText(customer.getPrice());
+//                amount_due_info.setText(customer.getPrice());
 //
             }
         }
+
+
+
         print.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerSelected,amount,months);
+                int amountInInt= Integer.parseInt(amount);
+                if(amountInInt<=0){
+                        //do nothing
+                }else{
+//                    months=monthTextChecker(months);
+                    String monthsString=months.toString();
+//                    ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerSelected.get(0),amount,months);
+                    ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerForProcessing,amount,monthsString,monthsCounter);
 
-                ((MainActivity)getActivity()).mViewPager.setCurrentItem(2);
+                    ((MainActivity)getActivity()).mViewPager.setCurrentItem(2);
+
+
+                }
+            }
+        });
+
+        add_month.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+
+
+//                Toast.makeText(getActivity(), ""+months.get(monthsCounter-1), Toast.LENGTH_SHORT).show();
+                if(monthsCounter>0) {
+                    Tag tag = new Tag(getNextMonth(months.get(monthsCounter - 1)));
+                    tag.radius = 10f;
+                    tag.layoutColor = Color.GRAY;
+                    tag.tagTextColor = Color.BLACK;
+                    tag.isDeletable = true;
+                    tags.add(tag);
+
+                    months.add(tag.text);
+                    monthsCounter++;
+
+                    tagGroup.addTags(tags);
+                    changePriceandTag(customer, 1);
+                }
+                else if(monthsCounter==0){
+                    Toast.makeText(getActivity(), ""+customer.getLast_paid(), Toast.LENGTH_SHORT).show();
+
+                    Tag tag = new Tag(getNextMonthServer(customer.getLast_paid().toLowerCase()));
+
+                    tag.radius = 10f;
+                    tag.layoutColor = Color.GRAY;
+                    tag.tagTextColor = Color.BLACK;
+                    tag.isDeletable = true;
+                    tags.add(tag);
+
+                    months.add(tag.text);
+                    monthsCounter++;
+
+                    tagGroup.addTags(tags);
+                    changePriceandTag(customer, 1);
+
+
+                }else
+                {
+                    Toast.makeText(getActivity(), "No month added", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
     }
+
+    //ush.start
+
+    //comma editor
+//    public String monthTextChecker(String monthsForCheck){
+//        while(true)
+//        if(monthsForCheck.charAt(0)==',' || )
+//        {
+//            monthsForCheck.replace(",","");
+//        }
+//
+//        return monthsForCheck;
+//    }
+
+    public void changePriceandTag(Customers custom,int reduceORadd){
+
+        int newPrice;
+
+        if(reduceORadd<0)
+        {
+            newPrice = (Integer.parseInt(custom.getPrice()) * count - (Integer.parseInt(custom.getPrice())));
+            count--;
+        }else{
+            newPrice = (Integer.parseInt(custom.getPrice()) * count + (Integer.parseInt(custom.getPrice())));
+            count++;
+        }
+
+        amount = "" + newPrice;
+        amount_due_info.setText(amount);
+    }
+    //ush.end
+
+
     public ArrayList<String> getmonthsDue(String lastpaidmonth){
         ArrayList<String> months = new ArrayList<String>();
         months.add("jan");
@@ -198,14 +342,15 @@ public class BillPaymentFragment extends Fragment {
         if((indexofcurrentmonth-indexoflastpaid)>0){
             for(int i = indexoflastpaid;i<indexofcurrentmonth;i++){
                 monthstoreturn.add(months.get(i));
+
                 count ++;
             }
         }else if((indexofcurrentmonth-indexoflastpaid)<0){
-            for(int i = indexofcurrentmonth;i<12;i++){
+            for(int i = indexoflastpaid;i<12;i++){
                 monthstoreturn.add(months.get(i));
                 count++;
             }
-            for(int i = 0;i<indexoflastpaid;i++){
+            for(int i = 0;i<indexofcurrentmonth;i++){
                 monthstoreturn.add(months.get(i));
                 count++;
             }
@@ -213,6 +358,35 @@ public class BillPaymentFragment extends Fragment {
         return monthstoreturn;
 
 
+    }
+
+    public String getNextMonth(String lastmonth){
+        String[] cal={"jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"};
+        for(int i=0;i<cal.length;i++){
+//            Log.v("Last Month", lastmonth);
+            if(lastmonth.equals(cal[i])){
+//                Log.v("what month", cal[i]);
+                return cal[(i+1)%12];
+            }
+        }
+        return "err";
+
+    }
+
+    public String getNextMonthServer(String month){
+        String[] cal={"jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"};
+        for(int i=0;i<12;i++){
+//            Log.v("Last Month", lastmonth);
+            if(month.contains(cal[i])){
+//                Log.v("what month", cal[i]);
+                return cal[(i+1)%12];
+            }
+        }
+        return "err";
+    }
+    public String getMonthFromInt(int m) {
+        String[] cal = {"jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"};
+        return cal[m];
     }
 
 

@@ -1,13 +1,17 @@
 package billingapp.psionicinteractivelimited.com.billingapp.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cunoraz.tagview.Tag;
 import com.cunoraz.tagview.TagView;
@@ -16,8 +20,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import billingapp.psionicinteractivelimited.com.billingapp.LoginActivity;
+import billingapp.psionicinteractivelimited.com.billingapp.MainActivity;
 import billingapp.psionicinteractivelimited.com.billingapp.R;
+import billingapp.psionicinteractivelimited.com.billingapp.model.GPSTracker;
 import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Customers;
+import billingapp.psionicinteractivelimited.com.billingapp.database.billingdatabaseHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +61,13 @@ public class PrintReceiptFragment extends Fragment {
     private String print_payment_date="";
     private String print_notice="";
     private String print_powered_by="";
+    private int monthsCounter;
+
+    private Button confirmationButton;
+
+    GPSTracker gps;
+
+    Customers customer_global;
 
 
     //ush: ends
@@ -96,28 +111,71 @@ public class PrintReceiptFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_print, container, false);
 
+        final billingdatabaseHelper databasehelper = new billingdatabaseHelper(getActivity(),1);
+
         mTextView_company= (TextView) view.findViewById(R.id.print_texts_company);
         mTextView_user= (TextView) view.findViewById(R.id.print_texts_user);
-
-
         //ush: started
+        confirmationButton= (Button) view.findViewById(R.id.confirmationButton);
 
 
         //ush: ends
 //        mTextView_user.setShadowLayer(1, 0, 0, Color.BLACK);
 //        mTextView_company.setShadowLayer(1, 0, 0, Color.BLACK);
 
+        confirmationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                gps=new GPSTracker(getContext());
+                if(gps.canGetLocation()){
+
+                    double latitude = gps.getLatitude();
+                    double longitude = gps.getLongitude();
+
+                    // \n is for new line
+                    Toast.makeText(getContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+
+                    databasehelper.makeTimeStampEmpty(customer_global,""+latitude,""+longitude,""+print_due_amount,monthsCounter,print_payment_date);
+//                    Log.v("updddated_attttttttttt",cursor_tostring);
+
+
+
+
+                }else{
+                    // can't get location
+                    // GPS or Network is not enabled
+                    // Ask user to enable GPS/network in settings
+                    gps.showSettingsAlert();
+                }
+
+                ((MainActivity)getActivity()).mViewPager.setCurrentItem(0);
+                ((MainActivity)getActivity()).locationFragment.getBackFromPrintScreen();
+
+//                Log.v("updddated at",""+databasehelper.makeTimeStampEmpty(customer_global));
+
+
+
+
+            }
+        });
+//        public void proceedToConfirmation(View v) {
+//        Toast.makeText(getContext(), "processing...", Toast.LENGTH_LONG).show();
+//        }
+
         return view;
     }
-    public void initiateCustomers(Customers customer,String amount,String months){
+    public void initiateCustomers(Customers customer,String amount,String months,int monthsCounter){
 //        TextView UserInformation
-
+        customer_global=customer;
         String print_address=customer.getAddress();
-        String print_user_name="Psionic Interactive Limited";
+//        String print_user_name="Psionic Interactive Limited";
+        String print_user_name=customer.getName();
         String print_user_id=customer.getCustomer_code();
-        String print_due_amount=amount;
-        String print_due_month=months;
-        String print_payment_date=new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+         print_due_amount=amount;
+         print_due_month=months;
+        this.monthsCounter=monthsCounter;
+        print_payment_date=new SimpleDateFormat("dd-MM-yyyy").format(new Date());
         String print_notice="Please submit a signed copy of the bill to the collector.";
         print_powered_by="Psionic Interactive Limited";
 
@@ -143,6 +201,8 @@ public class PrintReceiptFragment extends Fragment {
 
 
     }
+
+
 
 
 

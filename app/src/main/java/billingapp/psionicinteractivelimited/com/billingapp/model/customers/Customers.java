@@ -29,6 +29,15 @@ public class Customers
 
     private String last_paid;
 
+    private String updated_at;
+
+    public static String to_sync_lat="default";
+    public static String to_sync_lon="deafult";
+    public static String to_sync_paying_for="deafult";
+    public static String to_sync_total_amount="deafult";
+    public static String to_sync_collection_date="deafult";
+
+
     public String getHouses_id ()
     {
         return houses_id;
@@ -49,10 +58,7 @@ public class Customers
         this.phone = phone;
     }
 
-    public String getPrice ()
-    {
-        return price;
-    }
+    public String getPrice () { return price;}
 
     public void setPrice (String price)
     {
@@ -69,7 +75,19 @@ public class Customers
         this.customer_code = customer_code;
     }
 
-    public Customers(  String houses_id,String phone,String price,String customer_code,String address,String customers_id,String name, String last_paid  ) {
+    public String get_to_sync_lat () { return to_sync_lat;}
+    public String get_to_sync_lon () { return to_sync_lon;}
+    public String get_to_sync_paying_for () { return to_sync_paying_for;}
+    public String get_to_sync_total_amount () { return to_sync_total_amount;}
+    public String get_to_sync_collection_date () { return to_sync_collection_date;}
+
+    public void set_to_sync_lat (String a) { this.to_sync_lat=a;}
+    public void set_to_sync_lon (String a) {this.to_sync_lon=a;}
+    public void set_to_sync_paying_for (String a) {this.to_sync_paying_for=a;}
+    public void set_to_sync_total_amount (String a) { this.to_sync_total_amount=a;}
+    public void set_to_sync_collection_date (String a) {this.to_sync_collection_date=a;}
+
+    public Customers(  String houses_id,String phone,String price,String customer_code,String address,String customers_id,String name, String last_paid, String updated_at ) {
         this.last_paid = last_paid;
         this.name = name;
         this.customers_id = customers_id;
@@ -78,6 +96,8 @@ public class Customers
         this.price = price;
         this.phone = phone;
         this.houses_id = houses_id;
+
+        this.updated_at = updated_at;
     }
 
     public String getAddress ()
@@ -121,16 +141,31 @@ public class Customers
         this.last_paid = last_paid;
     }
 
+    //updated_at
+
+    //ius start
+    public String getUpdated_at ()
+    {
+        return updated_at;
+    }
+
+    public void setUpdated_at (String updated_at)
+    {
+        this.updated_at = updated_at;
+    }
+
+    //ius end
+
     @Override
     public String toString()
     {
-        return "ClassPojo [houses_id = "+houses_id+", phone = "+phone+", price = "+price+", customer_code = "+customer_code+", address = "+address+", customers_id = "+customers_id+", name = "+name+", last_paid = "+last_paid+"]";
+        return "ClassPojo [houses_id = "+houses_id+", phone = "+phone+", price = "+price+", customer_code = "+customer_code+", address = "+address+", customers_id = "+customers_id+", name = "+name+", last_paid = "+last_paid+", updated_at = "+updated_at+", location: lat = "+to_sync_lat+", location: lon = "+to_sync_lon+", paying for = "+to_sync_paying_for+", bill amount = "+to_sync_total_amount+", collection date = "+to_sync_collection_date+"]";
     }
 
     public static Customers jsontoCustomers(String json) {
         try {
             JSONObject customerJson = new JSONObject(json);
-            Customers customerToReturn = new Customers(customerJson.getString("houses_id"),customerJson.getString("phone"),customerJson.getString("price"),customerJson.getString("customer_code"),customerJson.getString("address"),customerJson.getString("customers_id"),customerJson.getString("name"),customerJson.getString("last_paid"));
+            Customers customerToReturn = new Customers(customerJson.getString("houses_id"),customerJson.getString("phone"),customerJson.getString("price"),customerJson.getString("customer_code"),customerJson.getString("address"),customerJson.getString("customers_id"),customerJson.getString("name"),customerJson.getString("last_paid"),customerJson.getString("updated_at"));
             return customerToReturn;
         } catch (JSONException e) {
             e.printStackTrace();

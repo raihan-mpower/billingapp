@@ -1,11 +1,14 @@
 package billingapp.psionicinteractivelimited.com.billingapp.database;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -58,6 +61,10 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
             }
         }
     }
+    public ArrayList<Customers> getALLCustomers(){
+        return customerRepository.getALLCustomers(getReadableDatabase());
+//        return null;
+    }
     public ArrayList<Customers> getCustomersbyCustomerID(String customerID){
         return customerRepository.findByCustomerCaseID(customerID,getReadableDatabase());
 //        return null;
@@ -82,7 +89,7 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
     public void updateCustomer(Customers customer) {
         SQLiteDatabase database = getWritableDatabase();
         ContentValues valuesToUpdate = customerRepository.getCustomerValues(customer);
-        database.update(customerRepository.tableName, valuesToUpdate, customerRepository.houses_id + " = ?", new String[]{customer.getHouses_id()});
+        database.update(customerRepository.tableName, valuesToUpdate, customerRepository.customers_id + " = ?", new String[]{customer.getCustomers_id()});
     }
     ///////////////////////////////////////////////////////
 
@@ -205,6 +212,34 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
         database.update(territoryRepository.tableName, valuesToUpdate, territoryRepository.id + " = ?", new String[]{territory.getId()});
     }
     ///////////////////////////////////////////////////////
+
+    public void makeTimeStampEmpty(Customers customer, String lat, String lon,String amount,int monthCounter,String collectionDate){
+        SQLiteDatabase database_to_null_timestamp = getWritableDatabase();
+        ContentValues valuesToUpdate = new ContentValues();
+        valuesToUpdate.put("updated_at","");
+        valuesToUpdate.put("to_sync_lat",lat);
+        valuesToUpdate.put("to_sync_lon",lon);
+        valuesToUpdate.put("to_sync_paying_for",monthCounter);
+        valuesToUpdate.put("to_sync_total_amount",amount);
+        valuesToUpdate.put("to_sync_collection_date",collectionDate);
+
+        database_to_null_timestamp.update(customerRepository.tableName, valuesToUpdate, customerRepository.customers_id + " = ?", new String[]{customer.getCustomers_id()});
+
+//        SQLiteDatabase db = getReadableDatabase();
+//        Cursor cursor = db.rawQuery("SELECT "+customerRepository.updated_at+" FROM "+customerRepository.tableName,null);
+//        return cursor.toString();
+
+    }
+
+    public ArrayList<Customers> getCustomersWithNoTimestamp(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return customerRepository.findCustomerByBlankTimestamp(db);
+
+
+    }
+
+
+
 
 
 }
