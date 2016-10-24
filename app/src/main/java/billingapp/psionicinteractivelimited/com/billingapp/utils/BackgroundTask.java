@@ -47,8 +47,8 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     @Override
     protected String doInBackground(String... params) {
 
-        String sync_url = "http://cable.psionichub.com/sync/billingdata?token="+token;
-
+//        String sync_url = "http://cable.psionichub.com/sync/billingdata?token="+token;
+        String sync_url = "http://192.168.0.100:8000/sync/billingdata?token="+token;
             try {
 
 
@@ -102,74 +102,6 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                     httpURLConnection.disconnect();
 
                 }
-//                bufferedReader.close();
-//                inputStream.close();
-
-
-
-
-
-
-
-//                URL url = new URL(sync_url);
-//                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-//                httpURLConnection.setRequestMethod("POST");
-//                httpURLConnection.setDoOutput(true);
-//                httpURLConnection.setDoInput(true);
-//
-//                OutputStream OS = httpURLConnection.getOutputStream();
-//                InputStream inputStream = httpURLConnection.getInputStream();
-//
-//                /// data from sqlite
-//                billingdatabaseHelper dbHelper=new billingdatabaseHelper(ctx,1);
-//                ArrayList<Customers> arrayList =  dbHelper.getCustomersWithNoTimestamp();
-//                String test = arrayList.toString();
-//                Log.v("Array List length",arrayList.size()+"");
-//
-//                BufferedWriter bufferedWriter;
-//                BufferedReader bufferedReader;
-//
-//                for (int arrayListCounter=0;arrayListCounter<=arrayList.size();arrayListCounter++){
-//
-//                    bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
-//                    bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
-//                    // etotuk porjonto ok ok ok
-//
-//                    Customers customer= arrayList.get(arrayListCounter);
-//
-//                    String data = URLEncoder.encode("customer_id", "UTF-8") + "=" + URLEncoder.encode(customer.getCustomers_id(), "UTF-8") + "&" +
-//                                URLEncoder.encode("total_bill", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_total_amount(), "UTF-8") + "&" +
-//                                URLEncoder.encode("collection_date", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_collection_date(), "UTF-8")+"&"+
-//                                URLEncoder.encode("lat", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_lat(), "UTF-8")+"&"+
-//                                URLEncoder.encode("lon", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_lon(), "UTF-8");
-//                    Log.v("Dataaaaaaaaaaaaaaa",data );
-//
-//
-//                        Log.v(""+customer.getCustomers_id()," "+customer.get_to_sync_total_amount()+" "+customer.get_to_sync_collection_date()+" "+customer.get_to_sync_lat()+" "+customer.get_to_sync_lon());
-//
-//                    bufferedWriter.write(data);
-//                    bufferedWriter.flush();
-//                    bufferedWriter.close();
-//
-//                    String response = "";
-//                    String line = "";
-//                    while ((line = bufferedReader.readLine())!=null)
-//                    {
-//                        response += line;
-//                    }
-//                    Log.v("Response from server",""+customer.getCustomers_id()+" "+response);
-//
-//                    bufferedReader.close();
-//
-//                }
-//
-//
-//                OS.close();
-//                  bufferedReader.close();
-//                inputStream.close();
-//
-//                httpURLConnection.disconnect();
-//                return "Registration Success...";
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {

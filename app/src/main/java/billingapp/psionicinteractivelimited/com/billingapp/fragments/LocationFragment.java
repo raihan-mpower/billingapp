@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import billingapp.psionicinteractivelimited.com.billingapp.MainActivity;
@@ -96,10 +97,6 @@ public class LocationFragment extends Fragment {
 //        ((MainActivity)getActivity()).mViewPager.setCurrentItem(0);
         View view = inflater.inflate(R.layout.fragment_location, container, false);
 
-
-
-
-
         final billingdatabaseHelper databasehelper = new billingdatabaseHelper(getActivity(),1);
         MainActivity.territories =territoryRepository.getALLterritory(databasehelper.getReadableDatabase());
 
@@ -140,8 +137,6 @@ public class LocationFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             actvOnclick(suggestions,databasehelper);
-
-
             }
         });
 //        billpayment.setOnClickListener(new View.OnClickListe//r() {
@@ -302,7 +297,11 @@ public class LocationFragment extends Fragment {
                 public void onClick(View v) {
 
                     if (checkBlankFields()){
-                        ((MainActivity) getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerForProcessing);
+                        try {
+                            ((MainActivity) getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerForProcessing);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         ((MainActivity) getActivity()).mViewPager.setCurrentItem(1);
 
                     }

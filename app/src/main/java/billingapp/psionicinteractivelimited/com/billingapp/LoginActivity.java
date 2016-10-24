@@ -209,7 +209,7 @@ public class LoginActivity extends AppCompatActivity {
         String token = "";
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://cable.psionichub.com/authmob");
+        HttpPost httppost = new HttpPost("http://192.168.0.100:8000/authmob");
 
         try {
             // Add your data

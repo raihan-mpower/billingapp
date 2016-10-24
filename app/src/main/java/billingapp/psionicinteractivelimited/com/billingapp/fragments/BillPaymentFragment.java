@@ -20,9 +20,11 @@ import android.widget.Toast;
 import com.cunoraz.tagview.Tag;
 import com.cunoraz.tagview.TagView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import billingapp.psionicinteractivelimited.com.billingapp.MainActivity;
 import billingapp.psionicinteractivelimited.com.billingapp.R;
@@ -113,7 +115,7 @@ public class BillPaymentFragment extends Fragment {
 
         return view;
     }
-    public void initiateCustomers(final Customers customer){
+    public void initiateCustomers(final Customers customer) throws ParseException {
 //        TextView UserInformation\
 
         count = 0;
@@ -125,7 +127,15 @@ public class BillPaymentFragment extends Fragment {
         customer_price=Integer.parseInt(customer.getPrice());
         //u.end
 
-        ArrayList<String> monthsdue = getmonthsDue(customer.getLast_paid());
+//        Toast.makeText(getContext(), customer.getLast_paid(), Toast.LENGTH_SHORT).show();
+        String s=customer.getLast_paid();
+        SimpleDateFormat simpleDateFormat =new SimpleDateFormat("yyyy-MM-dd");
+        Date date=simpleDateFormat.parse(s);
+        int m=date.getMonth();
+        Toast.makeText(getContext(), "Last paid "+getMonthFromInt(m), Toast.LENGTH_SHORT).show();
+
+
+        ArrayList<String> monthsdue = getmonthsDue(getMonthFromInt(m));
 
 
        final ArrayList<Tag> tags = new ArrayList<>();
@@ -336,11 +346,11 @@ public class BillPaymentFragment extends Fragment {
                 count ++;
             }
         }else if((indexofcurrentmonth-indexoflastpaid)<0){
-            for(int i = indexofcurrentmonth;i<12;i++){
+            for(int i = indexoflastpaid;i<12;i++){
                 monthstoreturn.add(months.get(i));
                 count++;
             }
-            for(int i = 0;i<indexoflastpaid;i++){
+            for(int i = 0;i<indexofcurrentmonth;i++){
                 monthstoreturn.add(months.get(i));
                 count++;
             }
@@ -373,7 +383,10 @@ public class BillPaymentFragment extends Fragment {
             }
         }
         return "err";
-
+    }
+    public String getMonthFromInt(int m) {
+        String[] cal = {"jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"};
+        return cal[m];
     }
 
 
