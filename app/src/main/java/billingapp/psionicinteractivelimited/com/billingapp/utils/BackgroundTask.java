@@ -48,8 +48,10 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
     protected String doInBackground(String... params) {
 
 //        String sync_url = "http://cable.psionichub.com/sync/billingdata?token="+token;
-        String sync_url = "http://192.168.0.100:8000/sync/billingdata?token="+token;
-            try {
+//        String sync_url = "http://192.168.0.100:8000/sync/billingdata?token="+token;
+        String sync_url = "http://192.168.0.100:8000/sync/billingdata/";
+
+        try {
 
 
                 URL url = new URL(sync_url);
@@ -63,22 +65,32 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                 for (int arrayListCounter=0;arrayListCounter<arrayList.size();arrayListCounter++){
 
                     HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+
                     httpURLConnection.setRequestMethod("POST");
-                    httpURLConnection.setDoOutput(true);
-                    httpURLConnection.setDoInput(true);
-
-                    OutputStream outputStream = httpURLConnection.getOutputStream();
-                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
-
-
+                    String basicAuth="Bearer {"+token+"}";
+                    httpURLConnection.setRequestProperty("Authorization",basicAuth);
                     Customers customer= arrayList.get(arrayListCounter);
 
-                    String data = URLEncoder.encode("customer_id", "UTF-8") + "=" + URLEncoder.encode(customer.getCustomers_id(), "UTF-8") + "&" +
-                            URLEncoder.encode("total_bill", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_total_amount(), "UTF-8") + "&" +
+//to_sync_paying_for
+
+                    String data = URLEncoder.encode("customers_id", "UTF-8") + "=" + URLEncoder.encode(customer.getCustomers_id(), "UTF-8") + "&" +
+                            URLEncoder.encode("total", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_total_amount(), "UTF-8") + "&" +
+                            URLEncoder.encode("last_paid_date_num", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_paying_for(), "UTF-8") + "&" +
                             URLEncoder.encode("collection_date", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_collection_date(), "UTF-8")+"&"+
                             URLEncoder.encode("lat", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_lat(), "UTF-8")+"&"+
                             URLEncoder.encode("lon", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_lon(), "UTF-8");
                     Log.v("Dataaaaaaaaaaaaaaa",data );
+
+                    httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                    httpURLConnection.setRequestProperty("Content-Length", "" + data.getBytes().length);
+                    httpURLConnection.setRequestProperty("Content-Language", "en-US");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream outputStream = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
+
+
+
 
 
                     Log.v(""+customer.getCustomers_id()," "+customer.get_to_sync_total_amount()+" "+customer.get_to_sync_collection_date()+" "+customer.get_to_sync_lat()+" "+customer.get_to_sync_lon());
@@ -103,8 +115,10 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 
                 }
             } catch (MalformedURLException e) {
+                Log.v("exception Malformed",""+e);
                 e.printStackTrace();
             } catch (IOException e) {
+            Log.v("exception IO",""+e);
                 e.printStackTrace();
             }
 
