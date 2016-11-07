@@ -126,7 +126,8 @@ public class LocationFragment extends Fragment {
         telephonenumber.setThreshold(-1);
 
         final ArrayList<String> suggestions = new ArrayList<String>();
-        for(int i = 0;i< MainActivity.territories.size();i++){
+        for(int i = 0;i< MainActivity.territories.size
+                ();i++){
             Log.v("naam ki",MainActivity.territories.get(i).getName());
             suggestions.add(MainActivity.territories.get(i).getName());
         }

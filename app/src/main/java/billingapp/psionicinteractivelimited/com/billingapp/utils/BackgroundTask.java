@@ -49,7 +49,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 
 //        String sync_url = "http://cable.psionichub.com/sync/billingdata?token="+token;
 //        String sync_url = "http://192.168.0.100:8000/sync/billingdata?token="+token;
-        String sync_url = "http://192.168.0.100:8000/sync/billingdata/";
+        String sync_url = "http://192.168.0.101:8000/sync/billingdata/";
 
         try {
 
@@ -76,7 +76,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                     String data = URLEncoder.encode("customers_id", "UTF-8") + "=" + URLEncoder.encode(customer.getCustomers_id(), "UTF-8") + "&" +
                             URLEncoder.encode("total", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_total_amount(), "UTF-8") + "&" +
                             URLEncoder.encode("last_paid_date_num", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_paying_for(), "UTF-8") + "&" +
-                            URLEncoder.encode("collection_date", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_collection_date(), "UTF-8")+"&"+
+                            URLEncoder.encode("timestamp", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_collection_date(), "UTF-8")+"&"+
                             URLEncoder.encode("lat", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_lat(), "UTF-8")+"&"+
                             URLEncoder.encode("lon", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_lon(), "UTF-8");
                     Log.v("Dataaaaaaaaaaaaaaa",data );
@@ -86,6 +86,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                     httpURLConnection.setRequestProperty("Content-Language", "en-US");
                     httpURLConnection.setDoOutput(true);
                     httpURLConnection.setDoInput(true);
+
                     OutputStream outputStream = httpURLConnection.getOutputStream();
                     BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
 

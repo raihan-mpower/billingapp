@@ -107,7 +107,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (mEmailView.getText().toString().equals("") || mPasswordView.getText().toString().equals("")){
-
                 }else{
                     executeAsynctask();
                 }
@@ -209,7 +208,7 @@ public class LoginActivity extends AppCompatActivity {
         String token = "";
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://192.168.0.100:8000/authmob");
+        HttpPost httppost = new HttpPost("http://192.168.0.101:8000/authmob");
 
         try {
             // Add your data
