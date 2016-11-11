@@ -24,17 +24,39 @@
             android:background="#606060"
 
             >
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tab_layout"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent">
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tab_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="0dp"
+                    android:layout_weight="1"
+                    app:tabTextAppearance="@style/CustomTextStyle" />
+
+                <Button
+                    android:text=""
+                    android:onClick="QrScanner"
+                    android:background="@drawable/qrcodeicon"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/button" />
+            </LinearLayout>
+
 
         </android.support.v7.widget.Toolbar>
+
+
+
 
     </android.support.design.widget.AppBarLayout>
 
 
-    <android.support.v4.view.ViewPager
+    <billingapp.psionicinteractivelimited.com.billingapp.utils.CustomViewPager
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -1,5 +1,7 @@
 package billingapp.psionicinteractivelimited.com.billingapp;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -12,17 +14,22 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import billingapp.psionicinteractivelimited.com.billingapp.database.billingdatabaseHelper;
+import billingapp.psionicinteractivelimited.com.billingapp.database.customerRepository;
 import billingapp.psionicinteractivelimited.com.billingapp.fragments.BillPaymentFragment;
 import billingapp.psionicinteractivelimited.com.billingapp.fragments.LocationFragment;
 import billingapp.psionicinteractivelimited.com.billingapp.fragments.PrintReceiptFragment;
@@ -31,10 +38,19 @@ import billingapp.psionicinteractivelimited.com.billingapp.model.location.House;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.Road;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.Sector;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.Territory;
+import billingapp.psionicinteractivelimited.com.billingapp.utils.CustomViewPager;
 import billingapp.psionicinteractivelimited.com.billingapp.utils.syncUtils;
 import billingapp.psionicinteractivelimited.com.billingapp.utils.BackgroundTask;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.zxing.Result;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
+
+public class MainActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -45,11 +61,13 @@ public class MainActivity extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
+    private ZXingScannerView mScannerView;
+    Dialog qrdialog;
+    public boolean getcustomerByQR = false;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    public ViewPager mViewPager;
+    public CustomViewPager mViewPager;
     public static ArrayList<Territory> territories = new ArrayList<Territory>();
     public static ArrayList<Sector> sectors = new ArrayList<Sector>();
     public static ArrayList<Road> roads = new ArrayList<Road>();
@@ -102,12 +120,36 @@ public class MainActivity extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (CustomViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(mViewPager);
+        LinearLayout tabStrip = ((LinearLayout)tabLayout.getChildAt(0));
+        for(int i = 0; i < tabStrip.getChildCount(); i++) {
+            tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return true;
+                }
+            });
+        }
+        mViewPager.setPagingEnabled(false);
 
 
+
+    }
+    public void QrScanner(View view){
+
+        qrdialog = new Dialog(this);
+
+
+
+        mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
+//        setContentView(mScannerView);
+        qrdialog.setContentView(mScannerView);
+        qrdialog.show();
+        mScannerView.setResultHandler(this); // Register ourselves as a handler for scan results.
+        mScannerView.startCamera();         // Start camera
 
     }
 
@@ -247,4 +289,39 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
+        @Override
+        public void handleResult(Result rawResult) {
+            // Do something with the result here
+            getcustomerByQR = true;
+            mScannerView.stopCamera();
+            qrdialog.dismiss();
+
+            Log.e("handler", rawResult.getText()); // Prints scan results
+            Log.e("handler", rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode)
+            String qrJson = rawResult.getText();
+            JSONObject object = null;
+            String customerid = "";
+            try {
+                object = new JSONObject(qrJson);
+                JSONArray customers = object.getJSONArray("customers");
+                for(int i = 0;i<customers.length();i++) {
+                    JSONObject currentcustomer = customers.getJSONObject(i);
+                    customerid = currentcustomer.getString("id");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            final billingdatabaseHelper databasehelper = new billingdatabaseHelper(this,1);
+            MainActivity.customerForProcessing = customerRepository.findByCustomerCaseID(customerid,databasehelper.getReadableDatabase()).get(0);
+
+            // show the scanner result into dialog box.
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setTitle("Scan Result");
+//            builder.setMessage(rawResult.getText());
+//            AlertDialog alert1 = builder.create();
+//            alert1.show();
+
+            // If you would like to resume scanning, call this method below:
+            // mScannerView.resumeCameraPreview(this);
+        }
 }

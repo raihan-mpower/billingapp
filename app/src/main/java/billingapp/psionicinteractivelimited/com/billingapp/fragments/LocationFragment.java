@@ -147,6 +147,32 @@ public class LocationFragment extends Fragment {
 //                ((MainActivity)getActivity()).mViewPager.setCurrentI//m(1);
 //      //    }
 //        });
+        billpayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!((MainActivity)getActivity()).getcustomerByQR) {
+                    if (checkBlankFields()) {
+                        try {
+                            ((MainActivity) getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerForProcessing);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        ((MainActivity) getActivity()).mViewPager.setCurrentItem(1);
+
+                    } else {
+                        Toast.makeText(getContext(), "USER INFORMATION MISSING", Toast.LENGTH_LONG).show();
+                    }
+                }else{
+                    try {
+                        ((MainActivity) getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerForProcessing);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    ((MainActivity) getActivity()).mViewPager.setCurrentItem(1);
+                }
+            }
+        });
+
 
 
         return view;
@@ -296,19 +322,26 @@ public class LocationFragment extends Fragment {
             billpayment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(!((MainActivity)getActivity()).getcustomerByQR) {
+                        if (checkBlankFields()) {
+                            ((MainActivity) getActivity()).mViewPager.setPagingEnabled(true);
+                            try {
+                                ((MainActivity) getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerForProcessing);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            ((MainActivity) getActivity()).mViewPager.setCurrentItem(1);
 
-                    if (checkBlankFields()){
+                        } else {
+                            Toast.makeText(getContext(), "USER INFORMATION MISSING", Toast.LENGTH_LONG).show();
+                        }
+                    }else{
                         try {
                             ((MainActivity) getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerForProcessing);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
                         ((MainActivity) getActivity()).mViewPager.setCurrentItem(1);
-
-                    }
-                    else
-                    {
-                        Toast.makeText(getContext(),"USER INFORMATION MISSING",Toast.LENGTH_LONG).show();
                     }
                 }
             });
