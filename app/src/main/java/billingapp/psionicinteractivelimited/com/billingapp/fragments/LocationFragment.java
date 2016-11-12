@@ -168,6 +168,7 @@ public class LocationFragment extends Fragment {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+                    ((MainActivity) getActivity()).mViewPager.setPagingEnabled(true);
                     ((MainActivity) getActivity()).mViewPager.setCurrentItem(1);
                 }
             }
@@ -265,6 +266,7 @@ public class LocationFragment extends Fragment {
             Log.v("road naam ki",MainActivity.roads.get(i).getRoad());
             roadsuggestions.add(MainActivity.roads.get(i).getRoad());
         }
+        ((MainActivity)getActivity()).getcustomerByQR = false;
         house.setText("");
         house.setHint("House Number");
         customerid.setText("");
@@ -341,6 +343,7 @@ public class LocationFragment extends Fragment {
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
+                        ((MainActivity) getActivity()).mViewPager.setPagingEnabled(true);
                         ((MainActivity) getActivity()).mViewPager.setCurrentItem(1);
                     }
                 }
@@ -355,6 +358,15 @@ public class LocationFragment extends Fragment {
             return false;
         }
         return true;
+    }
+    public void fillfromQR(String customer_id,String city,String sectorfromqr,String roadfromqr,String housefromqr,String phone){
+        customerid.setText(customer_id);
+        telephonenumber.setText(phone);
+        atcv.setText(city);
+        sector.setText(sectorfromqr);
+        house.setText(housefromqr);
+        road.setText(roadfromqr);
+
     }
 
 

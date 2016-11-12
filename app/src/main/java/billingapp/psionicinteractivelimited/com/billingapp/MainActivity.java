@@ -301,17 +301,28 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             String qrJson = rawResult.getText();
             JSONObject object = null;
             String customerid = "";
+            String city = "";
+            String sector = "";
+            String road = "";
+            String house = "";
+            String phone = "";
             try {
                 object = new JSONObject(qrJson);
                 JSONArray customers = object.getJSONArray("customers");
                 for(int i = 0;i<customers.length();i++) {
                     JSONObject currentcustomer = customers.getJSONObject(i);
                     customerid = currentcustomer.getString("id");
+                    city = currentcustomer.getString("city");
+                    sector = currentcustomer.getString("sector");
+                    road = currentcustomer.getString("Road");
+                    house =  currentcustomer.getString("house");
+                    phone = currentcustomer.getString("phone");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             final billingdatabaseHelper databasehelper = new billingdatabaseHelper(this,1);
+            locationFragment.fillfromQR(customerid,city,sector,road,house,phone);
             MainActivity.customerForProcessing = customerRepository.findByCustomerCaseID(customerid,databasehelper.getReadableDatabase()).get(0);
 
             // show the scanner result into dialog box.
