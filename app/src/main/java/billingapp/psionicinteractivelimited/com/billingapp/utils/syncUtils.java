@@ -36,6 +36,7 @@ import java.util.ArrayList;
 
 import billingapp.psionicinteractivelimited.com.billingapp.MainActivity;
 import billingapp.psionicinteractivelimited.com.billingapp.database.billingdatabaseHelper;
+import billingapp.psionicinteractivelimited.com.billingapp.fragments.LocationFragment;
 import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Customers;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.House;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.Road;
@@ -50,7 +51,7 @@ public class syncUtils {
     public syncUtils(Context context) {
         this.context = context;
     }
-    public void executeAsynctask(){
+    public void executeAsynctask(final LocationFragment locationFragment, final boolean isFistLoad){
         (new AsyncTask() {
 
             ProgressDialog dialog;
@@ -81,6 +82,9 @@ public class syncUtils {
             protected void onPostExecute(Object o) {
                 super.onPostExecute(o);
                 dialog.dismiss();
+                if(isFistLoad){
+                    locationFragment.refreshcreateview();
+                }
             }
         }).execute();
     }

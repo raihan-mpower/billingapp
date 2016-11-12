@@ -34,14 +34,14 @@ public class customerRepository {
     public static String to_sync_paying_for="to_sync_paying_for";
     public static String to_sync_total_amount="to_sync_total_amount";
     public static String to_sync_collection_date="to_sync_collection_date";
-
+    public static String customer_due="due";
 
     //ius. end
 
 
 
-    public static String [] columns = {houses_id,phone,price,customer_code,address,customers_id,name,last_paid,updated_at,to_sync_lat,to_sync_lon,to_sync_paying_for,to_sync_total_amount,to_sync_collection_date};
-    public static String sqlStatement = "CREATE TABLE customers(houses_id VARCHAR , phone VARCHAR, price VARCHAR, customer_code VARCHAR, address VARCHAR, customers_id INTEGER PRIMARY KEY, name VARCHAR, last_paid VARCHAR, updated_at VARCHAR, to_sync_lat VARCHAR, to_sync_lon VARCHAR, to_sync_paying_for VARCHAR, to_sync_total_amount VARCHAR, to_sync_collection_date VARCHAR )";
+    public static String [] columns = {houses_id,phone,price,customer_code,address,customers_id,name,last_paid,updated_at,to_sync_lat,to_sync_lon,to_sync_paying_for,to_sync_total_amount,to_sync_collection_date,customer_due};
+    public static String sqlStatement = "CREATE TABLE customers(houses_id VARCHAR , phone VARCHAR, price VARCHAR, customer_code VARCHAR, address VARCHAR, customers_id INTEGER PRIMARY KEY, name VARCHAR, last_paid VARCHAR, updated_at VARCHAR, to_sync_lat VARCHAR, to_sync_lon VARCHAR, to_sync_paying_for VARCHAR, to_sync_total_amount VARCHAR, to_sync_collection_date VARCHAR, due VARCHAR )";
 
     public static void createsql(SQLiteDatabase database){
         database.execSQL(sqlStatement);
@@ -63,12 +63,14 @@ public class customerRepository {
         values.put(to_sync_paying_for,customer.get_to_sync_paying_for());
         values.put(to_sync_total_amount,customer.get_to_sync_total_amount());
         values.put(to_sync_collection_date,customer.get_to_sync_collection_date());
+        values.put(customer_due,customer.getDue());
         return values;
     }
 
     public static Customers getCustomer(Cursor cursor){
         Customers customers = new Customers(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
                 cursor.getString(4), cursor.getString(5), cursor.getString(6),cursor.getString(7),cursor.getString(8));
+        customers.setDue(cursor.getString(14));
         return customers;
     }
 

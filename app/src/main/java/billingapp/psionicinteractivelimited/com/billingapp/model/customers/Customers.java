@@ -36,7 +36,15 @@ public class Customers
     public static String to_sync_paying_for="deafult";
     public static String to_sync_total_amount="deafult";
     public static String to_sync_collection_date="deafult";
+    public String due = "";
 
+    public String getDue() {
+        return due;
+    }
+
+    public void setDue(String due) {
+        this.due = due;
+    }
 
     public String getHouses_id ()
     {

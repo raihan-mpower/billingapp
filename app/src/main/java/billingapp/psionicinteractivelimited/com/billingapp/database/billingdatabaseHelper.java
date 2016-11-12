@@ -222,7 +222,7 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
         valuesToUpdate.put("to_sync_paying_for",monthCounter);
         valuesToUpdate.put("to_sync_total_amount",amount);
         valuesToUpdate.put("to_sync_collection_date",collectionDate);
-
+        valuesToUpdate.put(customerRepository.customer_due,customer.getDue());
         database_to_null_timestamp.update(customerRepository.tableName, valuesToUpdate, customerRepository.customers_id + " = ?", new String[]{customer.getCustomers_id()});
 
 //        SQLiteDatabase db = getReadableDatabase();

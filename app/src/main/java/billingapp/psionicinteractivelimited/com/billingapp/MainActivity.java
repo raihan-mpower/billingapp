@@ -1,6 +1,5 @@
 package billingapp.psionicinteractivelimited.com.billingapp;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -86,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
     //ush: started
     public PrintReceiptFragment printReceipttFragment;
     public LocationFragment locationFragment;
+    private SharedPreferences preferences;
     //ush: ends
 
 
@@ -96,8 +96,8 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         Su = new syncUtils(this);
 
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-
+        preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        locationFragment = LocationFragment.newInstance("","");
 
         boolean isFistLoad=preferences.getBoolean("firstLoad",true);
         if(isFistLoad){
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             editor.apply();
 
             Toast.makeText(MainActivity.this, "testest"+isFistLoad, Toast.LENGTH_SHORT).show();
-            Su.executeAsynctask();
+            Su.executeAsynctask(locationFragment,true);
         }
 //        else{
 ////            Toast.makeText(MainActivity.this, "notest"+isFistLoad, Toast.LENGTH_SHORT).show();
@@ -169,16 +169,16 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_update) {
 
-
-            Su.executeAsynctask();
+            boolean isFistLoad=preferences.getBoolean("firstLoad",true);
+            Su.executeAsynctask(locationFragment, isFistLoad);
             Toast.makeText(MainActivity.this, "Updating...", Toast.LENGTH_SHORT).show();
             return true;
         }
         else if(id == R.id.action_sync){
-
-            BackgroundTask bt=new BackgroundTask(MainActivity.this);
+            boolean isFistLoad=preferences.getBoolean("firstLoad",true);
+            BackgroundTask bt=new BackgroundTask(MainActivity.this,Su,locationFragment,isFistLoad);
             bt.execute();
-            Su.executeAsynctask();
+
             return true;
         }
         else if(id == R.id.action_logout){
@@ -251,7 +251,6 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             if(position == 0){
-                locationFragment = LocationFragment.newInstance("","");
                 return locationFragment;
             }else if(position == 1){
                 billPaymentFragment = BillPaymentFragment.newInstance("","");

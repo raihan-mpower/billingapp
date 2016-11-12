@@ -134,7 +134,7 @@ public class PrintReceiptFragment extends Fragment {
 
                     // \n is for new line
                     Toast.makeText(getContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
-
+                    customer_global.setDue("0");
                     databasehelper.makeTimeStampEmpty(customer_global,""+latitude,""+longitude,""+print_due_amount,monthsCounter,print_payment_date);
 //                    Log.v("updddated_attttttttttt",cursor_tostring);
 
@@ -149,6 +149,7 @@ public class PrintReceiptFragment extends Fragment {
                 }
 
                 ((MainActivity)getActivity()).mViewPager.setCurrentItem(0);
+                ((MainActivity)getActivity()).mViewPager.setPagingEnabled(false);
                 ((MainActivity)getActivity()).locationFragment.getBackFromPrintScreen();
 
 //                Log.v("updddated at",""+databasehelper.makeTimeStampEmpty(customer_global));

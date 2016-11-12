@@ -28,6 +28,8 @@ import java.util.Date;
 
 import billingapp.psionicinteractivelimited.com.billingapp.MainActivity;
 import billingapp.psionicinteractivelimited.com.billingapp.R;
+import billingapp.psionicinteractivelimited.com.billingapp.database.billingdatabaseHelper;
+import billingapp.psionicinteractivelimited.com.billingapp.model.GPSTracker;
 import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Customers;
 
 /**
@@ -60,6 +62,7 @@ public class BillPaymentFragment extends Fragment {
     int monthsCounter=0;
     //u.start
     int customer_price;
+    private Button due_button;
 
 //    final ArrayList<Tag> tags= new ArrayList<>();
     //u.end
@@ -110,7 +113,7 @@ public class BillPaymentFragment extends Fragment {
         print = (Button)view.findViewById(R.id.button_print);
 
         add_month= (Button) view.findViewById(R.id.button_add_month);
-
+        due_button = (Button) view.findViewById(R.id.button_due);
 
 
         return view;
@@ -227,7 +230,40 @@ public class BillPaymentFragment extends Fragment {
                 }
             }
         });
+        due_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GPSTracker gps = new GPSTracker(getContext());
+                if(gps.canGetLocation()){
 
+                    double latitude = gps.getLatitude();
+                    double longitude = gps.getLongitude();
+
+                    // \n is for new line
+                    Toast.makeText(getContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+
+//                    Log.v("updddated_attttttttttt",cursor_tostring);
+                    final billingdatabaseHelper databasehelper = new billingdatabaseHelper(getActivity(),1);
+                    Customers customer_global = MainActivity.customerForProcessing;
+                    customer_global.setDue("1");
+                    String print_payment_date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+                    databasehelper.makeTimeStampEmpty(customer_global,""+latitude,""+longitude,""+amount,monthsCounter,print_payment_date);
+                    ((MainActivity)getActivity()).mViewPager.setCurrentItem(0);
+                    ((MainActivity)getActivity()).mViewPager.setPagingEnabled(false);
+                    ((MainActivity)getActivity()).locationFragment.getBackFromPrintScreen();
+
+
+                }else{
+                    // can't get location
+                    // GPS or Network is not enabled
+                    // Ask user to enable GPS/network in settings
+                    gps.showSettingsAlert();
+                }
+
+
+
+            }
+        });
         add_month.setOnClickListener(new View.OnClickListener(){
 
             @Override

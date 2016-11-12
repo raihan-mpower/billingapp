@@ -178,6 +178,66 @@ public class LocationFragment extends Fragment {
 
         return view;
     }
+    public void refreshcreateview(){
+        final billingdatabaseHelper databasehelper = new billingdatabaseHelper(getActivity(),1);
+        MainActivity.territories =territoryRepository.getALLterritory(databasehelper.getReadableDatabase());
+
+        atcv.setThreshold(-1);
+        sector.setThreshold(-1);
+        road.setThreshold(-1);
+        house.setThreshold(-1);
+        customerid.setThreshold(-1);
+        telephonenumber.setThreshold(-1);
+
+        final ArrayList<String> suggestions = new ArrayList<String>();
+        for(int i = 0;i< MainActivity.territories.size
+                ();i++){
+            Log.v("naam ki",MainActivity.territories.get(i).getName());
+            suggestions.add(MainActivity.territories.get(i).getName());
+        }
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, suggestions);
+        atcv.setAdapter(arrayAdapter);
+        arrayAdapter.notifyDataSetChanged();
+        atcv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                actvOnclick(suggestions,databasehelper);
+            }
+        });
+//        billpayment.setOnClickListener(new View.OnClickListe//r() {
+//            @O//rride
+//            public void onClick(Vi// v) {
+//                ((MainActivity)getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerForProce//ing);
+//                ((MainActivity)getActivity()).mViewPager.setCurrentI//m(1);
+//      //    }
+//        });
+        billpayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!((MainActivity)getActivity()).getcustomerByQR) {
+                    if (checkBlankFields()) {
+                        try {
+                            ((MainActivity) getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerForProcessing);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        ((MainActivity) getActivity()).mViewPager.setCurrentItem(1);
+
+                    } else {
+                        Toast.makeText(getContext(), "USER INFORMATION MISSING", Toast.LENGTH_LONG).show();
+                    }
+                }else{
+                    try {
+                        ((MainActivity) getActivity()).billPaymentFragment.initiateCustomers(MainActivity.customerForProcessing);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    ((MainActivity) getActivity()).mViewPager.setPagingEnabled(true);
+                    ((MainActivity) getActivity()).mViewPager.setCurrentItem(1);
+                }
+            }
+        });
+    }
 
     private void actvOnclick(ArrayList<String> suggestions, final billingdatabaseHelper databasehelper) {
         int index = suggestions.indexOf(atcv.getEditableText().toString());
