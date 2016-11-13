@@ -96,69 +96,40 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 
 
 
-//                    HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
-//
-//                    httpURLConnection.setRequestMethod("POST");
-//                    String basicAuth="Bearer {"+token+"}";
-//                    httpURLConnection.setRequestProperty("Authorization",basicAuth);
-//
-//
-////to_sync_paying_for
-//
-//                    String data = URLEncoder.encode("customers_id", "UTF-8") + "=" + URLEncoder.encode(customer.getCustomers_id(), "UTF-8") + "&" +
-//                            URLEncoder.encode("total", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_total_amount(), "UTF-8") + "&" +
-//                            URLEncoder.encode("timestamp", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_collection_date()+ " 00:00:00", "UTF-8")+"&"+
-//                            URLEncoder.encode("due", "UTF-8") + "=" + URLEncoder.encode(customer.getDue(), "UTF-8") + "&" +
-//                            URLEncoder.encode("last_paid_date_num", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_paying_for(), "UTF-8") + "&" +
-//                            URLEncoder.encode("lat", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_lat(), "UTF-8")+"&"+
-//                            URLEncoder.encode("lon", "UTF-8") + "=" + URLEncoder.encode(customer.get_to_sync_lon(), "UTF-8");
-//                    Log.v("Dataaaaaaaaaaaaaaa",data );
-////                    ) customers_id
-////                    2) total
-////                    3) timestamp (Collection date & time. Received Format: d-m-Y H:i:s)
-////                    4) due (0=paid 1=due)
-////                    5) last_paid_date_num (number of months of bill received)
-////                    6) lat
-////                    7) lon
-//
-//                    httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-////                    httpURLConnection.setRequestProperty("Content-Disposition", "form-data");
-////Content-Disposition: form-data;
-////                    httpURLConnection.setRequestProperty("Content-Length", "" + data.getBytes().length);
-////                    httpURLConnection.setRequestProperty("Content-Language", "en-US");
-//                    httpURLConnection.setDoOutput(true);
-//                    httpURLConnection.setDoInput(true);
-//
-//                    OutputStream outputStream = httpURLConnection.getOutputStream();
-//                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
-//
-//
-//
-//
-//
-//                    Log.v(""+customer.getCustomers_id()," "+customer.get_to_sync_total_amount()+" "+customer.get_to_sync_collection_date()+" "+customer.get_to_sync_lat()+" "+customer.get_to_sync_lon());
-//
-//                    bufferedWriter.write(data);
-//                    bufferedWriter.flush();
-//                    bufferedWriter.close();
-//                    outputStream.close();
-//
-//                    InputStream inputStream = httpURLConnection.getInputStream();
-//                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
-//                    String response = "";
-//                    String line = "";
-//                    while ((line = bufferedReader.readLine())!=null)
-//                    {
-//                        response += line;
-//                    }
-//                    Log.v("Response from server",""+customer.getCustomers_id()+" "+response);
-//
-
-//                    httpURLConnection.disconnect();
                     if(result.equalsIgnoreCase("success")){
                         successString = "success";
                     }
                 }
+
+
+            String edit_url = "http://cable.psionichub.com/sync/customerdata";
+
+
+                ArrayList<Customers> arrayListforEdit = dbHelper.getCustomersForEdit();
+            for (int arrayListCounter=0;arrayListCounter<arrayListforEdit.size();arrayListCounter++){
+                Customers customer= arrayListforEdit.get(arrayListCounter);
+                //////////////////////////test post/////////////////////////////////////////
+                Map<String, String> parameters = new HashMap<String, String>(2);
+                parameters.put("customers_id",customer.getCustomers_id());
+                parameters.put("name",customer.getName());
+                parameters.put("phone", customer.getPhone());
+
+                String result = multipartRequest(edit_url, parameters);
+                Log.v("just result",result);
+                /////////////////////////test post ////////////////////////////////////////
+
+
+
+                if(result.equalsIgnoreCase("success")){
+                    dbHelper.deleteCustomerEditEntry(customer);
+                }
+            }
+
+
+
+
+
+
             } catch (MalformedURLException e) {
                 Log.v("exception Malformed",""+e);
                 e.printStackTrace();

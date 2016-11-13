@@ -40,6 +40,7 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
         roadsRepository.createsql(db);
         sectorRepository.createsql(db);
         territoryRepository.createsql(db);
+        CustomerEditRepository.createsql(db);
     }
 
     @Override
@@ -92,6 +93,42 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
         database.update(customerRepository.tableName, valuesToUpdate, customerRepository.customers_id + " = ?", new String[]{customer.getCustomers_id()});
     }
     ///////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////customerEditMethod///////////////////////////////////////////////////////////////////
+    public void insertCustomersEdit(ArrayList<Customers> customerlist){
+        SQLiteDatabase database = getWritableDatabase();
+        for(int i = 0;i<customerlist.size();i++) {
+
+                    database.insert(CustomerEditRepository.tablename, null,CustomerEditRepository.getCustomerEditValues(customerlist.get(i).getCustomers_id()));
+                }
+
+
+    }
+    public ArrayList<Customers> getCustomersForEdit(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(CustomerEditRepository.tablename, CustomerEditRepository.columns, null, null, null, null, null, null);
+        ArrayList<String> customerids = CustomerEditRepository.readAllCustomerEdit(cursor);
+        ArrayList<Customers> customersEditted = new ArrayList<Customers>();
+        for(int i = 0;i<customerids.size();i++){
+            try {
+                Customers customertoadd = getCustomersbyCustomerID(customerids.get(i)).get(0);
+                customersEditted.add(customertoadd);
+            }catch (Exception e){
+
+            }
+
+        }
+        return customersEditted;
+    }
+    public void deleteCustomerEditEntry(Customers customers){
+        SQLiteDatabase database = getWritableDatabase();
+
+
+        database.delete(CustomerEditRepository.tablename, CustomerEditRepository.customer_id + " = ?", new String[]{customers.getCustomers_id()});
+
+
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /////////////////house methods/////////////////////////////
     public void insert_or_update_House(ArrayList<House> houselist){

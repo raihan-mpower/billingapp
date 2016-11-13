@@ -1,5 +1,6 @@
 package billingapp.psionicinteractivelimited.com.billingapp.fragments;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
@@ -63,6 +64,7 @@ public class BillPaymentFragment extends Fragment {
     //u.start
     int customer_price;
     private Button due_button;
+    private Button Edit_button;
 
 //    final ArrayList<Tag> tags= new ArrayList<>();
     //u.end
@@ -114,6 +116,7 @@ public class BillPaymentFragment extends Fragment {
 
         add_month= (Button) view.findViewById(R.id.button_add_month);
         due_button = (Button) view.findViewById(R.id.button_due);
+        Edit_button = (Button) view.findViewById(R.id.button_edit);
 
 
         return view;
@@ -261,6 +264,47 @@ public class BillPaymentFragment extends Fragment {
                 }
 
 
+
+            }
+        });
+        Edit_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog editDialog = new Dialog(getActivity());
+                editDialog.setTitle("Change Customer Details");
+                editDialog.setContentView(R.layout.edit_dialog);
+                editDialog.show();
+                editDialog.setCanceledOnTouchOutside(true);
+                editDialog.setCancelable(true);
+                final EditText edit_customer_name = (EditText)editDialog.findViewById(R.id.edit_customer_name);
+                final EditText edit_phone = (EditText)editDialog.findViewById(R.id.edit_phone);
+                edit_customer_name.setText(MainActivity.customerForProcessing.getName());
+                edit_phone.setText(MainActivity.customerForProcessing.getPhone());
+                Button editdialogSubmit = (Button)editDialog.findViewById(R.id.edit_accept);
+                editdialogSubmit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final billingdatabaseHelper databasehelper = new billingdatabaseHelper(getActivity(),1);
+                        Customers customer_global = MainActivity.customerForProcessing;
+                        if(!edit_customer_name.getText().toString().equalsIgnoreCase("")) {
+                            customer_global.setName(edit_customer_name.getText().toString());
+                        }
+                        if(!edit_phone.getText().toString().equalsIgnoreCase("")) {
+                            customer_global.setPhone(edit_phone.getText().toString());
+                        }
+                        databasehelper.updateCustomer(customer_global);
+                        ArrayList<Customers> customerforEdit = new ArrayList<Customers>();
+                        customerforEdit.add(customer_global);
+                        databasehelper.insertCustomersEdit(customerforEdit);
+                        try {
+                            initiateCustomers(customer_global);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        ((MainActivity)getActivity()).locationFragment.refreshcreateview();
+                        editDialog.dismiss();
+                    }
+                });
 
             }
         });
