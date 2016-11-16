@@ -19,7 +19,7 @@
             android:text="User Information :"
             android:id="@+id/textView4"
             android:textColor="#ffffff"
-            android:layout_margin="15dp" />
+            android:layout_marginLeft="15dp" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -28,8 +28,8 @@
             android:background="@drawable/textboxback"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
             >
 
             <LinearLayout
@@ -43,14 +43,14 @@
                     android:text="Address: "
                     android:id="@+id/address_label"
                     android:textColor="#ffffff"
-                    android:textSize="20sp"/>
+                    android:textSize="15sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/address_info"
                     android:textColor="#ffffff"
-                    android:textSize="20sp"/>
+                    android:textSize="15sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -64,14 +64,14 @@
                     android:text="User Name: "
                     android:id="@+id/user_name_label"
                     android:textColor="#ffffff"
-                    android:textSize="20sp"/>
+                    android:textSize="15sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/username_info"
                     android:textColor="#ffffff"
-                    android:textSize="20sp"/>
+                    android:textSize="15sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -85,14 +85,14 @@
                     android:text="User ID: "
                     android:id="@+id/user_id_label"
                     android:textColor="#ffffff"
-                    android:textSize="20sp"/>
+                    android:textSize="15sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/userid_info"
                     android:textColor="#ffffff"
-                    android:textSize="20sp"/>
+                    android:textSize="15sp"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -127,8 +127,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/amount_due_info"
-                android:textColor="#ffffff"
-                android:textStyle="bold" />
+                android:textColor="#f00"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                />
 
 
         </LinearLayout>
@@ -144,7 +146,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Month Due :"
                 android:id="@+id/textView6"
-                android:layout_margin="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:textColor="#fff"
                 />
             <Button
@@ -173,51 +176,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:focusable="true"
-                android:layout_margin="15dp" />
+                android:layout_margin="10dp" />
         </ScrollView>
 
 
 
         <TableLayout
            android:layout_width="match_parent"
-           android:layout_height="match_parent"
+           android:layout_height="wrap_content"
            android:gravity="bottom"
+
 
 
            >
 
-           <TableRow
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:gravity="center_horizontal"
+        </TableLayout>
 
-               >
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|bottom"
 
-               <Button
-                   android:layout_width="60pt"
-                   android:layout_height="60pt"
-                   android:id="@+id/button_edit"
-                   android:background="@drawable/button_edit"
+            >
 
-                   />
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/button_edit"
+                android:background="@drawable/button_edit"
 
-               <Button
-                   android:layout_width="60pt"
-                   android:layout_height="60pt"
-                   android:id="@+id/button_print"
-                   android:background="@drawable/button_print"
+                />
 
-                   />
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/button_print"
+                android:background="@drawable/button_print"
 
-               <Button
-                   android:layout_width="60pt"
-                   android:layout_height="60pt"
-                   android:id="@+id/button_due"
-                   android:background="@drawable/button_due"
-               />
-           </TableRow>
+                />
 
-       </TableLayout>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/button_due"
+                android:background="@drawable/button_due"
+            />
+        </TableRow>
 
     </LinearLayout>
 </FrameLayout>

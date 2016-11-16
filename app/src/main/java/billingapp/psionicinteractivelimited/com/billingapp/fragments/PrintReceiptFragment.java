@@ -181,16 +181,18 @@ public class PrintReceiptFragment extends Fragment {
 
 
 
-        mTextView_company.setText(Html.fromHtml("<b>DIGI 21 Cable Service<b><br>" + "House $3, Road #4, Sector #1<br>" +
-                "Uttara Model Town<br>Tel: 8915857<br>*********************************<br><br>"));
+        //Company information disabled for now
+
+//        mTextView_company.setText(Html.fromHtml("<b>DIGI 21 Cable Service<b><br>" + "House $3, Road #4, Sector #1<br>" +
+//                "Uttara Model Town<br>Tel: 8915857<br>*********************************<br><br>"));
 
 
         mTextView_user.setText(Html.fromHtml(
 
-                "User Information <br> "+print_address +"<br>"+
-                        "User Name: "+print_user_name+"<br>"+
-                        "User ID: "+print_user_id+"<br>"+"<br>"+
-                        "Amount Due:<br>BDT "+print_due_amount+"<br>"+"<br>"+
+                        print_address +"<br>"+
+                        "Name: "+print_user_name+"<br>"+
+                        "ID: "+print_user_id+"<br>"+"<br>"+
+                        "Amount Due:<br><h2 color='#f00'> BDT "+print_due_amount+"</h2>"+"<br>"+
                         "Month Due:<br><b>"+print_due_month+"</b><br>"+"<br>"+
                         "Date: "+ print_payment_date+"<br><br>"+
                         print_notice+"<br><br>"+

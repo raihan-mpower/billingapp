@@ -37,14 +37,16 @@
                     android:layout_weight="1"
                     app:tabTextAppearance="@style/CustomTextStyle" />
 
-                <Button
-                    android:text=""
-                    android:onClick="QrScanner"
-                    android:background="@drawable/qrcodeicon"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:id="@+id/button" />
+
+                <!--to enable QR scanner just un-comment the button-->
+                <!--<Button-->
+                    <!--android:text=""-->
+                    <!--android:onClick="QrScanner"-->
+                    <!--android:background="@drawable/qrcodeicon"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:layout_width="30dp"-->
+                    <!--android:layout_height="30dp"-->
+                    <!--android:id="@+id/button" />-->
             </LinearLayout>
 
 

@@ -150,9 +150,12 @@ public class BillPaymentFragment extends Fragment {
         for(int i = 0;i < monthsdue.size();i++){
             Tag tag = new Tag(monthsdue.get(i));
             tag.radius = 10f;
+//            tag.text.toUpperCase();
+            tag.text=tag.text.toUpperCase();
             tag.layoutColor = Color.GRAY;
             tag.tagTextColor = Color.BLACK;
             tag.isDeletable = true;
+
             tags.add(tag);
 
             //ush.start
@@ -318,6 +321,7 @@ public class BillPaymentFragment extends Fragment {
                 if(monthsCounter>0) {
                     Tag tag = new Tag(getNextMonth(months.get(monthsCounter - 1)));
                     tag.radius = 10f;
+                    tag.text=tag.text.toUpperCase();
                     tag.layoutColor = Color.GRAY;
                     tag.tagTextColor = Color.BLACK;
                     tag.isDeletable = true;
@@ -335,6 +339,7 @@ public class BillPaymentFragment extends Fragment {
                     Tag tag = new Tag(getNextMonthServer(customer.getLast_paid().toLowerCase()));
 
                     tag.radius = 10f;
+                    tag.text=tag.text.toUpperCase();
                     tag.layoutColor = Color.GRAY;
                     tag.tagTextColor = Color.BLACK;
                     tag.isDeletable = true;
@@ -446,7 +451,7 @@ public class BillPaymentFragment extends Fragment {
         String[] cal={"jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"};
         for(int i=0;i<cal.length;i++){
 //            Log.v("Last Month", lastmonth);
-            if(lastmonth.equals(cal[i])){
+            if(lastmonth.toLowerCase().equals(cal[i])){
 //                Log.v("what month", cal[i]);
                 return cal[(i+1)%12];
             }
@@ -459,7 +464,7 @@ public class BillPaymentFragment extends Fragment {
         String[] cal={"jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"};
         for(int i=0;i<12;i++){
 //            Log.v("Last Month", lastmonth);
-            if(month.contains(cal[i])){
+            if(month.toLowerCase().contains(cal[i])){
 //                Log.v("what month", cal[i]);
                 return cal[(i+1)%12];
             }
