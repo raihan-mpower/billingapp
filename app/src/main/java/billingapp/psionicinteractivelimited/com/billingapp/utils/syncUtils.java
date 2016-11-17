@@ -92,7 +92,10 @@ public class syncUtils {
     public void syncLocalWithServer(String token){
         Log.v("syncLocalWithServer","started");
 
-        String sync_url = "http://cable.psionichub.com/sync/billingdata?token="+token;
+//        String sync_url = "http://cable.psionichub.com/sync/billingdata?token="+token;
+        String sync_url = "http://192.168.0.102:8000/sync/billingdata?token="+token;
+
+
 //        String sync_url = "http://192.168.0.101:8000/sync/billingdata?token="+token;
         Log.v("url",sync_url);
 
@@ -154,7 +157,9 @@ public class syncUtils {
         String responsestring = "";
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet("http://cable.psionichub.com/sync/locations?token="+token);
+//        HttpGet httpget = new HttpGet("http://cable.psionichub.com/sync/locations?token="+token);
+        HttpGet httpget = new HttpGet("http://192.168.0.102:8000/sync/locations?token="+token);
+//        192.168.0.114:8000
 
 //        HttpGet httpget = new HttpGet("http://192.168.0.101:8000/sync/locations?token="+token);
 
@@ -323,7 +328,9 @@ public class syncUtils {
         String responsestring = "";
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet("http://cable.psionichub.com/sync/customers?token="+token+"&last_id="+last_id+"&limit=100");
+//        HttpGet httpget = new HttpGet("http://cable.psionichub.com/sync/customers?token="+token+"&last_id="+last_id+"&limit=100");
+        HttpGet httpget = new HttpGet("http://192.168.0.102:8000/sync/customers?token="+token+"&last_id="+last_id+"&limit=100");
+
 //        HttpGet httpget = new HttpGet("http://192.168.0.101:8000/sync/customers?token="+token+"&last_id="+last_id+"&limit=100");
 
 

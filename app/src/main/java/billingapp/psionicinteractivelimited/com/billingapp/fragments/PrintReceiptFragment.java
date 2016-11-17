@@ -138,6 +138,10 @@ public class PrintReceiptFragment extends Fragment {
                     databasehelper.makeTimeStampEmpty(customer_global,""+latitude,""+longitude,""+print_due_amount,monthsCounter,print_payment_date);
 //                    Log.v("updddated_attttttttttt",cursor_tostring);
 
+                    ((MainActivity)getActivity()).mViewPager.setCurrentItem(0);
+                    ((MainActivity)getActivity()).mViewPager.setPagingEnabled(false);
+                    ((MainActivity)getActivity()).locationFragment.getBackFromPrintScreen();
+
 
 
 
@@ -148,9 +152,7 @@ public class PrintReceiptFragment extends Fragment {
                     gps.showSettingsAlert();
                 }
 
-                ((MainActivity)getActivity()).mViewPager.setCurrentItem(0);
-                ((MainActivity)getActivity()).mViewPager.setPagingEnabled(false);
-                ((MainActivity)getActivity()).locationFragment.getBackFromPrintScreen();
+
 
 //                Log.v("updddated at",""+databasehelper.makeTimeStampEmpty(customer_global));
 

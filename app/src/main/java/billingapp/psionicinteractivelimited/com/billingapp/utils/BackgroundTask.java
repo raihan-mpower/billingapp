@@ -65,7 +65,10 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 //        String sync_url = "http://cable.psionichub.com/sync/billingdata?token="+token;
 //        String sync_url = "http://192.168.0.100:8000/sync/billingdata?token="+token;
 //        String sync_url = "http://192.168.0.101:8000/sync/billingdata/";
-        String sync_url = "http://cable.psionichub.com/sync/billingdata";
+
+//        String sync_url = "http://cable.psionichub.com/sync/billingdata";
+
+        String sync_url = "http://192.168.0.102:8000/sync/billingdata";
 
         try {
 
@@ -102,7 +105,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                 }
 
 
-            String edit_url = "http://cable.psionichub.com/sync/customerdata";
+            String edit_url = "http://192.168.0.102:8000/sync/customerdata";
 
 
                 ArrayList<Customers> arrayListforEdit = dbHelper.getCustomersForEdit();

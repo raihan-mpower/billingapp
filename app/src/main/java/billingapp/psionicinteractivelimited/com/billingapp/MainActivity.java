@@ -32,6 +32,7 @@ import billingapp.psionicinteractivelimited.com.billingapp.database.customerRepo
 import billingapp.psionicinteractivelimited.com.billingapp.fragments.BillPaymentFragment;
 import billingapp.psionicinteractivelimited.com.billingapp.fragments.LocationFragment;
 import billingapp.psionicinteractivelimited.com.billingapp.fragments.PrintReceiptFragment;
+import billingapp.psionicinteractivelimited.com.billingapp.model.GPSTracker;
 import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Customers;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.House;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.Road;
@@ -93,9 +94,18 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        GPSTracker gps=new GPSTracker(this);
+
+        if (!gps.canGetLocation()){
+
+            gps.showSettingsAlert();
+            Toast.makeText(this, "Please Turn on GPS", Toast.LENGTH_LONG).show();
+        }
+
+
+
         Su = new syncUtils(this);
-
-
         preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         locationFragment = LocationFragment.newInstance("","");
 
@@ -105,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             editor.putBoolean("firstLoad",false);
             editor.apply();
 
-            Toast.makeText(MainActivity.this, "testest"+isFistLoad, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainActivity.this, "testest"+isFistLoad, Toast.LENGTH_SHORT).show();
             Su.executeAsynctask(locationFragment,true);
         }
 //        else{
@@ -134,8 +144,6 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             });
         }
         mViewPager.setPagingEnabled(false);
-
-
 
     }
     public void QrScanner(View view){
