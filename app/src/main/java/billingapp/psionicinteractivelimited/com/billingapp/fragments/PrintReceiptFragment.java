@@ -132,6 +132,8 @@ public class PrintReceiptFragment extends Fragment {
                     double latitude = gps.getLatitude();
                     double longitude = gps.getLongitude();
 
+
+
                     // \n is for new line
                     Toast.makeText(getContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
                     customer_global.setDue("0");
@@ -177,7 +179,9 @@ public class PrintReceiptFragment extends Fragment {
          print_due_amount=amount;
          print_due_month=months;
         this.monthsCounter=monthsCounter;
-        print_payment_date=new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        print_payment_date=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
+        Log.v("date_with_time",print_payment_date);
+//        Toast.makeText(getContext(), print_payment_date, Toast.LENGTH_SHORT).show();
         String print_notice="Please submit a signed copy of the bill to the collector.";
         print_powered_by="Psionic Interactive Limited";
 

@@ -74,6 +74,7 @@ public class Territory
     {
         return "ClassPojo [sector = "+sector+", id = "+id+", address = "+address+", name = "+name+"]";
     }
+
     public static Territory jsontoTerritory(String json) {
         try {
             JSONObject territoryJson = new JSONObject(json);

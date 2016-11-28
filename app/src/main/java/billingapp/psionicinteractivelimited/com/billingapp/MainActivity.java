@@ -1,10 +1,16 @@
 package billingapp.psionicinteractivelimited.com.billingapp;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -52,6 +58,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class MainActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
+    private static final Object PERMISSION_REQUEST_CODE_LOCATION =1 ;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -97,10 +104,31 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
 
         GPSTracker gps=new GPSTracker(this);
 
+//        if (gps.getLatitude()==0.0 || gps.getLongitude()==0.0) {
+//            requestPermission(Manifest.permission.ACCESS_FINE_LOCATION,PERMISSION_REQUEST_CODE_LOCATION,getApplicationContext(),CopyOfMap.this);
+
+//            if (
+//                    ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION);
+//        )
+//            {
+
+//            } else {
+//
+//                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, (Integer) PERMISSION_REQUEST_CODE_LOCATION);
+//            }
+//        }
+
+        if (!checkPerm(Manifest.permission.ACCESS_FINE_LOCATION,getApplicationContext())) {
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, (Integer) PERMISSION_REQUEST_CODE_LOCATION);
+        }
+
+
         if (!gps.canGetLocation()){
 
             gps.showSettingsAlert();
             Toast.makeText(this, "Please Turn on GPS", Toast.LENGTH_LONG).show();
+//            ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION);
+//            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, (Integer) PERMISSION_REQUEST_CODE_LOCATION);
         }
 
 
@@ -146,6 +174,22 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         mViewPager.setPagingEnabled(false);
 
     }
+
+    private boolean checkPerm(String accessFineLocation, Context applicationContext) {
+        int result = ContextCompat.checkSelfPermission(applicationContext, accessFineLocation);
+        if (result == PackageManager.PERMISSION_GRANTED){
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+
+    }
+
+
     public void QrScanner(View view){
 
         qrdialog = new Dialog(this);
@@ -342,4 +386,6 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             // If you would like to resume scanning, call this method below:
             // mScannerView.resumeCameraPreview(this);
         }
+
+
 }

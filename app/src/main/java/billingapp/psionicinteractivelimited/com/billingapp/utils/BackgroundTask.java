@@ -66,9 +66,9 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 //        String sync_url = "http://192.168.0.100:8000/sync/billingdata?token="+token;
 //        String sync_url = "http://192.168.0.101:8000/sync/billingdata/";
 
-//        String sync_url = "http://cable.psionichub.com/sync/billingdata";
+        String sync_url = "http://cable.psionichub.com/sync/billingdata";
 
-        String sync_url = "http://192.168.0.102:8000/sync/billingdata";
+//        String sync_url = "http://192.168.0.102:8000/sync/billingdata";
 
         try {
 
@@ -87,7 +87,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                     Map<String, String> parameters = new HashMap<String, String>(2);
                     parameters.put("customers_id",customer.getCustomers_id());
                     parameters.put("total",customer.get_to_sync_total_amount());
-                    parameters.put("timestamp", customer.get_to_sync_collection_date()+ " 00:00:00");
+                    parameters.put("timestamp", customer.get_to_sync_collection_date());
                     parameters.put("due", customer.getDue());
                     parameters.put("last_paid_date_num", customer.get_to_sync_paying_for());
                     parameters.put("lat", customer.get_to_sync_lat());
@@ -104,8 +104,8 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                     }
                 }
 
-
-            String edit_url = "http://192.168.0.102:8000/sync/customerdata";
+            String edit_url = "http://cable.psionichub.com/sync/customerdata";
+//          String edit_url = "http://192.168.0.102:8000/sync/customerdata";
 
 
                 ArrayList<Customers> arrayListforEdit = dbHelper.getCustomersForEdit();
