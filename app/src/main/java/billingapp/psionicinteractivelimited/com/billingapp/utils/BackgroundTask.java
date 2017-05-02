@@ -57,7 +57,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 //        alertDialog.setTitle("Login Information....");
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ctx);
         token = preferences.getString("token", "");
-        dialog = ProgressDialog.show(ctx,"please wait","synching....g");
+        dialog = ProgressDialog.show(ctx,"please wait","uploading database");
     }
     @Override
     protected String doInBackground(String... params) {

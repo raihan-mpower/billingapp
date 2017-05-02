@@ -59,7 +59,7 @@ public class syncUtils {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                dialog = ProgressDialog.show(context,"please wait","processing...");
+                dialog = ProgressDialog.show(context,"please wait","updating database...");
             }
 
             @Override

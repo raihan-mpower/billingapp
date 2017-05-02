@@ -220,18 +220,24 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_update) {
+            update_the_data_from_server();
 
-            boolean isFistLoad=preferences.getBoolean("firstLoad",true);
-            Su.executeAsynctask(locationFragment, isFistLoad);
-            Toast.makeText(MainActivity.this, "Updating...", Toast.LENGTH_SHORT).show();
-            return true;
+
         }
         else if(id == R.id.action_sync){
             boolean isFistLoad=preferences.getBoolean("firstLoad",true);
             BackgroundTask bt=new BackgroundTask(MainActivity.this,Su,locationFragment,isFistLoad);
             bt.execute();
+            Toast.makeText(MainActivity.this, "SYNCHED", Toast.LENGTH_SHORT).show();
 
-            return true;
+            //update after sync start
+            //update function will be called from here after sync call
+
+            update_the_data_from_server();
+
+
+
+            //update after sync ends
         }
         else if(id == R.id.action_logout){
 
@@ -245,13 +251,18 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
             finish();
 
-
-
-
-
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean update_the_data_from_server() {
+
+        boolean isFistLoad=preferences.getBoolean("firstLoad",true);
+        Su.executeAsynctask(locationFragment, isFistLoad);
+//            Toast.makeText(MainActivity.this, "Updating...", Toast.LENGTH_SHORT).show();
+        return true;
+
     }
 
 
