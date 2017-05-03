@@ -260,7 +260,13 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
         valuesToUpdate.put("to_sync_total_amount",amount);
         valuesToUpdate.put("to_sync_collection_date",collectionDate);
         valuesToUpdate.put(customerRepository.customer_due,customer.getDue());
+
+        Log.v("whats customer due",customerRepository.customer_due+" " + customer.getDue() );
+
+        Log.v("whoisempty",customerRepository.customers_id+" " + amount );
+
         database_to_null_timestamp.update(customerRepository.tableName, valuesToUpdate, customerRepository.customers_id + " = ?", new String[]{customer.getCustomers_id()});
+//        Log.v()
 
 //        SQLiteDatabase db = getReadableDatabase();
 //        Cursor cursor = db.rawQuery("SELECT "+customerRepository.updated_at+" FROM "+customerRepository.tableName,null);
@@ -270,7 +276,13 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<Customers> getCustomersWithNoTimestamp(){
         SQLiteDatabase db = this.getReadableDatabase();
-        return customerRepository.findCustomerByBlankTimestamp(db);
+        ArrayList<Customers>  cstmr =customerRepository.findCustomerByBlankTimestamp(db);
+
+        for (Customers c:cstmr) {
+            Log.v("membernamealpha: ", ""+ c.toString());
+        }
+
+        return cstmr;
 
 
     }

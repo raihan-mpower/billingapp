@@ -101,21 +101,42 @@ public class customerRepository {
         Cursor cursor = database.query(tableName, columns, null, null, null, null, null, null);
         cursor.moveToFirst();
         ArrayList<Customers> customers = new ArrayList<Customers>();
+
         while (!cursor.isAfterLast()) {
             Customers customer = getCustomer(cursor);
+
             if (customer.getUpdated_at().equals("")){
 
                 customer.set_to_sync_lat(cursor.getString(9));
                 customer.set_to_sync_lon(cursor.getString(10));
                 customer.set_to_sync_paying_for(cursor.getString(11));
                 customer.set_to_sync_total_amount(cursor.getString(12));
+
+                //till this part its okey
+                Log.v("theamount",cursor.getString(12));
+                Log.v("theamountfromcustomer",customer.get_to_sync_total_amount());
+
+
+
+                //
+
                 customer.set_to_sync_collection_date(cursor.getString(13));
-                Log.v("lisssssssssssttt fromm ",cursor.getString(9)+""+cursor.getString(10)+""+cursor.getString(11)+""+cursor.getString(12)+""+cursor.getString(13));
+                Log.v("lisssssssssssttt fromm ",cursor.getString(9)+" "+cursor.getString(10)+" "+cursor.getString(11)+" "+cursor.getString(12)+" "+cursor.getString(13));
                 customers.add(customer);
             }
             cursor.moveToNext();
         }
+        for (Customers c:customers)
+        {
+            Log.v("mycustomer",c.toString());
+        }
+
         cursor.close();
+
+//        Log.v("alpha1",customers.get(0).get_to_sync_total_amount());
+//        Log.v("alpha1",customers.get(1).get_to_sync_total_amount());
+
+
         return customers;
     }
 

@@ -77,14 +77,32 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 
                 billingdatabaseHelper dbHelper=new billingdatabaseHelper(ctx,1);
                 ArrayList<Customers> arrayList =  dbHelper.getCustomersWithNoTimestamp();
+
+
+
+
+
+//            till this its okey
+            for (int i = 0; i<arrayList.size(); i++){
+                Log.v("membername: ", ""+ arrayList.get(i).toString());
+            }
+            //ends
+
+
                 String test = arrayList.toString();
 
                 Log.v("Array List length",arrayList.size()+"");
 
-                for (int arrayListCounter=0;arrayListCounter<arrayList.size();arrayListCounter++){
+                for (int arrayListCounter=0;arrayListCounter<arrayList.size();arrayListCounter++)
+                {
+
                     Customers customer= arrayList.get(arrayListCounter);
+
+                    Log.v("arraylistmugdho",customer.get_to_sync_total_amount());
+
                     //////////////////////////test post/////////////////////////////////////////
                     Map<String, String> parameters = new HashMap<String, String>(2);
+
                     parameters.put("customers_id",customer.getCustomers_id());
                     parameters.put("total",customer.get_to_sync_total_amount());
                     parameters.put("timestamp", customer.get_to_sync_collection_date());
@@ -94,7 +112,23 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                     parameters.put("lon", customer.get_to_sync_lon());
 
                     String result = multipartRequest(sync_url, parameters);
-                    Log.v("result",result);
+
+                    Log.v("resulttime",customer.get_to_sync_collection_date());
+
+                    Log.v("customers_id",customer.getCustomers_id());
+                    Log.v("total",customer.get_to_sync_total_amount());
+                    Log.v("timestamp", customer.get_to_sync_collection_date());
+                    Log.v("due", customer.getDue());
+                    Log.v("last_paid_date_num", customer.get_to_sync_paying_for());
+                    Log.v("lat", customer.get_to_sync_lat());
+                    Log.v("lon", customer.get_to_sync_lon());
+
+//                    Log.v("shakiblatlon",customer.get_to_sync_total_amount());
+//                    Log.v("shakibamount",customer.get_to_sync_total_amount());
+
+                    Log.v("resultthis",result);
+
+
                     /////////////////////////test post ////////////////////////////////////////
 
 
@@ -109,6 +143,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 
 
                 ArrayList<Customers> arrayListforEdit = dbHelper.getCustomersForEdit();
+
             for (int arrayListCounter=0;arrayListCounter<arrayListforEdit.size();arrayListCounter++){
                 Customers customer= arrayListforEdit.get(arrayListCounter);
                 //////////////////////////test post/////////////////////////////////////////
@@ -204,18 +239,39 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 
             outputStream.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
 
+            Log.v("this_is_response",connection.getResponseMessage());
 
 //            if (200 != connection.getResponseCode()) {
 //                throw new Exception("Failed to upload code:" + connection.getResponseCode() + " " + connection.getResponseMessage());
 //            }
+            if (200 == connection.getResponseCode()) {
+//                Log.v("breader1",new BufferedReader(new InputStreamReader((connection.getInputStream())));
+
+
+            } else {
+//                Log.v("bufferreader"," "+new BufferedReader(new InputStreamReader((connection.getErrorStream()))));
+                BufferedReader br = new BufferedReader(new InputStreamReader((connection.getErrorStream())));
+//                Log.v("bufferreader", br.toString());
+
+                String s;
+                while ((s=br.readLine())!=null)
+                {
+
+                    Log.v("sssss",s);
+                }
+            }
 
             inputStream = connection.getInputStream();
 
             result = this.convertStreamToString(inputStream);
+            Log.v("serveroutput", result);
+
+
 
             inputStream.close();
             outputStream.flush();
             outputStream.close();
+
 
             return result;
         } catch (Exception e) {

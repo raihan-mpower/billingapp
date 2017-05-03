@@ -66,6 +66,9 @@ public class BillPaymentFragment extends Fragment {
     private Button due_button;
     private Button Edit_button;
 
+
+    ArrayList<Tag> tags;
+
 //    final ArrayList<Tag> tags= new ArrayList<>();
     //u.end
 
@@ -144,7 +147,7 @@ public class BillPaymentFragment extends Fragment {
         ArrayList<String> monthsdue = getmonthsDue(getMonthFromInt(m));
 
 
-       final ArrayList<Tag> tags = new ArrayList<>();
+       tags = new ArrayList<>();
 
 
         for(int i = 0;i < monthsdue.size();i++){
@@ -231,6 +234,7 @@ public class BillPaymentFragment extends Fragment {
                     ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerForProcessing,amount,monthsString,monthsCounter);
 
                     ((MainActivity)getActivity()).mViewPager.setCurrentItem(2);
+                    months.clear();
 
 
                 }
@@ -253,7 +257,9 @@ public class BillPaymentFragment extends Fragment {
                     Customers customer_global = MainActivity.customerForProcessing;
                     customer_global.setDue("1");
                     String print_payment_date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+
                     databasehelper.makeTimeStampEmpty(customer_global,""+latitude,""+longitude,""+amount,monthsCounter,print_payment_date);
+
                     ((MainActivity)getActivity()).mViewPager.setCurrentItem(0);
                     ((MainActivity)getActivity()).mViewPager.setPagingEnabled(false);
                     ((MainActivity)getActivity()).locationFragment.getBackFromPrintScreen();
