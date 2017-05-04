@@ -128,7 +128,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/textboxback"
-                android:hint="Telephone Number"
+                android:hint="Flat Number"
                 android:text=""
                 android:textColorHint="#fff"
                 android:textColor="#ffffff"

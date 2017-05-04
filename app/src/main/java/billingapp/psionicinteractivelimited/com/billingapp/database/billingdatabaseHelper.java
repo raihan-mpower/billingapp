@@ -279,7 +279,7 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Customers>  cstmr =customerRepository.findCustomerByBlankTimestamp(db);
 
         for (Customers c:cstmr) {
-            Log.v("membernamealpha: ", ""+ c.toString());
+            Log.v("rcvd_temp_customer: ", ""+ c.toString());
         }
 
         return cstmr;

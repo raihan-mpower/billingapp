@@ -31,11 +31,11 @@ public class Customers
 
     private String updated_at;
 
-    public static String to_sync_lat="default";
-    public static String to_sync_lon="deafult";
-    public static String to_sync_paying_for="deafult";
-    public static String to_sync_total_amount="deafult";
-    public static String to_sync_collection_date="deafult";
+    public String to_sync_lat="default";
+    public String to_sync_lon="deafult";
+    public String to_sync_paying_for="deafult";
+    public String to_sync_total_amount="deafult";
+    public String to_sync_collection_date="deafult";
     public String due = "";
 
     public String getDue() {

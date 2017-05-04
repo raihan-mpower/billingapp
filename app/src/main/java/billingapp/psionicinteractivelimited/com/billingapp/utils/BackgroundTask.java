@@ -68,23 +68,19 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 
         String sync_url = "http://cable.psionichub.com/sync/billingdata";
 
-//        String sync_url = "http://192.168.0.102:8000/sync/billingdata";
+//        String sync_url = "http://192.168.0.108:8000/sync/billingdata";
 
         try {
-
-
                 URL url = new URL(sync_url);
 
                 billingdatabaseHelper dbHelper=new billingdatabaseHelper(ctx,1);
                 ArrayList<Customers> arrayList =  dbHelper.getCustomersWithNoTimestamp();
 
-
-
-
+            Log.v("where its going","getCustomerWithNoTimestamp");
 
 //            till this its okey
             for (int i = 0; i<arrayList.size(); i++){
-                Log.v("membername: ", ""+ arrayList.get(i).toString());
+                Log.v("NoTimestamp response ", ""+ arrayList.get(i).toString());
             }
             //ends
 
@@ -139,7 +135,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                 }
 
             String edit_url = "http://cable.psionichub.com/sync/customerdata";
-//          String edit_url = "http://192.168.0.102:8000/sync/customerdata";
+//          String edit_url = "http://192.168.0.108:8000/sync/customerdata";
 
 
                 ArrayList<Customers> arrayListforEdit = dbHelper.getCustomersForEdit();
