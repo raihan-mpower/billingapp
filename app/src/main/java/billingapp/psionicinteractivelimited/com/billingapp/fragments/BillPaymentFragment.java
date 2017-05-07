@@ -432,6 +432,7 @@ public class BillPaymentFragment extends Fragment {
         Log.v("current month",""+indexofcurrentmonth);
 
         ArrayList<String> monthstoreturn = new ArrayList<String>();
+        
         if((indexofcurrentmonth-indexoflastpaid)>0){
             for(int i = indexoflastpaid;i<indexofcurrentmonth;i++){
                 monthstoreturn.add(months.get(i));
