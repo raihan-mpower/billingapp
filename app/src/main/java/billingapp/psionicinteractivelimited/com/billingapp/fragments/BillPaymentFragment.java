@@ -106,8 +106,7 @@ public class BillPaymentFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bill_payment, container, false);
         address = (TextView) view.findViewById(R.id.address_info);
@@ -138,7 +137,7 @@ public class BillPaymentFragment extends Fragment {
 
 //        Toast.makeText(getContext(), customer.getLast_paid(), Toast.LENGTH_SHORT).show();
         String s=customer.getLast_paid();
-        SimpleDateFormat simpleDateFormat =new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date=simpleDateFormat.parse(s);
         int m=date.getMonth();
         Toast.makeText(getContext(), "Last paid "+getMonthFromInt(m), Toast.LENGTH_SHORT).show();
@@ -262,7 +261,7 @@ public class BillPaymentFragment extends Fragment {
 
                     ((MainActivity)getActivity()).mViewPager.setCurrentItem(0);
                     ((MainActivity)getActivity()).mViewPager.setPagingEnabled(false);
-                    ((MainActivity)getActivity()).locationFragment.getBackFromPrintScreen();
+//                    ((MainActivity)getActivity()).locationFragment.getBackFromPrintScreen();
 
 
                 }else{

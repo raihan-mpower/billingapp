@@ -13,9 +13,11 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string name="action_sync">Sync</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="action_update">Update</string>
-    <string name="action_sync">Sync</string>
+
     <string name="action_logout">Logout</string>
     <string name="section_format">Hello World from section: %1$d</string>
 

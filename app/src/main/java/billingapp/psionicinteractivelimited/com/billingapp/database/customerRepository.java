@@ -113,16 +113,30 @@ public class customerRepository {
                 customer.set_to_sync_paying_for(cursor.getString(11));
                 customer.set_to_sync_total_amount(cursor.getString(12));
                 customer.set_to_sync_collection_date(cursor.getString(13));
-
-//                //till this part its okey
-//                Log.v("theamount",cursor.getString(12));
-//                Log.v("theamountfromcustomer",customer.get_to_sync_total_amount());
-//
-
-
-//                Log.v("lisssssssssssttt from ",cursor.getString(9)+" "+cursor.getString(10)+" "+cursor.getString(11)+" "+cursor.getString(12)+" "+cursor.getString(13));
                 Log.v("temporarycustomer",customer.toString());
                 customers.add(customer);
+            }
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return customers;
+    }
+
+    public static Customers findCustomerByCustomerCode(SQLiteDatabase database,String customer_search_code) {
+
+//
+
+        Cursor cursor = database.query(tableName, columns, null, null, null, null, null, null);
+        cursor.moveToFirst();
+
+        Customers matchedCustomer=new Customers(null,null,null,null,null,null,null,null,null);
+
+        while (!cursor.isAfterLast()) {
+            Customers customer = getCustomer(cursor);
+
+
+            if (cursor.getString(3).equals(customer_search_code)){
+                matchedCustomer=customer;
             }
             cursor.moveToNext();
         }
@@ -132,11 +146,42 @@ public class customerRepository {
 //        Log.v("alpha1",customers.get(1).get_to_sync_total_amount());
 
 
-        return customers;
+        return matchedCustomer;
+
+
+
     }
+
+
 
     public static ArrayList<Customers> getALLCustomers(SQLiteDatabase readableDatabase) {
         Cursor cursor = readableDatabase.query(tableName, columns,null, null, null, null, null, null);
         return readAllCustomers(cursor);
+    }
+
+
+
+
+    public static ArrayList<String> findCustomersByCustomerCodeSubstring(SQLiteDatabase database, String s) {
+
+        Cursor cursor = database.query(tableName, columns, null, null, null, null, null, null);
+        cursor.moveToFirst();
+
+        ArrayList<String> customers = new ArrayList<String>();
+
+        while (!cursor.isAfterLast()) {
+            Customers customer = getCustomer(cursor);
+
+
+            if (cursor.getString(3).contains(s)){
+
+                customers.add(customer.getCustomer_code());
+            }
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return customers;
+
+
     }
 }

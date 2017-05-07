@@ -211,6 +211,9 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
         return sectorRepository.findByterritory_id(territoryID,getReadableDatabase());
 //        return null;
     }
+
+
+
     public void updateSector(Sector sector) {
         SQLiteDatabase database = getWritableDatabase();
         ContentValues valuesToUpdate = sectorRepository.getSectorValues(sector);
@@ -284,11 +287,27 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
 
         return cstmr;
 
+    }
+
+    public ArrayList<String> getCustomersByCustomerCodeSubstring(String s){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<String>  cstmr =customerRepository.findCustomersByCustomerCodeSubstring(db,s);
+
+//        for (Customers c:cstmr) {
+//            Log.v("rcvd_customer_substr: ", ""+ c.toString());
+//        }
+        Log.v("imam",cstmr.toString());
+
+        return cstmr;
+
 
     }
 
+    public Customers getCustomerByCustomerCode(String customer_code) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Customers cstmr=customerRepository.findCustomerByCustomerCode(db,customer_code);
+        return cstmr;
 
 
-
-
+    }
 }

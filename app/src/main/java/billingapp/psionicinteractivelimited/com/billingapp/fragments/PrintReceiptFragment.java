@@ -142,7 +142,7 @@ public class PrintReceiptFragment extends Fragment {
 
                     ((MainActivity)getActivity()).mViewPager.setCurrentItem(0);
                     ((MainActivity)getActivity()).mViewPager.setPagingEnabled(false);
-                    ((MainActivity)getActivity()).locationFragment.getBackFromPrintScreen();
+//                    ((MainActivity)getActivity()).locationFragment.getBackFromPrintScreen();
 
 
 
