@@ -144,7 +144,7 @@ public class BillPaymentFragment extends Fragment {
 
 
         ArrayList<String> monthsdue = getmonthsDue(getMonthFromInt(m));
-
+        monthsCounter=0;
 
        tags = new ArrayList<>();
 
@@ -323,6 +323,7 @@ public class BillPaymentFragment extends Fragment {
 
 
 //                Toast.makeText(getActivity(), ""+months.get(monthsCounter-1), Toast.LENGTH_SHORT).show();
+                Log.v("whatsmonthscounter",""+monthsCounter);
                 if(monthsCounter>0) {
                     Tag tag = new Tag(getNextMonth(months.get(monthsCounter - 1)));
                     tag.radius = 10f;
@@ -341,7 +342,8 @@ public class BillPaymentFragment extends Fragment {
                 else if(monthsCounter==0){
                     Toast.makeText(getActivity(), ""+customer.getLast_paid(), Toast.LENGTH_SHORT).show();
 
-                    Tag tag = new Tag(getNextMonthServer(customer.getLast_paid().toLowerCase()));
+                    Tag tag = new Tag(getNextMonthServer(customer.getLast_paid()));
+
 
                     tag.radius = 10f;
                     tag.text=tag.text.toUpperCase();
@@ -454,11 +456,14 @@ public class BillPaymentFragment extends Fragment {
     }
 
     public String getNextMonth(String lastmonth){
+
+        Log.v("getNextMonth",lastmonth);
         String[] cal={"jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"};
         for(int i=0;i<cal.length;i++){
-//            Log.v("Last Month", lastmonth);
-            if(lastmonth.toLowerCase().equals(cal[i])){
-//                Log.v("what month", cal[i]);
+            Log.v("gesegese", cal[i]);
+            if(lastmonth.toLowerCase().contains(cal[i])){
+                Log.v("getNextMonth+1", ""+cal[(i+1)%12]);
+
                 return cal[(i+1)%12];
             }
         }
@@ -466,13 +471,21 @@ public class BillPaymentFragment extends Fragment {
 
     }
 
-    public String getNextMonthServer(String month){
+    public String getNextMonthServer(String date){
+
+        Log.v("getNextMonthServer",date);
+
+        String[] calend = date.split("-");
+        int month_int = Integer.parseInt(calend[1]);
+        String month=getMonthFromInt(month_int-1).toLowerCase();
+
         String[] cal={"jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"};
-        for(int i=0;i<12;i++){
+        for(int i=0;i<cal.length;i++){
 //            Log.v("Last Month", lastmonth);
             if(month.toLowerCase().contains(cal[i])){
 //                Log.v("what month", cal[i]);
-                return cal[(i+1)%12];
+                Log.v("getNextMonthServer+mont",cal[(i)%12]);
+                return cal[(i)%12];
             }
         }
         return "err";

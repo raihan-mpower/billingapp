@@ -45,7 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/customer_id_text_layout"
-                    android:inputType="textPhonetic"
+                    android:inputType="number"
                     android:layout_marginTop="30dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -55,6 +55,7 @@
                     android:text=""
                     android:textColorHint="#fff"
                     android:textColor="#ffffff"
+
                     />
 
                 <Button

@@ -175,7 +175,7 @@ public class customerRepository {
 
             if (cursor.getString(3).contains(s)){
 
-                customers.add(customer.getCustomer_code());
+                customers.add(customer.getCustomer_code()+"-"+customer.getName());
             }
             cursor.moveToNext();
         }

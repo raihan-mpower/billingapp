@@ -159,8 +159,14 @@ public class LocationFragment extends Fragment {
         billpayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "hi", Toast.LENGTH_SHORT).show();
-                String customer_input= customerid.getText().toString();
+
+                if(!checkBlankFields()){
+
+
+                    //getting the customer_code from the input by split (-)
+                String[] str = customerid.getText().toString().split("-");
+                String customer_input=str[0];
+                    ;
                 Log.v("slelected_customer_tv",customer_input);
 
                 billingdatabaseHelper dbHelper=new billingdatabaseHelper(getActivity(),1);
@@ -179,6 +185,11 @@ public class LocationFragment extends Fragment {
                 ((MainActivity) getActivity()).mViewPager.setPagingEnabled(true);
                 ((MainActivity) getActivity()).mViewPager.setCurrentItem(1);
 
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "Select USER", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return view;
@@ -196,8 +207,7 @@ public class LocationFragment extends Fragment {
         customerid.setThreshold(-1);
 
         final ArrayList<String> suggestions = new ArrayList<String>();
-        for(int i = 0;i< MainActivity.territories.size
-                ();i++){
+        for(int i = 0;i< MainActivity.territories.size();i++){
             Log.v("naam ki",MainActivity.territories.get(i).getName());
             suggestions.add(MainActivity.territories.get(i).getName());
         }
@@ -233,10 +243,10 @@ public class LocationFragment extends Fragment {
 
     private boolean checkBlankFields() {
 
-        if (customerid.getEditableText().toString()==""){
-            return false;
+        if (customerid.getText().toString().equals("")){
+            return true;
         }
-        return true;
+        return false;
     }
 
 
