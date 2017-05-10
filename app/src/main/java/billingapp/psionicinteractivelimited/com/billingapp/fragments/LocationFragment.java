@@ -49,6 +49,7 @@ public class LocationFragment extends Fragment {
     private String mParam2;
 
 
+
     //ush.start
     private AutoCompleteTextView customerid;
     private Button billpayment;
@@ -153,6 +154,7 @@ public class LocationFragment extends Fragment {
 
             }
         });
+
 
 
 

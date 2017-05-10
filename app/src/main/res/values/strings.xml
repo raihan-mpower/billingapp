@@ -10,9 +10,7 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
 
     <string name="action_sync">Sync</string>
     <string name="title_activity_main">MainActivity</string>
@@ -20,6 +18,8 @@
 
     <string name="action_logout">Logout</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="url_authmob">http://cable.psionichub.com/authmob</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -99,7 +99,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -107,7 +107,19 @@
                 android:text="Amount Due :"
                 android:id="@+id/textView5"
                 android:textColor="#ffffff"
-                android:layout_marginLeft="15dp" />
+                android:layout_marginLeft="15dp"
+                />
+            <TextView
+                android:id="@+id/lastpaid_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="LAST PAID"
+                android:textColor="#fff"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+
+                />
 
 
         </LinearLayout>
@@ -122,6 +134,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp">
+
 
             <TextView
                 android:layout_width="wrap_content"

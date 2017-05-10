@@ -66,6 +66,8 @@ public class BillPaymentFragment extends Fragment {
     private Button due_button;
     private Button Edit_button;
 
+    TextView m_lastpaid_textView;
+
 
     ArrayList<Tag> tags;
 
@@ -120,6 +122,8 @@ public class BillPaymentFragment extends Fragment {
         due_button = (Button) view.findViewById(R.id.button_due);
         Edit_button = (Button) view.findViewById(R.id.button_edit);
 
+        m_lastpaid_textView= (TextView) view.findViewById(R.id.lastpaid_id);
+
 
         return view;
     }
@@ -133,6 +137,7 @@ public class BillPaymentFragment extends Fragment {
 
         //u.start
         customer_price=Integer.parseInt(customer.getPrice());
+        m_lastpaid_textView.setText("LAST PAID : "+customer.getLast_paid());
         //u.end
 
 //        Toast.makeText(getContext(), customer.getLast_paid(), Toast.LENGTH_SHORT).show();

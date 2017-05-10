@@ -257,6 +257,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
     }
 
     private boolean update_the_data_from_server() {
+        Log.v("update_hoitese","hochche");
 
         boolean isFistLoad=preferences.getBoolean("firstLoad",true);
         Su.executeAsynctask(locationFragment, isFistLoad);
