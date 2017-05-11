@@ -78,26 +78,12 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                 billingdatabaseHelper dbHelper=new billingdatabaseHelper(ctx,1);
                 ArrayList<Customers> arrayList =  dbHelper.getCustomersWithNoTimestamp();
 
-            Log.v("where its going","getCustomerWithNoTimestamp");
-
-//            till this its okey
-            for (int i = 0; i<arrayList.size(); i++){
-                Log.v("NoTimestamp response ", ""+ arrayList.get(i).toString());
-            }
-            //ends
-
-
-                String test = arrayList.toString();
-
-                Log.v("Array List length",arrayList.size()+"");
 
                 for (int arrayListCounter=0;arrayListCounter<arrayList.size();arrayListCounter++)
                 {
 
                     Customers customer= arrayList.get(arrayListCounter);
 
-
-                    //////////////////////////test post/////////////////////////////////////////
                     Map<String, String> parameters = new HashMap<String, String>(2);
 
                     parameters.put("customers_id",customer.getCustomers_id());
@@ -109,26 +95,11 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                     parameters.put("lon", customer.get_to_sync_lon());
 
                     String result = multipartRequest(sync_url, parameters);
-
-                    Log.v("resulttime",customer.get_to_sync_collection_date());
-
-                    Log.v("customers_id",customer.getCustomers_id());
-                    Log.v("total",customer.get_to_sync_total_amount());
-                    Log.v("timestamp", customer.get_to_sync_collection_date());
-                    Log.v("due", customer.getDue());
-                    Log.v("last_paid_date_num", customer.get_to_sync_paying_for());
-                    Log.v("lat", customer.get_to_sync_lat());
-                    Log.v("lon", customer.get_to_sync_lon());
-
-                    Log.v("resultthis",result);
-
-
-                    /////////////////////////test post ////////////////////////////////////////
-
-
+                    dbHelper.updateCustomer_updated_at_by_customer_code(customer.getCustomer_code());
 
                     if(result.equalsIgnoreCase("success")){
                         successString = "success";
+
                     }
                 }
 
@@ -148,7 +119,6 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                 parameters.put("phone", customer.getPhone());
 
                 String result = multipartRequest(edit_url, parameters);
-                Log.v("just result",result);
                 /////////////////////////test post ////////////////////////////////////////
 
 
@@ -233,7 +203,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 
             outputStream.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
 
-            Log.v("this_is_response",connection.getResponseMessage());
+//            Log.v("this_is_response",connection.getResponseMessage());
 
 //            if (200 != connection.getResponseCode()) {
 //                throw new Exception("Failed to upload code:" + connection.getResponseCode() + " " + connection.getResponseMessage());
@@ -244,21 +214,15 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 
             } else {
 //                Log.v("bufferreader"," "+new BufferedReader(new InputStreamReader((connection.getErrorStream()))));
-                BufferedReader br = new BufferedReader(new InputStreamReader((connection.getErrorStream())));
+//                BufferedReader br = new BufferedReader(new InputStreamReader((connection.getErrorStream())));
 //                Log.v("bufferreader", br.toString());
 
-                String s;
-                while ((s=br.readLine())!=null)
-                {
-
-                    Log.v("sssss",s);
-                }
             }
 
             inputStream = connection.getInputStream();
 
-            result = this.convertStreamToString(inputStream);
-            Log.v("serveroutput", result);
+//            result = this.convertStreamToString(inputStream);
+//            Log.v("serveroutput", result);
 
 
 
@@ -274,24 +238,24 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 
     }
 
-    private String convertStreamToString(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
-    }
+//    private String convertStreamToString(InputStream is) {
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+//        StringBuilder sb = new StringBuilder();
+//
+//        String line = null;
+//        try {
+//            while ((line = reader.readLine()) != null) {
+//                sb.append(line);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                is.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return sb.toString();
+//    }
 }

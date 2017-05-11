@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             //update after sync start
             //update function will be called from here after sync call
 
-            update_the_data_from_server();
+//            update_the_data_from_server();
 
 
 
@@ -257,9 +257,9 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
     }
 
     private boolean update_the_data_from_server() {
-        Log.v("update_hoitese","hochche");
 
         boolean isFistLoad=preferences.getBoolean("firstLoad",true);
+
         Su.executeAsynctask(locationFragment, isFistLoad);
 //            Toast.makeText(MainActivity.this, "Updating...", Toast.LENGTH_SHORT).show();
         return true;

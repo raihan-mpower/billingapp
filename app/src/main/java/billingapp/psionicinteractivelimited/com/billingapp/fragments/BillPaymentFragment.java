@@ -145,10 +145,11 @@ public class BillPaymentFragment extends Fragment {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date=simpleDateFormat.parse(s);
         int m=date.getMonth();
+        int year=date.getYear();
         Toast.makeText(getContext(), "Last paid "+getMonthFromInt(m), Toast.LENGTH_SHORT).show();
 
 
-        ArrayList<String> monthsdue = getmonthsDue(getMonthFromInt(m));
+        ArrayList<String> monthsdue = getmonthsDue(getMonthFromInt(m),year);
         monthsCounter=0;
 
        tags = new ArrayList<>();
@@ -408,7 +409,9 @@ public class BillPaymentFragment extends Fragment {
     //ush.end
 
 
-    public ArrayList<String> getmonthsDue(String lastpaidmonth){
+    public ArrayList<String> getmonthsDue(String lastpaidmonth, int year){
+
+        Toast.makeText(getActivity(), ""+(year+1900), Toast.LENGTH_SHORT).show();
         ArrayList<String> months = new ArrayList<String>();
         months.add("jan");
         months.add("feb");
@@ -426,6 +429,13 @@ public class BillPaymentFragment extends Fragment {
         Calendar cal= Calendar.getInstance();
         SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
         String month_name = month_date.format(cal.getTime());
+
+//        SimpleDateFormat year_current = new SimpleDateFormat("YYYY");
+//        String year_name = year_current.format(cal.getTime());
+//
+//        int difference=  Integer.parseInt(year_name)-year;
+//
+//        Toast.makeText(getActivity(), ""+difference, Toast.LENGTH_SHORT).show();
 
         String strippedlastpaidmonth = lastpaidmonth.substring(0,3);
         Log.v("last paid month",""+strippedlastpaidmonth);

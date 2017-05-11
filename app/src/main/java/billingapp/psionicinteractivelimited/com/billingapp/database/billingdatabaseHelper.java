@@ -159,8 +159,23 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
         database.update(houseRepository.tableName, valuesToUpdate, houseRepository.id + " = ?", new String[]{house.getId()});
     }
     ///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
 
+    public void updateCustomer_updated_at_by_customer_code(String customer_code) {
+        SQLiteDatabase database = getWritableDatabase();
+        ContentValues valuesToUpdate = new ContentValues();
+        valuesToUpdate.put("updated_at","updated");
 
+//        return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?", new String[] { String.valueOf(contact.getID()) });
+        Log.v("updating_using_c_code",customer_code+" with "+"update");
+        database.update(customerRepository.tableName, valuesToUpdate, customerRepository.customer_code + " = ?", new String[]{customer_code});
+    }
+    ///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
     /////////////////road methods/////////////////////////////
     public void insert_or_update_Road(ArrayList<Road> roadlist){
         SQLiteDatabase database = getWritableDatabase();

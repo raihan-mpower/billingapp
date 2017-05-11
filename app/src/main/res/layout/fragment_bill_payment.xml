@@ -120,11 +120,7 @@
                 android:layout_marginTop="5dp"
 
                 />
-
-
         </LinearLayout>
-
-
 
         <LinearLayout
             android:orientation="horizontal"

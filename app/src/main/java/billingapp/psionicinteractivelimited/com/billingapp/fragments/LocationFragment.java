@@ -99,6 +99,7 @@ public class LocationFragment extends Fragment {
         customerid= (AutoCompleteTextView) view.findViewById(R.id.customer_id);
 
 
+
         billpayment = (Button) view.findViewById(R.id.bill_payment);
 //
         customerid.setThreshold(-1);
