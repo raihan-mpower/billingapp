@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -110,6 +111,8 @@ public class BillPaymentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
         View view = inflater.inflate(R.layout.fragment_bill_payment, container, false);
         address = (TextView) view.findViewById(R.id.address_info);
         user_name = (TextView) view.findViewById(R.id.username_info);
@@ -149,7 +152,7 @@ public class BillPaymentFragment extends Fragment {
         Toast.makeText(getContext(), "Last paid "+getMonthFromInt(m), Toast.LENGTH_SHORT).show();
 
 
-        ArrayList<String> monthsdue = getmonthsDue(getMonthFromInt(m),year);
+        ArrayList<String> monthsdue = getmonthsDue(getMonthFromInt(m),customer.getLast_paid(),year);
         monthsCounter=0;
 
        tags = new ArrayList<>();
@@ -409,9 +412,18 @@ public class BillPaymentFragment extends Fragment {
     //ush.end
 
 
-    public ArrayList<String> getmonthsDue(String lastpaidmonth, int year){
+    public ArrayList<String> getmonthsDue(String lastpaidmonth, String lastPaid, int CurrentYear){
 
-        Toast.makeText(getActivity(), ""+(year+1900), Toast.LENGTH_SHORT).show();
+        String[] LastPaidDateTimeParts = lastPaid.split("-");
+//
+//        Toast.makeText(getContext(), "Last paid "+lastPaid + " year "+LastPaidDateTimeParts[0] , Toast.LENGTH_LONG).show();
+//        Toast.makeText(getContext(), "Current year "+(CurrentYear+1900), Toast.LENGTH_LONG).show();
+
+
+
+
+
+
         ArrayList<String> months = new ArrayList<String>();
         months.add("jan");
         months.add("feb");
@@ -448,6 +460,8 @@ public class BillPaymentFragment extends Fragment {
         Log.v("current month",""+indexofcurrentmonth);
 
         ArrayList<String> monthstoreturn = new ArrayList<String>();
+
+//        if(indexofcurrentmonth<indexoflastpaid && )
         
         if((indexofcurrentmonth-indexoflastpaid)>0){
             for(int i = indexoflastpaid;i<indexofcurrentmonth;i++){

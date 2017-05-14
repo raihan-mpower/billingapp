@@ -66,8 +66,8 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 //        String sync_url = "http://192.168.0.100:8000/sync/billingdata?token="+token;
 //        String sync_url = "http://192.168.0.101:8000/sync/billingdata/";
 
-//        String sync_url = "http://cable.psionichub.com/sync/billingdata";
-        String sync_url = "http://cable.hmannan.com/sync/billingdata";
+        String sync_url = "http://cable.psionichub.com/sync/billingdata";
+//        String sync_url = "http://cable.hmannan.com/sync/billingdata";
 //        http://cable.hmannan.com
 
 //        String sync_url = "http://192.168.0.108:8000/sync/billingdata";
@@ -103,8 +103,8 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
                     }
                 }
 
-//            String edit_url = "http://cable.psionichub.com/sync/customerdata";
-            String edit_url = "http://cable.hmannan.com/sync/customerdata";
+            String edit_url = "http://cable.psionichub.com/sync/customerdata";
+//            String edit_url = "http://cable.hmannan.com/sync/customerdata";
 //          String edit_url = "http://192.168.0.108:8000/sync/customerdata";
 
 

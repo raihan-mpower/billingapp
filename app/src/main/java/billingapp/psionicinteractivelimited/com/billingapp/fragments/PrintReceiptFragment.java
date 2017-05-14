@@ -137,12 +137,17 @@ public class PrintReceiptFragment extends Fragment {
                     // \n is for new line
                     Toast.makeText(getContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
                     customer_global.setDue("0");
+
+
                     databasehelper.makeTimeStampEmpty(customer_global,""+latitude,""+longitude,""+print_due_amount,monthsCounter,print_payment_date);
 //                    Log.v("updddated_attttttttttt",cursor_tostring);
 
                     ((MainActivity)getActivity()).mViewPager.setCurrentItem(0);
                     ((MainActivity)getActivity()).mViewPager.setPagingEnabled(false);
 //                    ((MainActivity)getActivity()).locationFragment.getBackFromPrintScreen();
+
+                    ((MainActivity)getActivity()).locationFragment.makeCustomerIdBlank();
+
 
 
 
@@ -180,6 +185,7 @@ public class PrintReceiptFragment extends Fragment {
          print_due_month=months;
         this.monthsCounter=monthsCounter;
         print_payment_date=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
+
         Log.v("date_with_time",print_payment_date);
 //        Toast.makeText(getContext(), print_payment_date, Toast.LENGTH_SHORT).show();
         String print_notice="Please submit a signed copy of the bill to the collector.";
@@ -188,11 +194,6 @@ public class PrintReceiptFragment extends Fragment {
 
 
         //Company information disabled for now
-
-//        mTextView_company.setText(Html.fromHtml("<b>DIGI 21 Cable Service<b><br>" + "House $3, Road #4, Sector #1<br>" +
-//                "Uttara Model Town<br>Tel: 8915857<br>*********************************<br><br>"));
-
-
         mTextView_user.setText(Html.fromHtml(
 
                         print_address +"<br>"+

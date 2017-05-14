@@ -15,7 +15,8 @@ public class Customers
 {
     private String houses_id;
 
-    private String phone;
+
+    private String flat;
 
     private String price;
 
@@ -38,6 +39,10 @@ public class Customers
     public String to_sync_collection_date="deafult";
     public String due = "";
 
+    public String phone = "";
+
+
+
     public String getDue() {
         return due;
     }
@@ -56,6 +61,16 @@ public class Customers
         this.houses_id = houses_id;
     }
 
+    public String getFlat ()
+    {
+        return flat;
+    }
+
+    public void setFlat (String flat)
+    {
+        this.flat = flat;
+    }
+
     public String getPhone ()
     {
         return phone;
@@ -65,6 +80,7 @@ public class Customers
     {
         this.phone = phone;
     }
+
 
     public String getPrice () { return price;}
 
@@ -95,17 +111,19 @@ public class Customers
     public void set_to_sync_total_amount (String a) { this.to_sync_total_amount=a;}
     public void set_to_sync_collection_date (String a) {this.to_sync_collection_date=a;}
 
-    public Customers(  String houses_id,String phone,String price,String customer_code,String address,String customers_id,String name, String last_paid, String updated_at ) {
+    public Customers(  String houses_id,String flat,String price,String customer_code,String address,String customers_id,String name, String last_paid, String updated_at,String phone )
+    {
         this.last_paid = last_paid;
         this.name = name;
         this.customers_id = customers_id;
         this.address = address;
         this.customer_code = customer_code;
         this.price = price;
-        this.phone = phone;
+        this.flat = flat;
         this.houses_id = houses_id;
-
         this.updated_at = updated_at;
+
+        this.phone=phone;
     }
 
     public String getAddress ()
@@ -167,13 +185,13 @@ public class Customers
     @Override
     public String toString()
     {
-        return "ClassPojo [houses_id = "+houses_id+", phone = "+phone+", price = "+price+", customer_code = "+customer_code+", address = "+address+", customers_id = "+customers_id+", name = "+name+", last_paid = "+last_paid+", updated_at = "+updated_at+", location: lat = "+to_sync_lat+", location: lon = "+to_sync_lon+", paying for = "+to_sync_paying_for+", bill amount = "+to_sync_total_amount+", collection date = "+to_sync_collection_date+"]";
+        return "ClassPojo [houses_id = "+houses_id+", flat = "+flat+", price = "+price+", customer_code = "+customer_code+", address = "+address+", customers_id = "+customers_id+", name = "+name+", last_paid = "+last_paid+", updated_at = "+updated_at+", location: lat = "+to_sync_lat+", location: lon = "+to_sync_lon+", paying for = "+to_sync_paying_for+", bill amount = "+to_sync_total_amount+", collection date = "+to_sync_collection_date+"]";
     }
 
     public static Customers jsontoCustomers(String json) {
         try {
             JSONObject customerJson = new JSONObject(json);
-            Customers customerToReturn = new Customers(customerJson.getString("houses_id"),customerJson.getString("phone"),customerJson.getString("price"),customerJson.getString("customer_code"),customerJson.getString("address"),customerJson.getString("customers_id"),customerJson.getString("name"),customerJson.getString("last_paid"),customerJson.getString("updated_at"));
+            Customers customerToReturn = new Customers(customerJson.getString("houses_id"),customerJson.getString("flat"),customerJson.getString("price"),customerJson.getString("customer_code"),customerJson.getString("address"),customerJson.getString("customers_id"),customerJson.getString("name"),customerJson.getString("last_paid"),customerJson.getString("updated_at"),customerJson.getString("phone"));
             return customerToReturn;
         } catch (JSONException e) {
             e.printStackTrace();

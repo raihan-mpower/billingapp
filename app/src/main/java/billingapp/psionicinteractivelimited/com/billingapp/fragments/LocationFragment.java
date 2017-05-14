@@ -1,6 +1,8 @@
 package billingapp.psionicinteractivelimited.com.billingapp.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -83,6 +87,7 @@ public class LocationFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -90,7 +95,7 @@ public class LocationFragment extends Fragment {
         // Inflate the layout for this fragment
 
 //        ((MainActivity)getActivity()).mViewPager.setCurrentItem(0);
-        View view = inflater.inflate(R.layout.fragment_location, container, false);
+        final View view = inflater.inflate(R.layout.fragment_location, container, false);
 
         final billingdatabaseHelper databasehelper = new billingdatabaseHelper(getActivity(),1);
 
@@ -103,6 +108,8 @@ public class LocationFragment extends Fragment {
         billpayment = (Button) view.findViewById(R.id.bill_payment);
 //
         customerid.setThreshold(-1);
+
+
 
 
 
@@ -188,6 +195,9 @@ public class LocationFragment extends Fragment {
                 ((MainActivity) getActivity()).mViewPager.setPagingEnabled(true);
                 ((MainActivity) getActivity()).mViewPager.setCurrentItem(1);
 
+                    hideKeyboard(getContext(),view);
+
+
                 }
                 else
                 {
@@ -196,6 +206,8 @@ public class LocationFragment extends Fragment {
             }
         });
         return view;
+
+
     }
 
 
@@ -208,6 +220,7 @@ public class LocationFragment extends Fragment {
 
 
         customerid.setThreshold(-1);
+        customerid.setText("");
 
         final ArrayList<String> suggestions = new ArrayList<String>();
         for(int i = 0;i< MainActivity.territories.size();i++){
@@ -253,4 +266,15 @@ public class LocationFragment extends Fragment {
     }
 
 
+    public void makeCustomerIdBlank() {
+        customerid.setText("");
+    }
+
+    public void hideKeyboard(Context ctx, View view){
+
+        InputMethodManager inputManager = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
+        IBinder binder = view.getWindowToken();
+        inputManager.hideSoftInputFromWindow(binder, 0);
+
+    }
 }

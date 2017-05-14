@@ -241,15 +241,20 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         }
         else if(id == R.id.action_logout){
 
-            Toast.makeText(MainActivity.this, "Logging out...", Toast.LENGTH_SHORT).show();
 
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("isLoggedIn",false);
-            editor.apply();
+            //logout disabled start
+//            Toast.makeText(MainActivity.this, "Logging out...", Toast.LENGTH_SHORT).show();
+//            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+//            SharedPreferences.Editor editor = preferences.edit();
+//            editor.putBoolean("isLoggedIn",false);
+//            editor.apply();
+//            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+//            finish();
 
-            startActivity(new Intent(MainActivity.this,LoginActivity.class));
-            finish();
+            //logout disabled end
+
+
+
 
         }
 
@@ -368,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             String sector = "";
             String road = "";
             String house = "";
-            String phone = "";
+            String flat = "";
             try {
                 object = new JSONObject(qrJson);
                 JSONArray customers = object.getJSONArray("customers");
@@ -379,13 +384,13 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
                     sector = currentcustomer.getString("sector");
                     road = currentcustomer.getString("Road");
                     house =  currentcustomer.getString("house");
-                    phone = currentcustomer.getString("phone");
+                    flat = currentcustomer.getString("flat");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             final billingdatabaseHelper databasehelper = new billingdatabaseHelper(this,1);
-            locationFragment.fillfromQR(customerid,city,sector,road,house,phone);
+            locationFragment.fillfromQR(customerid,city,sector,road,house,flat);
             MainActivity.customerForProcessing = customerRepository.findByCustomerCaseID(customerid,databasehelper.getReadableDatabase()).get(0);
 
             // show the scanner result into dialog box.
