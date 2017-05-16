@@ -70,9 +70,12 @@ public class syncUtils {
                 Log.v("token",token);
                 billingdatabaseHelper databasehelper = new billingdatabaseHelper(context,1);
                 if(databasehelper.getALLCustomers().size()<1){
-                    Log.v("is here","already exists");
+
+                    //is called when client-DB is fresh
                 syncCustomers();
                 }else{
+                    //is called when client-DB contains somedata
+                    //receives data after "last_updated_at timestamp"
                     updatedCustomer();
                 }
                 return null;
@@ -299,30 +302,59 @@ public class syncUtils {
             customerlist = Customers.returnCustomersFromArray(response);
         }
     }
+    ////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    // update customer method changed: (commented out as backup:start)
+
+//    public void updatedCustomer(){
+//        billingdatabaseHelper databasehelper = new billingdatabaseHelper(context,1);
+//
+//        int i = 0;
+//
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+//        String token = preferences.getString("token", "");
+//
+//        String response = getCustomersData(token,i);
+//        ArrayList<Customers> customerlist = Customers.returnCustomersFromArray(response);
+//
+//        while(customerlist.size()>0)
+//        {
+//            databasehelper.insert_or_update_Customers(customerlist);
+//            i = Integer.parseInt(customerlist.get(customerlist.size()-1).getCustomers_id());
+//            Log.v("last customer id",""+i);
+//            response = getCustomersData(token,i);
+//            customerlist = Customers.returnCustomersFromArray(response);
+//        }
+//
+//
+//    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    // update customer method changed: (commented out as backup:end)
+
+
 
     public void updatedCustomer(){
         billingdatabaseHelper databasehelper = new billingdatabaseHelper(context,1);
 
-        int i = 0;
-
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String token = preferences.getString("token", "");
+        String last_time = preferences.getString("last_updated_at", "1970");
 
-        String response = getCustomersData(token,i);
+        String response = getCustomersData_afterLastUpdateTime(token,last_time);
         ArrayList<Customers> customerlist = Customers.returnCustomersFromArray(response);
 
         while(customerlist.size()>0)
         {
             databasehelper.insert_or_update_Customers(customerlist);
-            i = Integer.parseInt(customerlist.get(customerlist.size()-1).getCustomers_id());
-            Log.v("last customer id",""+i);
-            response = getCustomersData(token,i);
-            customerlist = Customers.returnCustomersFromArray(response);
+
         }
 
 
     }
-
 
 
     public String getCustomersData(String token,int last_id) {
@@ -370,26 +402,40 @@ public class syncUtils {
         return responsestring;
     }
 
-//    class UpdateBlankTimes extends AsyncTask<String, Integer, String> {
-//
-//        ProgressDialog dialog;
-//
-//        @Override
-//        protected void onPreExecute() {
-////            super.onPreExecute();
-//            dialog = ProgressDialog.show(context,"please wait","syncing billing info");
-//
-//        }
-//
-//        @Override
-//        protected String doInBackground(String... params) {
-//
-//            return "";
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String content) {
-//            dialog.dismiss();
-//        }
-//    }
+
+    public String getCustomersData_afterLastUpdateTime(String token,String last_updated_at) {
+        String responsestring = "";
+        // Create a new HttpClient and Post Header
+        HttpClient httpclient = new DefaultHttpClient();
+//        HttpGet httpget = new HttpGet("http://cable.psionichub.com/sync/customers?token="+token+"&last_id="+last_id+"&limit=100");
+        HttpGet httpget = new HttpGet("http://cable.hmannan.com/sync/customers?token="+token+"&last_updated_at="+last_updated_at);
+//        HttpGet httpget = new HttpGet("http://192.168.0.108:8000/sync/customers?token="+token+"&last_id="+last_id+"&limit=100");
+
+//        HttpGet httpget = new HttpGet("http://192.168.0.101:8000/sync/customers?token="+token+"&last_id="+last_id+"&limit=100");
+
+
+
+        try {
+            HttpResponse response = httpclient.execute(httpget);
+            String respond = response.getStatusLine().getReasonPhrase();
+            int statusCode = response.getStatusLine().getStatusCode();
+
+// Getting the response body.
+            String responseBody = EntityUtils.toString(response.getEntity());
+
+            if(statusCode == 200){
+                responsestring = responseBody;
+
+            }else{
+                responsestring = "error";
+            }
+
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+        }
+        return responsestring;
+    }
+
 }

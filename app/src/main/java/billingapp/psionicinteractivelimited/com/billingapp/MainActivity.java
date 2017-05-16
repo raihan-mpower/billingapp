@@ -220,7 +220,13 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_update) {
-            update_the_data_from_server();
+//            update_the_data_from_server();
+
+            boolean isFistLoad=preferences.getBoolean("firstLoad",true);
+
+            Su.executeAsynctask(locationFragment, isFistLoad);
+//            Toast.makeText(MainActivity.this, "Updating...", Toast.LENGTH_SHORT).show();
+            return true;
 
 
         }
@@ -261,15 +267,15 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean update_the_data_from_server() {
-
-        boolean isFistLoad=preferences.getBoolean("firstLoad",true);
-
-        Su.executeAsynctask(locationFragment, isFistLoad);
-//            Toast.makeText(MainActivity.this, "Updating...", Toast.LENGTH_SHORT).show();
-        return true;
-
-    }
+//    private boolean update_the_data_from_server() {
+//
+//        boolean isFistLoad=preferences.getBoolean("firstLoad",true);
+//
+//        Su.executeAsynctask(locationFragment, isFistLoad);
+////            Toast.makeText(MainActivity.this, "Updating...", Toast.LENGTH_SHORT).show();
+//        return true;
+//
+//    }
 
 
     /**
