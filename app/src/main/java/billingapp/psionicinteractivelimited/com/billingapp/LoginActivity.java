@@ -98,6 +98,8 @@ public class LoginActivity extends AppCompatActivity {
             String u=preferences.getString("user","");
             String p=preferences.getString("pass","");
             String t=preferences.getString("token","");
+            String lastUpdatedAt=preferences.getString("last_updated_at","");
+            Log.v("unishsho70",lastUpdatedAt);
             executeAsynctask(u,p,t);
 
         }
@@ -149,6 +151,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("token",token);
                     editor.putString("user",username);
                     editor.putString("pass",password);
+                    editor.putString("last_updated_at","1970");
 
                     editor.putBoolean("isLoggedIn",true);
 
@@ -208,8 +211,8 @@ public class LoginActivity extends AppCompatActivity {
         String token = "";
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://cable.psionichub.com/authmob");
-//        HttpPost httppost = new HttpPost("http://cable.hmannan.com/authmob");
+//        HttpPost httppost = new HttpPost("http://cable.psionichub.com/authmob");
+        HttpPost httppost = new HttpPost("http://cable.hmannan.com/authmob");
 
 //        HttpPost httppost = new HttpPost("http://192.168.0.108:8000/authmob");
 

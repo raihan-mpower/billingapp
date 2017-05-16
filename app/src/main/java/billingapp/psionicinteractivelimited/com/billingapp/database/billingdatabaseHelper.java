@@ -268,9 +268,8 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
     }
     ///////////////////////////////////////////////////////
 
-    public void makeTimeStampEmpty(Customers customer, String lat, String lon,String amount,int monthCounter,String collectionDate){
+    public void makeTimeStampEmpty(Customers customer, String lat, String lon,String amount,int monthCounter,String collectionDate,String dateTimeParts){
 
-        String[] dateTImeParts = collectionDate.split(" ");
 
         SQLiteDatabase database_to_null_timestamp = getWritableDatabase();
         ContentValues valuesToUpdate = new ContentValues();
@@ -280,7 +279,7 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
         valuesToUpdate.put("to_sync_paying_for",monthCounter);
         valuesToUpdate.put("to_sync_total_amount",amount);
         valuesToUpdate.put("to_sync_collection_date",collectionDate);
-        valuesToUpdate.put("last_paid",dateTImeParts[0]);
+        valuesToUpdate.put("last_paid",dateTimeParts);
 
         valuesToUpdate.put(customerRepository.customer_due,customer.getDue());
 

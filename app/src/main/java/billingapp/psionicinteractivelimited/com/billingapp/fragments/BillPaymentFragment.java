@@ -152,7 +152,8 @@ public class BillPaymentFragment extends Fragment {
         Toast.makeText(getContext(), "Last paid "+getMonthFromInt(m), Toast.LENGTH_SHORT).show();
 
 
-        ArrayList<String> monthsdue = getmonthsDue(getMonthFromInt(m),customer.getLast_paid(),year);
+
+        ArrayList<String> monthsdue = getmonthsDue(getMonthFromInt(m),customer);
         monthsCounter=0;
 
        tags = new ArrayList<>();
@@ -266,7 +267,9 @@ public class BillPaymentFragment extends Fragment {
                     customer_global.setDue("1");
                     String print_payment_date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 
-                    databasehelper.makeTimeStampEmpty(customer_global,""+latitude,""+longitude,""+amount,monthsCounter,print_payment_date);
+
+                    //If any issue occurs please check this method double print_payment_date
+                    databasehelper.makeTimeStampEmpty(customer_global,""+latitude,""+longitude,""+amount,monthsCounter,print_payment_date,print_payment_date);
 
                     ((MainActivity)getActivity()).mViewPager.setCurrentItem(0);
                     ((MainActivity)getActivity()).mViewPager.setPagingEnabled(false);
@@ -412,12 +415,36 @@ public class BillPaymentFragment extends Fragment {
     //ush.end
 
 
-    public ArrayList<String> getmonthsDue(String lastpaidmonth, String lastPaid, int CurrentYear){
+    public ArrayList<String> getmonthsDue(String lastpaidmonth,Customers customers){
 
-        String[] LastPaidDateTimeParts = lastPaid.split("-");
+        String[] lastPaidYear_array=customers.getLast_paid().split("-");
+
+        String lastPaidYear=lastPaidYear_array[0];
+
+//        if(customers.getUpdated_at()!=""){
 //
+//            lastPaidYear=lastPaidYear_array[0];
+//        }else{
+//            lastPaidYear=lastPaidYear_array[2];
+//        }
+
+
+
+        //
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//        String[] currentPaidYear_array=format.format(new Date()).split("-");
+        String[] currentPaidYear_array=format.format(new Date()).split("-");
+        String currentPaidYear=currentPaidYear_array[0];
+        Log.v("last_and_current,L",lastPaidYear+" this "+currentPaidYear);
+
+        //
+
+//        String[] LastPaidDateTimeParts = lastPaid.split("-");
+
 //        Toast.makeText(getContext(), "Last paid "+lastPaid + " year "+LastPaidDateTimeParts[0] , Toast.LENGTH_LONG).show();
 //        Toast.makeText(getContext(), "Current year "+(CurrentYear+1900), Toast.LENGTH_LONG).show();
+
+//        Log.v("last_and_current",LastPaidDateTimeParts[0]+" "+(CurrentYear+1900));
 
 
 
@@ -445,7 +472,8 @@ public class BillPaymentFragment extends Fragment {
 //        SimpleDateFormat year_current = new SimpleDateFormat("YYYY");
 //        String year_name = year_current.format(cal.getTime());
 //
-//        int difference=  Integer.parseInt(year_name)-year;
+        int difference=  Integer.parseInt(currentPaidYear)-Integer.parseInt(lastPaidYear);
+        Log.v("the_difference",""+difference);
 //
 //        Toast.makeText(getActivity(), ""+difference, Toast.LENGTH_SHORT).show();
 
@@ -462,23 +490,28 @@ public class BillPaymentFragment extends Fragment {
         ArrayList<String> monthstoreturn = new ArrayList<String>();
 
 //        if(indexofcurrentmonth<indexoflastpaid && )
-        
-        if((indexofcurrentmonth-indexoflastpaid)>0){
-            for(int i = indexoflastpaid;i<indexofcurrentmonth;i++){
-                monthstoreturn.add(months.get(i));
 
-                count ++;
+        if(Integer.parseInt(lastPaidYear) <= Integer.parseInt(currentPaidYear)){
+            if((indexofcurrentmonth-indexoflastpaid)>0){
+                for(int i = indexoflastpaid;i<indexofcurrentmonth;i++){
+                    monthstoreturn.add(months.get(i));
+
+                    count ++;
+                }
+            }else if((indexofcurrentmonth-indexoflastpaid)<0 && (Integer.parseInt(lastPaidYear) < Integer.parseInt(currentPaidYear)) ){
+                for(int i = indexoflastpaid;i<12;i++){
+                    monthstoreturn.add(months.get(i));
+                    count++;
+                }
+                for(int i = 0;i<indexofcurrentmonth;i++){
+                    monthstoreturn.add(months.get(i));
+                    count++;
+                }
             }
-        }else if((indexofcurrentmonth-indexoflastpaid)<0){
-            for(int i = indexoflastpaid;i<12;i++){
-                monthstoreturn.add(months.get(i));
-                count++;
-            }
-            for(int i = 0;i<indexofcurrentmonth;i++){
-                monthstoreturn.add(months.get(i));
-                count++;
-            }
+
         }
+        
+
         return monthstoreturn;
 
 

@@ -16,8 +16,11 @@ import android.widget.Toast;
 import com.cunoraz.tagview.Tag;
 import com.cunoraz.tagview.TagView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import billingapp.psionicinteractivelimited.com.billingapp.LoginActivity;
@@ -126,6 +129,10 @@ public class PrintReceiptFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                Log.v("imam1","log_print");
+
+
+
                 gps=new GPSTracker(getContext());
                 if(gps.canGetLocation()){
 
@@ -139,7 +146,32 @@ public class PrintReceiptFragment extends Fragment {
                     customer_global.setDue("0");
 
 
-                    databasehelper.makeTimeStampEmpty(customer_global,""+latitude,""+longitude,""+print_due_amount,monthsCounter,print_payment_date);
+
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                    String last_paid_with_advance="";
+
+
+                    try {
+                        Log.v("imam1","last_paid_1");
+                        Date d = dateFormat.parse(customer_global.getLast_paid());
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(d);
+                        c.add(Calendar.MONTH,monthsCounter);
+
+                        Date currentDatePlusOne = c.getTime();
+
+                        last_paid_with_advance= dateFormat.format(currentDatePlusOne);
+
+
+                        Log.v("imam1","RESULT: "+last_paid_with_advance);
+                    } catch (Exception e) {
+                        Log.v("imam1",e.getMessage());
+                        e.printStackTrace();
+                    }
+
+
+                    databasehelper.makeTimeStampEmpty(customer_global,""+latitude,""+longitude,""+print_due_amount,monthsCounter,print_payment_date,last_paid_with_advance);
 //                    Log.v("updddated_attttttttttt",cursor_tostring);
 
                     ((MainActivity)getActivity()).mViewPager.setCurrentItem(0);
@@ -184,7 +216,7 @@ public class PrintReceiptFragment extends Fragment {
          print_due_amount=amount;
          print_due_month=months;
         this.monthsCounter=monthsCounter;
-        print_payment_date=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
+        print_payment_date=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
         Log.v("date_with_time",print_payment_date);
 //        Toast.makeText(getContext(), print_payment_date, Toast.LENGTH_SHORT).show();
