@@ -1,6 +1,8 @@
 package billingapp.psionicinteractivelimited.com.billingapp.model.customers;
 
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -192,24 +194,47 @@ public class Customers
         try {
             JSONObject customerJson = new JSONObject(json);
             Customers customerToReturn = new Customers(customerJson.getString("houses_id"),customerJson.getString("flat"),customerJson.getString("price"),customerJson.getString("customer_code"),customerJson.getString("address"),customerJson.getString("customers_id"),customerJson.getString("name"),customerJson.getString("last_paid"),customerJson.getString("updated_at"),customerJson.getString("phone"));
+//            Log.v("imam1","RESULT(servertime) :"+customerJson.getString("server_time"));
             return customerToReturn;
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.v("imam1","exception2"+e.getMessage());
             return null;
         }
     }
-    public static ArrayList<Customers> returnCustomersFromArray(String JsonArray){
+    public static ArrayList<Customers> returnCustomersFromArray(String JsonResponse){
+        Log.v("imam1","JsonResponse :"+ JsonResponse);
         ArrayList<Customers> customerlist = new ArrayList<Customers>();
         try {
-            JSONArray customerArray = new JSONArray(JsonArray);
-            for(int i = 0;i<customerArray.length();i++){
-                Customers customers = jsontoCustomers(customerArray.get(i).toString());
+                JSONObject jo = new JSONObject(JsonResponse);
+            JSONArray jr = jo.getJSONArray("0");
+            String serverTime =jo.getString("server_time");
+            Log.v("imam1","SERVERTIME : "+serverTime);
+            for(int i = 0;i<jr.length();i++){
+                Customers customers = jsontoCustomers(jr.get(i).toString());
                 customerlist.add(customers);
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            //zamela
+            Log.v("imam1","exception1"+e.getMessage());
         }
         return customerlist;
 
+    }
+
+    public static String return_last_time_from_JsonResponse(String JsonResponse){
+
+        String json_parsed_last_time="1970";
+        try {
+            JSONObject jo =new JSONObject(JsonResponse);
+            json_parsed_last_time=jo.getString("server_time");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.v("imam1","last_time_change_holo :"+json_parsed_last_time);
+        return json_parsed_last_time;
     }
 }

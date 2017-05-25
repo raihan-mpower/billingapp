@@ -42,6 +42,7 @@ import billingapp.psionicinteractivelimited.com.billingapp.model.location.House;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.Road;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.Sector;
 import billingapp.psionicinteractivelimited.com.billingapp.model.location.Territory;
+import com.orhanobut.logger.Logger;
 
 /**
  * Created by raihan on 9/2/16.
@@ -181,12 +182,15 @@ public class syncUtils {
 
 // Getting the response body.
             String responseBody = EntityUtils.toString(response.getEntity());
+            Logger.json(responseBody);
             Log.v("testcall",token);
             Log.v("testcall",responseBody);
             ;
             if(statusCode == 200){
                 Log.v("testcall",responseBody);
                 responsestring = responseBody;
+
+                //////////////////////////////////////////
                 processResponse(responsestring);
 
             }else{
@@ -292,77 +296,139 @@ public class syncUtils {
         int i = databasehelper.getlastCustomerID();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String token = preferences.getString("token", "");
-        String response = getCustomersData(token,i);
+        String last_time=preferences.getString("last_updated_at","1970");
+
+//        Toast.makeText(context, last_time, Toast.LENGTH_SHORT).show();
+        Log.v("imam1", "Last_time_before_sync :"+last_time);
+
+        String response = getCustomersData(token,i,last_time);
+//        Log.v("imam1","RESULT :"+response);
         ArrayList<Customers> customerlist = Customers.returnCustomersFromArray(response);
         while(customerlist.size()>0){
+            Logger.d(response);
             databasehelper.insert_or_update_Customers(customerlist);//shaon
             i = databasehelper.getlastCustomerID();
             Log.v("last customer id",""+i);
-             response = getCustomersData(token,i);
+             response = getCustomersData(token,i,last_time);
             customerlist = Customers.returnCustomersFromArray(response);
         }
+
+        //now update the last_time in sqlite, from the response of server
+        String last_time_toSet=Customers.return_last_time_from_JsonResponse(response);
+        last_time_toSet = last_time_toSet.replaceAll(" ", "%20");
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("last_updated_at",last_time_toSet);
+        editor.apply();
+
+        String updated_last_time=preferences.getString("last_updated_at","1970");
+
+        Log.v("imam1", "Last_time_after_sync :"+updated_last_time);
+
+
+
+
+//        Log.v("SSYYNNCC","SSYYNNCC");
+//        Toast.makeText(this, "SSYYNNCC", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, ""+customerlist.get(i).getName(), Toast.LENGTH_SHORT).show();
+//        Log.v("the_last_customer","RESULT: "+customerlist.get(i).getName());
+
     }
+
+
     ////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////
 
     // update customer method changed: (commented out as backup:start)
 
-//    public void updatedCustomer(){
-//        billingdatabaseHelper databasehelper = new billingdatabaseHelper(context,1);
-//
-//        int i = 0;
-//
-//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-//        String token = preferences.getString("token", "");
-//
-//        String response = getCustomersData(token,i);
-//        ArrayList<Customers> customerlist = Customers.returnCustomersFromArray(response);
-//
-//        while(customerlist.size()>0)
-//        {
-//            databasehelper.insert_or_update_Customers(customerlist);
-//            i = Integer.parseInt(customerlist.get(customerlist.size()-1).getCustomers_id());
-//            Log.v("last customer id",""+i);
-//            response = getCustomersData(token,i);
-//            customerlist = Customers.returnCustomersFromArray(response);
-//        }
-//
-//
-//    }
-
-    ////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////
-
-    // update customer method changed: (commented out as backup:end)
-
-
-
     public void updatedCustomer(){
         billingdatabaseHelper databasehelper = new billingdatabaseHelper(context,1);
 
+        int i = 0;
+
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String token = preferences.getString("token", "");
-        String last_time = preferences.getString("last_updated_at", "1970");
+        String last_time=preferences.getString("last_updated_at","1970");
 
-        String response = getCustomersData_afterLastUpdateTime(token,last_time);
+        Log.v("imam1", "Last_time_before_update :"+last_time);
+
+
+        String response = getCustomersData(token,i,last_time);
         ArrayList<Customers> customerlist = Customers.returnCustomersFromArray(response);
 
         while(customerlist.size()>0)
         {
             databasehelper.insert_or_update_Customers(customerlist);
-
+            i = Integer.parseInt(customerlist.get(customerlist.size()-1).getCustomers_id());
+            Log.v("last customer id",""+i);
+//            i = databasehelper.getlastCustomerID();
+            response = getCustomersData(token,i,last_time);
+            customerlist = Customers.returnCustomersFromArray(response);
         }
 
+        String last_time_toSet=Customers.return_last_time_from_JsonResponse(response);
+        last_time_toSet = last_time_toSet.replaceAll(" ", "%20");
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("last_updated_at",last_time_toSet);
+        editor.apply();
+
+        String updated_last_time=preferences.getString("last_updated_at","1970");
+
+        Log.v("imam1", "Last_time_after_update :"+updated_last_time);
 
     }
 
 
-    public String getCustomersData(String token,int last_id) {
+
+    // update customer method changed: (commented out as backup:end)
+    ////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+//    public void updatedCustomer(){
+//        billingdatabaseHelper databasehelper = new billingdatabaseHelper(context,1);
+//
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+//        String token = preferences.getString("token", "");
+//        String last_time = preferences.getString("last_updated_at", "1970");
+//
+//        String response = getCustomersData_afterLastUpdateTime(token,last_time);
+//        ArrayList<Customers> customerlist = Customers.returnCustomersFromArray(response);
+//
+//        while(customerlist.size()>0)
+//        {
+//            databasehelper.insert_or_update_Customers(customerlist);
+//
+//        }
+//
+//
+//    }
+
+
+    public String getCustomersData(String token,int last_id,String last_updated) {
         String responsestring = "";
+
+//        String simpleURL="http://cable.hmannan.com/sync/customers?token="+token+"&last_id="+last_id+"&limit=100"+"&last_updated_at="+last_updated;
+//        String encodedurl="";
+//        try {
+//            encodedurl = URLEncoder.encode(simpleURL,"UTF-8");
+//
+//            Log.v("imam1","ENCODED_URL :"+encodedurl);
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//            Log.v("imam1","RESULT : encoded URL"+e.getMessage());
+//        }
+
+
+//                String encodedurl = URLEncoder.encode(url,"UTF-8");
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
 //        HttpGet httpget = new HttpGet("http://cable.psionichub.com/sync/customers?token="+token+"&last_id="+last_id+"&limit=100");
-        HttpGet httpget = new HttpGet("http://cable.hmannan.com/sync/customers?token="+token+"&last_id="+last_id+"&limit=100");
+        HttpGet httpget = new HttpGet("http://cable.hmannan.com/sync/customers?token="+token+"&last_id="+last_id+"&limit=100"+"&last_updated_at="+last_updated);
+
+//        HttpGet httpget = new HttpGet(encodedurl);
 //        HttpGet httpget = new HttpGet("http://192.168.0.108:8000/sync/customers?token="+token+"&last_id="+last_id+"&limit=100");
 
 //        HttpGet httpget = new HttpGet("http://192.168.0.101:8000/sync/customers?token="+token+"&last_id="+last_id+"&limit=100");
@@ -383,7 +449,7 @@ public class syncUtils {
 // Getting the response body.
             String responseBody = EntityUtils.toString(response.getEntity());
             Log.v("testcall",token);
-            Log.v("mytestcall",responseBody);
+            Log.v("imam1","API_RESPONSE"+responseBody);
             ;
             if(statusCode == 200){
                 Log.v("testcall",responseBody);

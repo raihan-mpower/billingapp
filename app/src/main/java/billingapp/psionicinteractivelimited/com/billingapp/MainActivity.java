@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             boolean isFistLoad=preferences.getBoolean("firstLoad",true);
             BackgroundTask bt=new BackgroundTask(MainActivity.this,Su,locationFragment,isFistLoad);
             bt.execute();
-            Toast.makeText(MainActivity.this, "SYNCHED", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainActivity.this, "SYNCHED", Toast.LENGTH_SHORT).show();
 
             //update after sync start
             //update function will be called from here after sync call
