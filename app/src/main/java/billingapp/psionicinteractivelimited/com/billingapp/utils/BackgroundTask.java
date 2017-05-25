@@ -25,16 +25,24 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
+
 
 import billingapp.psionicinteractivelimited.com.billingapp.MainActivity;
 import billingapp.psionicinteractivelimited.com.billingapp.database.billingdatabaseHelper;
 import billingapp.psionicinteractivelimited.com.billingapp.fragments.LocationFragment;
 import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Customers;
+
+
 
 public class BackgroundTask extends AsyncTask<String,Void,String> {
     ProgressDialog dialog;
@@ -86,9 +94,26 @@ public class BackgroundTask extends AsyncTask<String,Void,String> {
 
                     Map<String, String> parameters = new HashMap<String, String>(2);
 
+
+                    DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                    DateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                    String inputDateStr=customer.get_to_sync_collection_date();
+                    Log.v("imam1","from SQLite : "+inputDateStr);
+
+                    Date date = new Date();
+                    try {
+                        date = inputFormat.parse(inputDateStr);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    String outputDateStr = outputFormat.format(date);
+                    Log.v("imam1","to DB by api : "+outputDateStr);
+
+
                     parameters.put("customers_id",customer.getCustomers_id());
                     parameters.put("total",customer.get_to_sync_total_amount());
-                    parameters.put("timestamp", customer.get_to_sync_collection_date());
+                    parameters.put("timestamp", outputDateStr);
                     parameters.put("due", customer.getDue());
                     parameters.put("last_paid_date_num", customer.get_to_sync_paying_for());
                     parameters.put("lat", customer.get_to_sync_lat());

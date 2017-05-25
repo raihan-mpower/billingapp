@@ -130,27 +130,19 @@ public class PrintReceiptFragment extends Fragment {
             public void onClick(View v) {
 
                 Log.v("imam1","log_print");
-
-
-
                 gps=new GPSTracker(getContext());
                 if(gps.canGetLocation()){
 
                     double latitude = gps.getLatitude();
                     double longitude = gps.getLongitude();
 
-
-
                     // \n is for new line
                     Toast.makeText(getContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
                     customer_global.setDue("0");
 
-
-
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
                     String last_paid_with_advance="";
-
 
                     try {
                         Log.v("imam1","last_paid_1");
