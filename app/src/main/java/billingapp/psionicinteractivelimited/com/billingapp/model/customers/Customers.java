@@ -21,6 +21,7 @@ public class Customers
     private String flat;
 
     private String price;
+    private String price_d;
 
     private String customer_code;
 
@@ -31,13 +32,22 @@ public class Customers
     private String name;
 
     private String last_paid;
+    private String last_paid_d;
+
+
 
     private String updated_at;
 
     public String to_sync_lat="default";
     public String to_sync_lon="deafult";
+
     public String to_sync_paying_for="deafult";
+    public String to_sync_paying_for_d="deafult";
+
+
     public String to_sync_total_amount="deafult";
+    public String to_sync_total_amount_d="deafult";
+
     public String to_sync_collection_date="deafult";
     public String due = "";
 
@@ -85,10 +95,16 @@ public class Customers
 
 
     public String getPrice () { return price;}
+    public String getPrice_d () { return price_d;}
+
 
     public void setPrice (String price)
     {
         this.price = price;
+    }
+    public void setPrice_d (String price_d)
+    {
+        this.price_d = price_d;
     }
 
     public String getCustomer_code ()
@@ -103,17 +119,31 @@ public class Customers
 
     public String get_to_sync_lat () { return to_sync_lat;}
     public String get_to_sync_lon () { return to_sync_lon;}
+
+
+
     public String get_to_sync_paying_for () { return to_sync_paying_for;}
+    public String get_to_sync_paying_for_d () { return to_sync_paying_for_d;}
+
     public String get_to_sync_total_amount () { return to_sync_total_amount;}
+    public String get_to_sync_total_amount_d () { return to_sync_total_amount_d;}
+
+
     public String get_to_sync_collection_date () { return to_sync_collection_date;}
 
     public void set_to_sync_lat (String a) { this.to_sync_lat=a;}
     public void set_to_sync_lon (String a) {this.to_sync_lon=a;}
+
+
     public void set_to_sync_paying_for (String a) {this.to_sync_paying_for=a;}
+    public void set_to_sync_paying_for_d (String a) {this.to_sync_paying_for_d=a;}
+
     public void set_to_sync_total_amount (String a) { this.to_sync_total_amount=a;}
+    public void set_to_sync_total_amount_d (String a) { this.to_sync_total_amount_d=a;}
+
     public void set_to_sync_collection_date (String a) {this.to_sync_collection_date=a;}
 
-    public Customers(  String houses_id,String flat,String price,String customer_code,String address,String customers_id,String name, String last_paid, String updated_at,String phone )
+    public Customers(  String houses_id,String flat,String price,String customer_code,String address,String customers_id,String name, String last_paid, String updated_at,String phone,String price_d,String last_paid_d )
     {
         this.last_paid = last_paid;
         this.name = name;
@@ -126,6 +156,13 @@ public class Customers
         this.updated_at = updated_at;
 
         this.phone=phone;
+
+        this.price_d=price_d;
+        this.last_paid_d=last_paid_d;
+
+
+
+
     }
 
     public String getAddress ()
@@ -163,10 +200,21 @@ public class Customers
     {
         return last_paid;
     }
+    public String getLast_paid_d ()
+    {
+        return last_paid_d;
+    }
+
+
 
     public void setLast_paid (String last_paid)
     {
         this.last_paid = last_paid;
+    }
+
+    public void setLast_paid_d (String last_paid_d)
+    {
+        this.last_paid_d = last_paid_d;
     }
 
     //updated_at
@@ -193,7 +241,8 @@ public class Customers
     public static Customers jsontoCustomers(String json) {
         try {
             JSONObject customerJson = new JSONObject(json);
-            Customers customerToReturn = new Customers(customerJson.getString("houses_id"),customerJson.getString("flat"),customerJson.getString("price"),customerJson.getString("customer_code"),customerJson.getString("address"),customerJson.getString("customers_id"),customerJson.getString("name"),customerJson.getString("last_paid"),customerJson.getString("updated_at"),customerJson.getString("phone"));
+            Customers customerToReturn = new Customers(customerJson.getString("houses_id"),customerJson.getString("flat"),customerJson.getString("price"),customerJson.getString("customer_code"),customerJson.getString("address"),customerJson.getString("customers_id"),customerJson.getString("name"),
+                    customerJson.getString("last_paid"),customerJson.getString("updated_at"),customerJson.getString("phone"),customerJson.getString("price_d"),customerJson.getString("last_paid_d"));
 //            Log.v("imam1","RESULT(servertime) :"+customerJson.getString("server_time"));
             return customerToReturn;
         } catch (JSONException e) {

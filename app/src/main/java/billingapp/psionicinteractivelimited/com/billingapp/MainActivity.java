@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import billingapp.psionicinteractivelimited.com.billingapp.database.billingdatabaseHelper;
 import billingapp.psionicinteractivelimited.com.billingapp.database.customerRepository;
 import billingapp.psionicinteractivelimited.com.billingapp.fragments.BillPaymentFragment;
+import billingapp.psionicinteractivelimited.com.billingapp.fragments.BillPaymentFragment_digital;
 import billingapp.psionicinteractivelimited.com.billingapp.fragments.LocationFragment;
 import billingapp.psionicinteractivelimited.com.billingapp.fragments.PrintReceiptFragment;
 import billingapp.psionicinteractivelimited.com.billingapp.model.GPSTracker;
@@ -89,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
 
     //ush.end
     public BillPaymentFragment billPaymentFragment;
+
+    public BillPaymentFragment_digital billPaymentFragment_digital;
 
     //ush: started
     public PrintReceiptFragment printReceipttFragment;
@@ -331,8 +334,15 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
                 billPaymentFragment = BillPaymentFragment.newInstance("","");
 
                 return billPaymentFragment;
+            }
+            else if(position==2){
+                billPaymentFragment_digital=BillPaymentFragment_digital.newInstance("","");
 
-            }else {
+                return billPaymentFragment_digital;
+            }
+
+
+            else {
 //                return BillPaymentFragment.newInstance("","");
 
                 //ush: started
@@ -347,18 +357,20 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Location";
+                    return "USERS";
                 case 1:
-                    return "Bill Payment";
+                    return "ANALOG";
                 case 2:
-                    return "Print";
+                    return "DIGITAL";
+                case 3:
+                    return  "BILL";
             }
             return null;
         }

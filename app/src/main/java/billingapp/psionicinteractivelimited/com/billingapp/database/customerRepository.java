@@ -38,13 +38,21 @@ public class customerRepository {
 
     public static String phone="phone";
 
+    public static String price_d="price_d";
+    public static String last_paid_d="last_paid_d";
+    public static String to_sync_paying_for_d="to_sync_paying_for_d";
+    public static String to_sync_total_amount_d="to_sync_total_amount_d";
+
 
     //ius. end
 
 
 
-    public static String [] columns = {houses_id,flat,price,customer_code,address,customers_id,name,last_paid,updated_at,to_sync_lat,to_sync_lon,to_sync_paying_for,to_sync_total_amount,to_sync_collection_date,customer_due,phone};
-    public static String sqlStatement = "CREATE TABLE customers(houses_id VARCHAR , flat VARCHAR, price VARCHAR, customer_code VARCHAR, address VARCHAR, customers_id INTEGER PRIMARY KEY, name VARCHAR, last_paid VARCHAR, updated_at VARCHAR, to_sync_lat VARCHAR, to_sync_lon VARCHAR, to_sync_paying_for VARCHAR, to_sync_total_amount VARCHAR, to_sync_collection_date VARCHAR, due VARCHAR,phone VARCHAR )";
+    public static String [] columns = {houses_id,flat,price,customer_code,address,customers_id,name,last_paid,updated_at,to_sync_lat,to_sync_lon,to_sync_paying_for,to_sync_total_amount,to_sync_collection_date,
+            customer_due,phone,price_d,last_paid_d,to_sync_paying_for_d,to_sync_total_amount_d};
+    public static String sqlStatement = "CREATE TABLE customers(houses_id VARCHAR , flat VARCHAR, price VARCHAR, customer_code VARCHAR, address VARCHAR, customers_id INTEGER PRIMARY KEY, " +
+            "name VARCHAR, last_paid VARCHAR, updated_at VARCHAR, to_sync_lat VARCHAR, to_sync_lon VARCHAR, to_sync_paying_for VARCHAR, " +
+            "to_sync_total_amount VARCHAR, to_sync_collection_date VARCHAR, due VARCHAR,phone VARCHAR,price_d VARCHAR,last_paid_d VARCHAR,to_sync_paying_for_d VARCHAR,to_sync_total_amount_d VARCHAR)";
 
     public static void createsql(SQLiteDatabase database){
         database.execSQL(sqlStatement);
@@ -68,13 +76,22 @@ public class customerRepository {
         values.put(to_sync_collection_date,customer.get_to_sync_collection_date());
         values.put(customer_due,customer.getDue());
         values.put(phone,customer.getPhone());
+
+        values.put(price_d,customer.getPrice_d());
+        values.put(last_paid_d,customer.getLast_paid_d());
+        values.put(to_sync_paying_for_d,customer.get_to_sync_paying_for_d());
+        values.put(to_sync_total_amount_d,customer.get_to_sync_total_amount_d());
+
+
+
         return values;
     }
 
     public static Customers getCustomer(Cursor cursor){
         Customers customers = new Customers(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                cursor.getString(4), cursor.getString(5), cursor.getString(6),cursor.getString(7),cursor.getString(8),cursor.getString(15));
+                cursor.getString(4), cursor.getString(5), cursor.getString(6),cursor.getString(7),cursor.getString(8),cursor.getString(15),cursor.getString(16),cursor.getString(17));
         customers.setDue(cursor.getString(14));
+        ;
         return customers;
     }
 
@@ -117,6 +134,10 @@ public class customerRepository {
                 customer.set_to_sync_paying_for(cursor.getString(11));
                 customer.set_to_sync_total_amount(cursor.getString(12));
                 customer.set_to_sync_collection_date(cursor.getString(13));
+
+                customer.set_to_sync_paying_for_d(cursor.getString(18));
+                customer.set_to_sync_total_amount_d(cursor.getString(19));
+
                 Log.v("temporarycustomer",customer.toString());
                 customers.add(customer);
             }
@@ -133,7 +154,7 @@ public class customerRepository {
         Cursor cursor = database.query(tableName, columns, null, null, null, null, null, null);
         cursor.moveToFirst();
 
-        Customers matchedCustomer=new Customers(null,null,null,null,null,null,null,null,null,null);
+        Customers matchedCustomer=new Customers(null,null,null,null,null,null,null,null,null,null,null,null);
 
         while (!cursor.isAfterLast()) {
             Customers customer = getCustomer(cursor);

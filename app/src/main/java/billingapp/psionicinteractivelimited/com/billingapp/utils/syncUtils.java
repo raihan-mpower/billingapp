@@ -426,9 +426,12 @@ public class syncUtils {
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
 //        HttpGet httpget = new HttpGet("http://cable.psionichub.com/sync/customers?token="+token+"&last_id="+last_id+"&limit=100");
-        HttpGet httpget = new HttpGet("http://cable.hmannan.com/sync/customers?token="+token+"&last_id="+last_id+"&limit=100"+"&last_updated_at="+last_updated);
 
-//        HttpGet httpget = new HttpGet(encodedurl);
+        ///////////////////////////////
+//        HttpGet httpget = new HttpGet("http://cable.hmannan.com/sync/customers?token="+token+"&last_id="+last_id+"&limit=100"+"&last_updated_at="+last_updated);
+        ///////////////////////////
+
+        HttpGet httpget = new HttpGet("http://psionichub.com/billingapp/digital/bill.txt");
 //        HttpGet httpget = new HttpGet("http://192.168.0.108:8000/sync/customers?token="+token+"&last_id="+last_id+"&limit=100");
 
 //        HttpGet httpget = new HttpGet("http://192.168.0.101:8000/sync/customers?token="+token+"&last_id="+last_id+"&limit=100");

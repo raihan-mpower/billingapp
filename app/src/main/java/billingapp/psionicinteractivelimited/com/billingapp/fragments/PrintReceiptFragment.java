@@ -68,6 +68,10 @@ public class PrintReceiptFragment extends Fragment {
 
     private Button confirmationButton;
 
+    private String amount_analog="";
+    private String monthsString_analog="";
+    private int count_analog=0;
+
     GPSTracker gps;
 
     Customers customer_global;
@@ -182,9 +186,6 @@ public class PrintReceiptFragment extends Fragment {
                     // Ask user to enable GPS/network in settings
                     gps.showSettingsAlert();
                 }
-
-
-
 //                Log.v("updddated at",""+databasehelper.makeTimeStampEmpty(customer_global));
 
 
@@ -198,9 +199,19 @@ public class PrintReceiptFragment extends Fragment {
 
         return view;
     }
-    public void initiateCustomers(Customers customer,String amount,String months,int monthsCounter){
+    public void initiateCustomers(Customers customer,String amount,String months,int monthsCounter,String amount_a,String monthString_a,int monthsCounter_a){
 //        TextView UserInformation
         customer_global=customer;
+
+//
+//        private String amount_analog="";
+//        private String monthsString_analog="";
+//        private int count_analog=0;
+
+        amount_analog=amount_a;
+        monthsString_analog=monthString_a;
+        count_analog=monthsCounter_a;
+
         String print_address=customer.getAddress();
 //        String print_user_name="Psionic Interactive Limited";
         String print_user_name=customer.getName();
@@ -210,7 +221,8 @@ public class PrintReceiptFragment extends Fragment {
         this.monthsCounter=monthsCounter;
         print_payment_date=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
-        Log.v("date_with_time",print_payment_date);
+        Log.v("imam1","Result: bill digital "+print_due_amount+" "+print_due_month+" "+monthsCounter+" ");
+//        Log.v("date_with_time",print_payment_date);
 //        Toast.makeText(getContext(), print_payment_date, Toast.LENGTH_SHORT).show();
         String print_notice="Please submit a signed copy of the bill to the collector.";
         print_powered_by="Psionic Interactive Limited";
@@ -220,14 +232,27 @@ public class PrintReceiptFragment extends Fragment {
         //Company information disabled for now
         mTextView_user.setText(Html.fromHtml(
 
-                        print_address +"<br>"+
+                print_address +"<br>"+
                         "Name: "+print_user_name+"<br>"+
                         "ID: "+print_user_id+"<br>"+"<br>"+
-                        "Amount Due:<br><h2 color='#f00'> BDT "+print_due_amount+"</h2>"+"<br>"+
-                        "Month Due:<br><b>"+print_due_month+"</b><br>"+"<br>"+
+                        "Analog  BILL:<br><h2 color='#f00'> BDT "+amount_analog+"</h2>"+"<br>"+
+                        "Digital BILL:<br><h2 color='#f00'> BDT "+print_due_amount+"</h2>"+"<br><br>"+
+
+                        "TOTAL :<br><h1 color='#f00'> BDT "+Integer.parseInt(amount_analog)+Integer.parseInt(print_due_amount)+"</h1>"+"<br>"+
+
+
                         "Date: "+ print_payment_date+"<br><br>"+
                         print_notice+"<br><br>"+
                         "Powered by: "+print_powered_by
+
+//                        print_address +"<br>"+
+//                        "Name: "+print_user_name+"<br>"+
+//                        "ID: "+print_user_id+"<br>"+"<br>"+
+//                        "Amount Due:<br><h2 color='#f00'> BDT "+print_due_amount+"</h2>"+"<br>"+
+//                        "Month Due:<br><b>"+print_due_month+"</b><br>"+"<br>"+
+//                        "Date: "+ print_payment_date+"<br><br>"+
+//                        print_notice+"<br><br>"+
+//                        "Powered by: "+print_powered_by
         ));
 
 

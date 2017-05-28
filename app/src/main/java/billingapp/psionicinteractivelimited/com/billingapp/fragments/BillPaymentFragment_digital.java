@@ -1,19 +1,13 @@
 package billingapp.psionicinteractivelimited.com.billingapp.fragments;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.Html;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -38,10 +32,10 @@ import billingapp.psionicinteractivelimited.com.billingapp.model.customers.Custo
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * to handle interaction events.
- * Use the {@link BillPaymentFragment#newInstance} factory method to
+ * Use the {@link BillPaymentFragment_digital#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BillPaymentFragment extends Fragment {
+public class BillPaymentFragment_digital extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -67,6 +61,14 @@ public class BillPaymentFragment extends Fragment {
     private Button due_button;
     private Button Edit_button;
 
+
+    private String amount_analog="";
+    private String monthsString_analog="";
+    private int count_analog=0;
+
+
+
+
     TextView m_lastpaid_textView;
 
 
@@ -76,7 +78,7 @@ public class BillPaymentFragment extends Fragment {
     //u.end
 
 
-    public BillPaymentFragment() {
+    public BillPaymentFragment_digital() {
         // Required empty public constructor
     }
 
@@ -89,8 +91,8 @@ public class BillPaymentFragment extends Fragment {
      * @return A new instance of fragment BillPaymentFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BillPaymentFragment newInstance(String param1, String param2) {
-        BillPaymentFragment fragment = new BillPaymentFragment();
+    public static BillPaymentFragment_digital newInstance(String param1, String param2) {
+        BillPaymentFragment_digital fragment = new BillPaymentFragment_digital();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -130,17 +132,23 @@ public class BillPaymentFragment extends Fragment {
 
         return view;
     }
-    public void initiateCustomers(final Customers customer) throws ParseException {
+    public void initiateCustomers(final Customers customer, final String amount_analog, final String monthsString_analog, final int count_analog) throws ParseException {
 //        TextView UserInformation\
 
+
+        this.amount_analog=amount_analog;
+        this.monthsString_analog=monthsString_analog;
+        this.count_analog=count_analog;
+
+        Log.v("imam1","Result: bill analog "+amount_analog+" "+monthsString_analog+" "+count_analog+" ");
         count = 0;
         address.setText(customer.getAddress());
         user_name.setText(customer.getName());
         user_id.setText(customer.getCustomer_code());
 
         //u.start
-        customer_price=Integer.parseInt(customer.getPrice());
-        m_lastpaid_textView.setText("LAST PAID : "+customer.getLast_paid());
+        customer_price=Integer.parseInt(customer.getPrice_d());
+        m_lastpaid_textView.setText("LAST PAID : "+customer.getLast_paid_d());
         //u.end
 
 //        Toast.makeText(getContext(), customer.getLast_paid(), Toast.LENGTH_SHORT).show();
@@ -220,8 +228,8 @@ public class BillPaymentFragment extends Fragment {
         if(customer.getPrice()!=null) {
             try {
 //                Log.v("price now",""+Integer.parseInt(customer.getPrice())*count);
-                amount_due_info.setText(""+(Integer.parseInt(customer.getPrice())*count));
-                amount = ""+(Integer.parseInt(customer.getPrice())*count);
+                amount_due_info.setText(""+(Integer.parseInt(customer.getPrice_d())*count));
+                amount = ""+(Integer.parseInt(customer.getPrice_d())*count);
             }catch (Exception e){
 //                amount_due_info.setText(customer.getPrice());
 //
@@ -240,17 +248,9 @@ public class BillPaymentFragment extends Fragment {
 //                    months=monthTextChecker(months);
                     String monthsString=months.toString();
 //                    ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerSelected.get(0),amount,months);
+                    ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerForProcessing,amount,monthsString,monthsCounter,amount_analog,monthsString_analog,count_analog);
 
-//                    ((MainActivity)getActivity()).printReceipttFragment.initiateCustomers(MainActivity.customerForProcessing,amount,monthsString,monthsCounter);
-
-
-                    try {
-                        ((MainActivity)getActivity()).billPaymentFragment_digital.initiateCustomers(MainActivity.customerForProcessing,amount,monthsString,monthsCounter);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    ((MainActivity)getActivity()).mViewPager.setCurrentItem(2);
+                    ((MainActivity)getActivity()).mViewPager.setCurrentItem(3);
                     months.clear();
 
 
@@ -295,47 +295,47 @@ public class BillPaymentFragment extends Fragment {
 
             }
         });
-        Edit_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Dialog editDialog = new Dialog(getActivity());
-                editDialog.setTitle("Change Customer Details");
-                editDialog.setContentView(R.layout.edit_dialog);
-                editDialog.show();
-                editDialog.setCanceledOnTouchOutside(true);
-                editDialog.setCancelable(true);
-                final EditText edit_customer_name = (EditText)editDialog.findViewById(R.id.edit_customer_name);
-                final EditText edit_phone = (EditText)editDialog.findViewById(R.id.edit_phone);
-                edit_customer_name.setText(MainActivity.customerForProcessing.getName());
-                edit_phone.setText(MainActivity.customerForProcessing.getPhone());
-                Button editdialogSubmit = (Button)editDialog.findViewById(R.id.edit_accept);
-                editdialogSubmit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        final billingdatabaseHelper databasehelper = new billingdatabaseHelper(getActivity(),1);
-                        Customers customer_global = MainActivity.customerForProcessing;
-                        if(!edit_customer_name.getText().toString().equalsIgnoreCase("")) {
-                            customer_global.setName(edit_customer_name.getText().toString());
-                        }
-                        if(!edit_phone.getText().toString().equalsIgnoreCase("")) {
-                            customer_global.setPhone(edit_phone.getText().toString());
-                        }
-                        databasehelper.updateCustomer(customer_global);
-                        ArrayList<Customers> customerforEdit = new ArrayList<Customers>();
-                        customerforEdit.add(customer_global);
-                        databasehelper.insertCustomersEdit(customerforEdit);
-                        try {
-                            initiateCustomers(customer_global);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        ((MainActivity)getActivity()).locationFragment.refreshcreateview();
-                        editDialog.dismiss();
-                    }
-                });
-
-            }
-        });
+//        Edit_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final Dialog editDialog = new Dialog(getActivity());
+//                editDialog.setTitle("Change Customer Details");
+//                editDialog.setContentView(R.layout.edit_dialog);
+//                editDialog.show();
+//                editDialog.setCanceledOnTouchOutside(true);
+//                editDialog.setCancelable(true);
+//                final EditText edit_customer_name = (EditText)editDialog.findViewById(R.id.edit_customer_name);
+//                final EditText edit_phone = (EditText)editDialog.findViewById(R.id.edit_phone);
+//                edit_customer_name.setText(MainActivity.customerForProcessing.getName());
+//                edit_phone.setText(MainActivity.customerForProcessing.getPhone());
+//                Button editdialogSubmit = (Button)editDialog.findViewById(R.id.edit_accept);
+//                editdialogSubmit.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        final billingdatabaseHelper databasehelper = new billingdatabaseHelper(getActivity(),1);
+//                        Customers customer_global = MainActivity.customerForProcessing;
+//                        if(!edit_customer_name.getText().toString().equalsIgnoreCase("")) {
+//                            customer_global.setName(edit_customer_name.getText().toString());
+//                        }
+//                        if(!edit_phone.getText().toString().equalsIgnoreCase("")) {
+//                            customer_global.setPhone(edit_phone.getText().toString());
+//                        }
+//                        databasehelper.updateCustomer(customer_global);
+//                        ArrayList<Customers> customerforEdit = new ArrayList<Customers>();
+//                        customerforEdit.add(customer_global);
+//                        databasehelper.insertCustomersEdit(customerforEdit);
+//                        try {
+//                            initiateCustomers(customer_global);
+//                        } catch (ParseException e) {
+//                            e.printStackTrace();
+//                        }
+//                        ((MainActivity)getActivity()).locationFragment.refreshcreateview();
+//                        editDialog.dismiss();
+//                    }
+//                });
+//
+//            }
+//        });
         add_month.setOnClickListener(new View.OnClickListener(){
 
             @Override
