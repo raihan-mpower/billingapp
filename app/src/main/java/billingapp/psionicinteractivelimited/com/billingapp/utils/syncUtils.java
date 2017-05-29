@@ -67,7 +67,7 @@ public class syncUtils {
             protected Object doInBackground(Object[] params) {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
                 String token = preferences.getString("token", "");
-                postData(token);
+//                postData(token);
                 Log.v("token",token);
                 billingdatabaseHelper databasehelper = new billingdatabaseHelper(context,1);
                 if(databasehelper.getALLCustomers().size()<1){
@@ -96,8 +96,8 @@ public class syncUtils {
     public void syncLocalWithServer(String token){
         Log.v("syncLocalWithServer","started");
 
-//        String sync_url = "http://cable.psionichub.com/sync/billingdata?token="+token;
-        String sync_url = "http://cable.hmannan.com/sync/billingdata?token="+token;
+        String sync_url = "http://cable.psionichub.com/sync/billingdata?token="+token;
+//        String sync_url = "http://cable.hmannan.com/sync/billingdata?token="+token;
 
 //        String sync_url = "http://192.168.0.108:8000/sync/billingdata?token="+token;
 
@@ -163,8 +163,8 @@ public class syncUtils {
         String responsestring = "";
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
-//        HttpGet httpget = new HttpGet("http://cable.psionichub.com/sync/locations?token="+token);
-        HttpGet httpget = new HttpGet("http://cable.hmannan.com/sync/locations?token="+token);
+        HttpGet httpget = new HttpGet("http://cable.psionichub.com/sync/locations?token="+token);
+//        HttpGet httpget = new HttpGet("http://cable.hmannan.com/sync/locations?token="+token);
 
 //        HttpGet httpget = new HttpGet("http://192.168.0.108:8000/sync/locations?token="+token);
 
@@ -426,7 +426,9 @@ public class syncUtils {
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
 //        HttpGet httpget = new HttpGet("http://cable.psionichub.com/sync/customers?token="+token+"&last_id="+last_id+"&limit=100");
-        HttpGet httpget = new HttpGet("http://cable.hmannan.com/sync/customers?token="+token+"&last_id="+last_id+"&limit=100"+"&last_updated_at="+last_updated);
+//        HttpGet httpget = new HttpGet("http://cable.hmannan.com/sync/customers?token="+token+"&last_id="+last_id+"&limit=100"+"&last_updated_at="+last_updated);
+
+        HttpGet httpget = new HttpGet("http://cable.psionichub.com/sync/customers?token="+token+"&last_id="+last_id+"&limit=100"+"&last_updated_at="+last_updated);
 
 //        HttpGet httpget = new HttpGet(encodedurl);
 //        HttpGet httpget = new HttpGet("http://192.168.0.108:8000/sync/customers?token="+token+"&last_id="+last_id+"&limit=100");
