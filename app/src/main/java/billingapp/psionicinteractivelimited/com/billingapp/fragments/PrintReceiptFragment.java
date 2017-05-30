@@ -221,10 +221,11 @@ public class PrintReceiptFragment extends Fragment {
         mTextView_user.setText(Html.fromHtml(
 
                         print_address +"<br>"+
-                        "Name: "+print_user_name+"<br>"+
-                        "ID: "+print_user_id+"<br>"+"<br>"+
-                        "Amount Due:<br><h2 color='#f00'> BDT "+print_due_amount+"</h2>"+"<br>"+
-                        "Month Due:<br><b>"+print_due_month+"</b><br>"+"<br>"+
+                        "Name : "+print_user_name+"<br>"+
+                        "ID : "+print_user_id+"<br>"+"<br>"+
+                        "Amount Due:<br><h1> BDT "+print_due_amount+"</h1>"+
+//                        "Month Due:<br><b>"+print_due_month+"</b><br>"+"<br>"+
+                        print_due_month+"<br>"+"<br>"+
                         "Date: "+ print_payment_date+"<br><br>"+
                         print_notice+"<br><br>"+
                         "Powered by: "+print_powered_by

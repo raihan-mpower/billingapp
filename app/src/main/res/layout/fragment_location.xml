@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     tools:context="billingapp.psionicinteractivelimited.com.billingapp.fragments.LocationFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,18 +13,16 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="10dp"
             >
 
             <LinearLayout
                 android:id="@+id/customer_id_text_layout"
-
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentStart="true"
+                >
 
 
                 <TextView
@@ -32,10 +31,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAllCaps="true"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Customer ID"
                     android:layout_marginLeft="10dp"
-                    android:textColor="#ffffff" />
+                    android:layout_marginTop="10dp"
+                    android:textColor="#000" />
 
 
 
@@ -46,16 +46,20 @@
 
                     android:layout_below="@+id/customer_id_text"
 
+                    android:background="@drawable/border"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+
                     android:inputType="number"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/textboxback"
-                    android:hint="Customer ID"
+                    android:hint="Type Customer ID here"
                     android:text=""
-                    android:textColorHint="#fff"
-                    android:textColor="#ffffff"
+                    android:textColorHint="#8b8b8b"
+                    android:paddingLeft="5dp"
+                    android:textColor="#000"
 
                     />
 
@@ -63,17 +67,21 @@
                     android:id="@+id/bill_payment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="bottom"
                     android:background="@drawable/buttonunpressedback"
                     android:text="Bill Payment"
                     android:textColor="#ffffff"
-                    android:layout_margin="20dp"
-                    android:layout_gravity="bottom"
-
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:layout_margin="10dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true" />
 
 
             </LinearLayout>
+
+
+
+
 
 
 

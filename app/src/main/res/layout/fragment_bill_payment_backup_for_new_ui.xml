@@ -3,47 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="65dp"
-    android:background="#eaeaea"
-
     tools:context="billingapp.psionicinteractivelimited.com.billingapp.fragments.BillPaymentFragment">
 
     <!-- TODO: Update blank fragment layout -->
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="User Information :"
+            android:id="@+id/textView4"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="15dp" />
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/textboxback_borderless"
+            android:background="@drawable/textboxback"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="2dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="2dp"
             >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="USER INFORMATION"
-                android:id="@+id/textView4"
-                android:layout_gravity="center"
-                android:textColor="#040404"
-                android:paddingBottom="10dp"
-                />
-
-
-
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -52,58 +40,58 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name : "
-                    android:id="@+id/user_name_label"
-                    android:textColor="#000"
-                    android:textSize="15sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/username_info"
-                    android:textColor="#000"
-                    android:textSize="15sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="User ID :"
-                    android:id="@+id/user_id_label"
-                    android:textColor="#000"
-                    android:textSize="15sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/userid_info"
-                    android:textColor="#000"
-                    android:textSize="15sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Address :"
+                    android:text="Address: "
                     android:id="@+id/address_label"
-                    android:textColor="#000"
+                    android:textColor="#ffffff"
                     android:textSize="15sp"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/address_info"
-                    android:textColor="#000"
+                    android:textColor="#ffffff"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="User Name: "
+                    android:id="@+id/user_name_label"
+                    android:textColor="#ffffff"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/username_info"
+                    android:textColor="#ffffff"
+                    android:textSize="15sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="User ID: "
+                    android:id="@+id/user_id_label"
+                    android:textColor="#ffffff"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/userid_info"
+                    android:textColor="#ffffff"
                     android:textSize="15sp"/>
             </LinearLayout>
         </LinearLayout>
@@ -111,44 +99,36 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#fff"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:paddingBottom="15dp"
-            android:paddingTop="5dp"
-            >
+            android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="AMOUNT DUE"
-                android:layout_gravity="center"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Amount Due :"
                 android:id="@+id/textView5"
-                android:textColor="#000"
+                android:textColor="#ffffff"
+                android:layout_marginLeft="15dp"
                 />
-
             <TextView
                 android:id="@+id/lastpaid_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Last Paid :"
-                android:textColor="#000"
-                android:layout_marginLeft="10dp"
+                android:text="LAST PAID"
+                android:textColor="#fff"
+                android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
 
                 />
-
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/textboxback"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_marginTop="5dp">
 
 
@@ -156,50 +136,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/amount_due_info"
-                android:textColor="#1c8cc9"
+                android:textColor="#fff"
                 android:textStyle="bold"
                 android:textSize="30sp"
                 />
 
+
         </LinearLayout>
-
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:weightSum="2"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             >
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Month Due :"
+                android:id="@+id/textView6"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textColor="#fff"
+                />
             <Button
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/add_month_button"
+                android:background="@drawable/addtag"
                 android:id="@+id/button_add_month"
-                android:gravity="center"
-                android:layout_marginLeft="7dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="15dp"
                 android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:text="ADD"
-
-                android:layout_weight="1"/>
-
-            <Button
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/delete_month_button"
-                android:id="@+id/button_delete_month"
-                android:gravity="center"
-                android:layout_marginLeft="3dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginRight="7dp"
-                android:text="delete"
-                android:layout_weight="1"/>
+                android:layout_marginBottom="2dp"/>
         </LinearLayout>
 
 
@@ -208,8 +176,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/scrollView"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:background="@drawable/textboxback">
 
             <com.cunoraz.tagview.TagView
@@ -217,48 +185,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:focusable="true"
-                 />
+                android:layout_margin="10dp" />
         </ScrollView>
 
 
 
+        <TableLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:gravity="bottom"
 
 
 
-        </LinearLayout>
+           >
 
+        </TableLayout>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal|bottom"
-            android:layout_marginTop="10dp"
+
             >
 
             <Button
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:id="@+id/button_edit"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:background="@drawable/button_edit_new"
+                android:background="@drawable/button_edit"
 
                 />
 
             <Button
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:id="@+id/button_print"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:background="@drawable/button_pay_new"
+                android:background="@drawable/button_print"
 
                 />
 
             <Button
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:id="@+id/button_due"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:background="@drawable/button_due_new" />
+                android:background="@drawable/button_due"
+            />
         </TableRow>
 
     </LinearLayout>
-
-    </ScrollView>
 </FrameLayout>

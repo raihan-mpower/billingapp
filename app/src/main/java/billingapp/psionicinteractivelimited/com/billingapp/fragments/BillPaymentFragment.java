@@ -59,6 +59,7 @@ public class BillPaymentFragment extends Fragment {
     String amount = "0.00";
     private Button print;
     private Button add_month;
+    private Button delete_month;
 
     ArrayList<String> months=new ArrayList<>();
     int monthsCounter=0;
@@ -122,6 +123,8 @@ public class BillPaymentFragment extends Fragment {
         print = (Button)view.findViewById(R.id.button_print);
 
         add_month= (Button) view.findViewById(R.id.button_add_month);
+        delete_month= (Button) view.findViewById(R.id.button_delete_month);
+
         due_button = (Button) view.findViewById(R.id.button_due);
         Edit_button = (Button) view.findViewById(R.id.button_edit);
 
@@ -376,6 +379,28 @@ public class BillPaymentFragment extends Fragment {
                     Toast.makeText(getActivity(), "No month added", Toast.LENGTH_SHORT).show();
                 }
 
+            }
+        });
+
+        delete_month.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(!months.isEmpty()) {
+                    int pos = count - 1;
+                    tagGroup.remove(pos);
+//                Toast.makeText(getActivity(), "Month "+tag.text+" Deleted successfully", Toast.LENGTH_LONG).show();
+                    tags.remove(pos);
+                    months.remove(pos);
+                    monthsCounter--;
+                    //ush.end
+                    changePriceandTag(customer, -1);
+                    Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(getContext(), "Cant delete this shit", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
