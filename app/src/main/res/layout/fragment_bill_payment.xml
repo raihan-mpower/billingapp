@@ -27,19 +27,19 @@
             android:background="@drawable/textboxback_borderless"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="5dp"
             >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="USER INFORMATION"
                 android:id="@+id/textView4"
                 android:layout_gravity="center"
                 android:textColor="#040404"
-                android:paddingBottom="10dp"
+                android:paddingBottom="5dp"
+                android:textSize="18sp"
                 />
 
 
@@ -47,64 +47,75 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:weightSum="5">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name : "
+                    android:text="Name      :  "
                     android:id="@+id/user_name_label"
                     android:textColor="#000"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/username_info"
                     android:textColor="#000"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp"
+                    android:layout_weight="4"/>
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:weightSum="5">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="User ID :"
+                    android:text="User ID   :  "
                     android:id="@+id/user_id_label"
                     android:textColor="#000"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/userid_info"
                     android:textColor="#000"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp"
+                    android:layout_weight="4"/>
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:weightSum="5">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Address :"
+                    android:text="Address :  "
                     android:id="@+id/address_label"
                     android:textColor="#000"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/address_info"
                     android:textColor="#000"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp"
+                    android:layout_weight="4"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -113,33 +124,37 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="#fff"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:paddingBottom="15dp"
             android:paddingTop="5dp"
             >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="AMOUNT DUE"
-                android:layout_gravity="center"
-                android:id="@+id/textView5"
-                android:textColor="#000"
-                />
-
-            <TextView
-                android:id="@+id/lastpaid_id"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Last Paid :"
-                android:textColor="#000"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
 
-                />
+                android:gravity="center"
+                android:layout_marginBottom="5dp">
+
+
+
+                <TextView
+                    android:id="@+id/lastpaid_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Paid Upto : "
+                    android:textColor="#000"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+
+
+                    />
+
+
+            </LinearLayout>
+
 
 
         <LinearLayout
@@ -149,16 +164,28 @@
             android:background="@drawable/textboxback"
             android:layout_marginLeft="7dp"
             android:layout_marginRight="7dp"
-            android:layout_marginTop="5dp">
-
+            android:gravity=""
+            >
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/amount_due_text"
+                android:textColor="#bababa"
+                android:textSize="15sp"
+                android:text="Due :"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:id="@+id/amount_due_info"
                 android:textColor="#1c8cc9"
-                android:textStyle="bold"
-                android:textSize="30sp"
+                android:textSize="25sp"
+                android:paddingLeft="20dp"
+                android:text="2500"
+                android:gravity="center"
                 />
 
         </LinearLayout>
@@ -185,7 +212,7 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
                 android:text="ADD"
-
+                android:textColor="#fff"
                 android:layout_weight="1"/>
 
             <Button
@@ -199,6 +226,7 @@
                 android:layout_marginBottom="2dp"
                 android:layout_marginRight="7dp"
                 android:text="delete"
+                android:textColor="#fff"
                 android:layout_weight="1"/>
         </LinearLayout>
 
@@ -208,8 +236,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/scrollView"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:background="@drawable/textboxback">
 
             <com.cunoraz.tagview.TagView
@@ -232,29 +260,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal|bottom"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+
             >
 
             <Button
                 android:id="@+id/button_edit"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:background="@drawable/button_edit_new"
 
                 />
 
             <Button
                 android:id="@+id/button_print"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:background="@drawable/button_pay_new"
 
                 />
 
             <Button
                 android:id="@+id/button_due"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:background="@drawable/button_due_new" />
         </TableRow>
 

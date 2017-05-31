@@ -164,11 +164,11 @@ public class BillPaymentFragment extends Fragment {
 
         for(int i = 0;i < monthsdue.size();i++){
             Tag tag = new Tag(monthsdue.get(i));
-            tag.radius = 10f;
+            tag.radius = 5f;
 //            tag.text.toUpperCase();
             tag.text=tag.text.toUpperCase();
-            tag.layoutColor = Color.GRAY;
-            tag.tagTextColor = Color.BLACK;
+            tag.layoutColor = Color.rgb(28,140,201);
+            tag.tagTextColor = Color.WHITE;
             tag.isDeletable = true;
 
             tags.add(tag);
@@ -341,10 +341,10 @@ public class BillPaymentFragment extends Fragment {
                 Log.v("whatsmonthscounter",""+monthsCounter);
                 if(monthsCounter>0) {
                     Tag tag = new Tag(getNextMonth(months.get(monthsCounter - 1)));
-                    tag.radius = 10f;
+                    tag.radius = 5f;
                     tag.text=tag.text.toUpperCase();
-                    tag.layoutColor = Color.GRAY;
-                    tag.tagTextColor = Color.BLACK;
+                    tag.layoutColor = Color.rgb(28,140,201);
+                    tag.tagTextColor = Color.WHITE;
                     tag.isDeletable = true;
                     tags.add(tag);
 
@@ -360,10 +360,10 @@ public class BillPaymentFragment extends Fragment {
                     Tag tag = new Tag(getNextMonthServer(customer.getLast_paid()));
 
 
-                    tag.radius = 10f;
+                    tag.radius = 5f;
                     tag.text=tag.text.toUpperCase();
-                    tag.layoutColor = Color.GRAY;
-                    tag.tagTextColor = Color.BLACK;
+                    tag.layoutColor = Color.rgb(28,140,201);
+                    tag.tagTextColor = Color.WHITE;
                     tag.isDeletable = true;
                     tags.add(tag);
 
