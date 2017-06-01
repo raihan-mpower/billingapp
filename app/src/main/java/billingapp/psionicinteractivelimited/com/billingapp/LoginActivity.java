@@ -4,9 +4,11 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -110,7 +112,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (mEmailView.getText().toString().equals("") || mPasswordView.getText().toString().equals("")){
                 }else{
-                    executeAsynctask();
+                    if (isOnline()){
+                        executeAsynctask();
+                    }else {
+                        Toast.makeText(LoginActivity.this, "INTERNET NEEDED", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
 
 
@@ -207,6 +214,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //////////////////////////////////////////////
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null &&
+                cm.getActiveNetworkInfo().isConnectedOrConnecting();
+    }
+
     public String postData(String username, String password) {
         String token = "";
         // Create a new HttpClient and Post Header

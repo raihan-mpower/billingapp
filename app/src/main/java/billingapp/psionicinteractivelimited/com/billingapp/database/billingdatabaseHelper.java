@@ -66,6 +66,13 @@ public class billingdatabaseHelper extends SQLiteOpenHelper {
         return customerRepository.getALLCustomers(getReadableDatabase());
 //        return null;
     }
+
+
+    public  ArrayList<Customers> get_bill_paid_customers_before_update(){
+
+        return  customerRepository.getALLCustomers_paid_before_update(getReadableDatabase());
+    }
+
     public ArrayList<Customers> getCustomersbyCustomerID(String customerID){
         return customerRepository.findByCustomerCaseID(customerID,getReadableDatabase());
 //        return null;

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -30,12 +31,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.security.PublicKey;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import billingapp.psionicinteractivelimited.com.billingapp.adapter.CustomListAdapter;
 import billingapp.psionicinteractivelimited.com.billingapp.database.billingdatabaseHelper;
 import billingapp.psionicinteractivelimited.com.billingapp.database.customerRepository;
 import billingapp.psionicinteractivelimited.com.billingapp.fragments.BillPaymentFragment;
@@ -225,70 +229,65 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         if (id == R.id.action_update) {
 //            update_the_data_from_server();
 
-            boolean isFistLoad=preferences.getBoolean("firstLoad",true);
-
+            if(isOnline()){
+                boolean isFistLoad=preferences.getBoolean("firstLoad",true);
             Su.executeAsynctask(locationFragment, isFistLoad);
-//            Toast.makeText(MainActivity.this, "Updating...", Toast.LENGTH_SHORT).show();
             return true;
+            }else{
+                Toast.makeText(this, "INTERNET PROBLEM", Toast.LENGTH_SHORT).show();
+            }
+
+//            ////////////////////
+//            boolean isFistLoad=preferences.getBoolean("firstLoad",true);
+//            Su.executeAsynctask(locationFragment, isFistLoad);
+//            return true;
+//            ////////////////
 
 
         }
         else if(id == R.id.action_sync){
-            boolean isFistLoad=preferences.getBoolean("firstLoad",true);
-            BackgroundTask bt=new BackgroundTask(MainActivity.this,Su,locationFragment,isFistLoad);
-            bt.execute();
-//            Toast.makeText(MainActivity.this, "SYNCHED", Toast.LENGTH_SHORT).show();
 
-            //update after sync start
-            //update function will be called from here after sync call
-
-//            update_the_data_from_server();
-
-
-
-            //update after sync ends
+            if(isOnline()) {
+                boolean isFistLoad = preferences.getBoolean("firstLoad", true);
+                BackgroundTask bt = new BackgroundTask(MainActivity.this, Su, locationFragment, isFistLoad);
+                bt.execute();
+            }else {
+                Toast.makeText(this, "INTERNET PROBLEM", Toast.LENGTH_SHORT).show();
+            }
         }
         else if(id == R.id.action_logout){
 
+//            ListView lv= (ListView) findViewById(R.id.log_listView);
+
+            billingdatabaseHelper bh=new billingdatabaseHelper(this,1);
+            ArrayList<Customers> arrayList = bh.get_bill_paid_customers_before_update();
+            Log.v("imam1","this_is_paid_list "+arrayList.get(0).get_to_sync_total_amount());
 
 
-//                    final Dialog editDialog = new Dialog(this);
-//                    editDialog.setTitle("BILL PAYMENT DETAILS");
-//                    editDialog.setContentView(R.layout.edit_dialog);
-//                    editDialog.show();
-//                    editDialog.setCanceledOnTouchOutside(true);
-//                    editDialog.setCancelable(true);
-//                    final EditText edit_customer_name = (EditText)editDialog.findViewById(R.id.edit_customer_name);
-//                    final EditText edit_phone = (EditText)editDialog.findViewById(R.id.edit_phone);
-//                    edit_customer_name.setText(MainActivity.customerForProcessing.getName());
-//                    edit_phone.setText(MainActivity.customerForProcessing.getPhone());
-//                    Button editdialogSubmit = (Button)editDialog.findViewById(R.id.edit_accept);
-//                    editdialogSubmit.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            final billingdatabaseHelper databasehelper = new billingdatabaseHelper(getActivity(),1);
-//                            Customers customer_global = MainActivity.customerForProcessing;
-//                            if(!edit_customer_name.getText().toString().equalsIgnoreCase("")) {
-//                                customer_global.setName(edit_customer_name.getText().toString());
-//                            }
-//                            if(!edit_phone.getText().toString().equalsIgnoreCase("")) {
-//                                customer_global.setPhone(edit_phone.getText().toString());
-//                            }
-//                            databasehelper.updateCustomer(customer_global);
-//                            ArrayList<Customers> customerforEdit = new ArrayList<Customers>();
-//                            customerforEdit.add(customer_global);
-//                            databasehelper.insertCustomersEdit(customerforEdit);
-//                            try {
-//                                initiateCustomers(customer_global);
-//                            } catch (ParseException e) {
-//                                e.printStackTrace();
-//                            }
-//                            ((MainActivity)getActivity()).locationFragment.refreshcreateview();
-//                            editDialog.dismiss();
-//                        }
-//                    });
+
+//            String houses_id,String flat,String price,String customer_code,String address,String customers_id,String name, String last_paid, String updated_at,String phone
 
 
+
+            final Dialog showlog = new Dialog(this);
+            showlog.setTitle("BILL PAYMENT DETAILS");
+            showlog.setContentView(R.layout.show_log);
+            ListView lv= (ListView) showlog.findViewById(R.id.log_listView);
+            showlog.show();
+            showlog.setCanceledOnTouchOutside(true);
+            showlog.setCancelable(true);
+
+            CustomListAdapter adapter = new CustomListAdapter(getApplicationContext(), R.layout.list_item, arrayList);
+            lv.setAdapter(adapter);
+
+
+            Button cancelDialog = (Button)showlog.findViewById(R.id.close_button);
+            cancelDialog.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showlog.dismiss();
+                }
+            });
 
             //logout disabled start
 //            Toast.makeText(MainActivity.this, "Logging out...", Toast.LENGTH_SHORT).show();
@@ -301,12 +300,17 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
 
             //logout disabled end
 
-
-
-
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null &&
+                cm.getActiveNetworkInfo().isConnectedOrConnecting();
     }
 
 //    private boolean update_the_data_from_server() {
@@ -396,11 +400,11 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Location";
+                    return "Customer";
                 case 1:
                     return "Bill Payment";
                 case 2:
-                    return "Print";
+                    return "Receipt";
             }
             return null;
         }

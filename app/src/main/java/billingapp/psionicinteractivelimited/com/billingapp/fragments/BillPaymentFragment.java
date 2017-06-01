@@ -152,7 +152,7 @@ public class BillPaymentFragment extends Fragment {
         Date date=simpleDateFormat.parse(s);
         int m=date.getMonth();
         int year=date.getYear();
-        Toast.makeText(getContext(), "Last paid "+getMonthFromInt(m), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "Last paid "+getMonthFromInt(m), Toast.LENGTH_SHORT).show();
 
 
 
@@ -355,7 +355,7 @@ public class BillPaymentFragment extends Fragment {
                     changePriceandTag(customer, 1);
                 }
                 else if(monthsCounter==0){
-                    Toast.makeText(getActivity(), ""+customer.getLast_paid(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), ""+customer.getLast_paid(), Toast.LENGTH_SHORT).show();
 
                     Tag tag = new Tag(getNextMonthServer(customer.getLast_paid()));
 
@@ -399,7 +399,7 @@ public class BillPaymentFragment extends Fragment {
                 }
                 else
                 {
-                    Toast.makeText(getContext(), "Cant delete this shit", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "No month to delete", Toast.LENGTH_SHORT).show();
                 }
             }
         });

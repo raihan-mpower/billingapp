@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/textboxback"
+    android:layout_margin="3dp"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+
+    >
+
+
+    <!-- Name Label -->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:paddingLeft="5pt"
+        android:orientation="vertical"
+        android:gravity="center"
+
+        >
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textAllCaps="true"
+            android:textSize="13sp"
+            android:textColor="#000"
+            />
+
+        <TextView
+            android:id="@+id/id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textSize="15sp"
+            android:textColor="#000"
+            />
+
+        <TextView
+            android:id="@+id/collection_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Collection Date"
+            android:textSize="14sp"
+            android:textColor="#000"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <TextView
+            android:id="@+id/bill"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="0000"
+            android:textSize="25sp"
+            android:textColor="#000"
+            android:gravity="center_horizontal|center_vertical"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>
+
+    <!-- Email label -->
+
+
+    <!-- Mobile number label -->
+
+</LinearLayout>

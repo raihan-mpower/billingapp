@@ -35,10 +35,10 @@ public class Customers
     private String updated_at;
 
     public String to_sync_lat="default";
-    public String to_sync_lon="deafult";
-    public String to_sync_paying_for="deafult";
-    public String to_sync_total_amount="deafult";
-    public String to_sync_collection_date="deafult";
+    public String to_sync_lon="default";
+    public String to_sync_paying_for="default";
+    public String to_sync_total_amount="default";
+    public String to_sync_collection_date="default";
     public String due = "";
 
     public String phone = "";

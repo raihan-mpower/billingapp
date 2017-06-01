@@ -74,6 +74,7 @@ public class customerRepository {
     public static Customers getCustomer(Cursor cursor){
         Customers customers = new Customers(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
                 cursor.getString(4), cursor.getString(5), cursor.getString(6),cursor.getString(7),cursor.getString(8),cursor.getString(15));
+
         customers.setDue(cursor.getString(14));
         return customers;
     }
@@ -180,6 +181,38 @@ public class customerRepository {
             if (cursor.getString(3).contains(s)){
 
                 customers.add(customer.getCustomer_code()+"-"+customer.getName());
+            }
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return customers;
+    }
+
+    public static ArrayList<Customers> getALLCustomers_paid_before_update(SQLiteDatabase database) {
+
+        Cursor cursor = database.query(tableName, columns, null, null, null, null, null, null);
+        cursor.moveToFirst();
+
+        ArrayList<Customers> customers = new ArrayList<>();
+
+        while (!cursor.isAfterLast()) {
+
+
+            if (!cursor.getString(12).equals("default")){
+
+                Customers customer = getCustomer(cursor);
+                Log.v("imam1","cursor_12_values "+cursor.getString(12));
+
+
+                customer.set_to_sync_lat(cursor.getString(9));
+                customer.set_to_sync_lon(cursor.getString(10));
+                customer.set_to_sync_paying_for(cursor.getString(11));
+                customer.set_to_sync_total_amount(cursor.getString(12));
+                customer.set_to_sync_collection_date(cursor.getString(13));
+
+
+
+                customers.add(customer);
             }
             cursor.moveToNext();
         }
