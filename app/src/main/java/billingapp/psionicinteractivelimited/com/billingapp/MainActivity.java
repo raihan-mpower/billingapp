@@ -2,7 +2,9 @@ package billingapp.psionicinteractivelimited.com.billingapp;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -38,6 +40,7 @@ import android.widget.Toast;
 import java.security.PublicKey;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import billingapp.psionicinteractivelimited.com.billingapp.adapter.CustomListAdapter;
 import billingapp.psionicinteractivelimited.com.billingapp.database.billingdatabaseHelper;
@@ -94,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
     public static Customers customerForProcessing ;
     syncUtils Su;
 
+
     //ush.end
     public BillPaymentFragment billPaymentFragment;
 
@@ -148,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         if(isFistLoad){
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("firstLoad",false);
+
             editor.apply();
 
 //            Toast.makeText(MainActivity.this, "testest"+isFistLoad, Toast.LENGTH_SHORT).show();
@@ -247,8 +252,23 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         }
         else if(id == R.id.action_sync){
 
+            boolean isFistLoad = preferences.getBoolean("firstLoad", true);
+//            if(!isFistLoad)
+//            {
+//                int i = 5;
+//                intent = new Intent(this, MyBroadcastReceiver.class);
+//                pendingIntent = PendingIntent.getBroadcast(
+//                        this.getApplicationContext(), 280192, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+//                alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + (i * 1000), 10000
+//                        , pendingIntent);
+//
+//                Toast.makeText(this, "Alarm will set in " + i + " seconds",
+//                        Toast.LENGTH_LONG).show();
+//            }
+
             if(isOnline()) {
-                boolean isFistLoad = preferences.getBoolean("firstLoad", true);
+
                 BackgroundTask bt = new BackgroundTask(MainActivity.this, Su, locationFragment, isFistLoad);
                 bt.execute();
             }else {
